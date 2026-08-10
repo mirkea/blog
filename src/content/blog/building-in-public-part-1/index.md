@@ -2,7 +2,7 @@
 title: "Building in public pt.1: from idea to concept"
 description: Turning a fuzzy idea into a product concept.
 pubDate: 2026-08-10
-readingTime: 2 min read
+readingTime: 8 min read
 tags:
   - building-in-public
   - startup
