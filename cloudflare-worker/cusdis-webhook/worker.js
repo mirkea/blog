@@ -46,7 +46,7 @@ export default {
             ${content}
           </blockquote>
           <p>
-            <a href="https://cusdis.com/dashboard/project/e48f5d58-50c3-46ff-a952-7547a70bf8ca" style="margin-right:1em">View in dashboard</a>
+            <a href="https://cusdis.com/dashboard/project/6ac8e894-5dfe-4f38-a947-d077bec8edba" style="margin-right:1em">View in dashboard</a>
             <a href="${approve_link}">✓ Approve comment</a>
           </p>
         `,
