@@ -1,0 +1,159 @@
+---
+export interface Props {
+  data: [string, number][];
+  legendLabel: string;
+  rangeLabel: string;
+  year: number;
+  id?: string;
+}
+
+const { data, legendLabel, rangeLabel, year, id = "devlog-rhythm" } = Astro.props;
+const svgId = `${id}-svg`;
+---
+
+<div class="devlog-charts">
+  <div class="devlog-chart-card">
+    <svg class="devlog-rhythm-svg" id={svgId} viewBox="0 0 860 260" preserveAspectRatio="none"></svg>
+    <div class="devlog-legend-row">
+      <span class="devlog-swatch"><span class="devlog-sq"></span>{legendLabel}</span>
+      <span>{rangeLabel}</span>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ data, year, svgId }}>
+  (function () {
+    var daily = data;
+    var svg = document.getElementById(svgId);
+    var isMobile = window.matchMedia("(max-width: 639px)").matches;
+    var W = 860,
+      H = 260,
+      padL = isMobile ? 36 : 30,
+      padR = 12,
+      padT = 14,
+      padB = isMobile ? 56 : 26;
+    var plotW = W - padL - padR,
+      plotH = H - padT - padB;
+    var max = Math.max.apply(
+      null,
+      daily.map(function (d) {
+        return d[1];
+      }),
+    );
+    var niceMax = Math.ceil(max / 10) * 10;
+    var n = daily.length;
+    var xStep = plotW / (n - 1);
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    function fmtDate(mmdd) {
+      var parts = mmdd.split("-");
+      return parts[1] + "." + monthNames[parseInt(parts[0], 10) - 1];
+    }
+    function xAt(i) {
+      return padL + i * xStep;
+    }
+    function yAt(v) {
+      return padT + plotH - (v / niceMax) * plotH;
+    }
+    var ns = "http://www.w3.org/2000/svg";
+    function el(tag, attrs) {
+      var e = document.createElementNS(ns, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+    var gradId = svgId + "-areaFade";
+    var defs = el("defs", {});
+    var grad = el("linearGradient", { id: gradId, x1: "0", y1: "0", x2: "0", y2: "1" });
+    grad.appendChild(el("stop", { offset: "0%", "stop-color": "currentColor", "stop-opacity": "0.18" }));
+    grad.appendChild(el("stop", { offset: "100%", "stop-color": "currentColor", "stop-opacity": "0.02" }));
+    defs.appendChild(grad);
+    svg.appendChild(defs);
+    [0, niceMax / 2, niceMax].forEach(function (v) {
+      var y = yAt(v);
+      svg.appendChild(el("line", { class: "devlog-grid-line", x1: padL, x2: W - padR, y1: y, y2: y }));
+      var t = el("text", { class: "devlog-axis-tick", x: 4, y: y + 3 });
+      t.textContent = v;
+      svg.appendChild(t);
+    });
+    var dateTickIdx = isMobile ? [0, 17, n - 1] : [0, 6, 13, 20, 27, n - 1];
+    dateTickIdx.forEach(function (i) {
+      var t = el("text", { class: "devlog-axis-tick", x: xAt(i), y: H - (isMobile ? 12 : 6), "text-anchor": "middle" });
+      t.textContent = fmtDate(daily[i][0]);
+      svg.appendChild(t);
+    });
+    var areaPts = "M " + xAt(0) + " " + yAt(0);
+    daily.forEach(function (d, i) {
+      areaPts += " L " + xAt(i) + " " + yAt(d[1]);
+    });
+    areaPts += " L " + xAt(n - 1) + " " + yAt(0) + " Z";
+    var areaFill = el("path", { class: "devlog-area-fill", d: areaPts });
+    areaFill.style.fill = "url(#" + gradId + ")";
+    svg.appendChild(areaFill);
+    var linePts = daily
+      .map(function (d, i) {
+        return xAt(i) + " " + yAt(d[1]);
+      })
+      .join(" L ");
+    svg.appendChild(el("path", { class: "devlog-area-line", d: "M " + linePts }));
+    var hoverRuleV = el("line", { class: "devlog-hover-rule" });
+    var hoverDot = el("circle", { class: "devlog-hover-dot", r: 4.5 });
+    svg.appendChild(hoverRuleV);
+    svg.appendChild(hoverDot);
+    var chartCard = svg.closest(".devlog-chart-card");
+    var tooltip = document.createElement("div");
+    tooltip.className = "devlog-tooltip";
+    chartCard.appendChild(tooltip);
+    var hitArea = el("rect", { x: padL, y: padT, width: plotW, height: plotH, fill: "transparent" });
+    svg.appendChild(hitArea);
+    function showAt(clientX) {
+      var rect = svg.getBoundingClientRect();
+      var scaleX = rect.width / W;
+      var localX = (clientX - rect.left) / scaleX;
+      var i = Math.round((localX - padL) / xStep);
+      i = Math.max(0, Math.min(n - 1, i));
+      var d = daily[i];
+      var px = xAt(i),
+        py = yAt(d[1]);
+      hoverRuleV.setAttribute("x1", px);
+      hoverRuleV.setAttribute("x2", px);
+      hoverRuleV.setAttribute("y1", padT);
+      hoverRuleV.setAttribute("y2", yAt(0));
+      hoverRuleV.style.opacity = 1;
+      hoverDot.setAttribute("cx", px);
+      hoverDot.setAttribute("cy", py);
+      hoverDot.style.opacity = 1;
+      tooltip.innerHTML =
+        '<span class="devlog-t-date">' +
+        fmtDate(d[0]) +
+        " " +
+        year +
+        '</span> &nbsp; <span class="devlog-t-val">' +
+        d[1] +
+        " commit" +
+        (d[1] === 1 ? "" : "s") +
+        "</span>";
+      var cardRect = chartCard.getBoundingClientRect();
+      var ptX = (px / W) * rect.width + (rect.left - cardRect.left);
+      var ptY = (py / H) * rect.height + (rect.top - cardRect.top);
+      tooltip.style.left = ptX + "px";
+      tooltip.style.top = ptY - 10 + "px";
+      tooltip.style.opacity = 1;
+    }
+    function hide() {
+      hoverRuleV.style.opacity = 0;
+      hoverDot.style.opacity = 0;
+      tooltip.style.opacity = 0;
+    }
+    hitArea.addEventListener("mousemove", function (e) {
+      showAt(e.clientX);
+    });
+    hitArea.addEventListener("mouseleave", hide);
+    hitArea.addEventListener(
+      "touchmove",
+      function (e) {
+        showAt(e.touches[0].clientX);
+      },
+      { passive: true },
+    );
+    hitArea.addEventListener("touchend", hide);
+  })();
+</script>

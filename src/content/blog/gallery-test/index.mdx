@@ -1,0 +1,40 @@
+---
+title: "Gallery Component Test"
+description: "Dummy post to test the inline image gallery component (Swiper-based, pinch-zoom, mobile peek scroll)."
+pubDate: 2026-09-01
+tags: ["test"]
+draft: true
+---
+
+import ImageGallery from "../../../components/ImageGallery";
+
+This is a throwaway test post for the new inline `ImageGallery` component. It should render 3 images in one row on desktop, and on mobile it should show one full image plus a peek of the next one, inviting a horizontal swipe. Pinch-to-zoom and pan should work on each image (desktop: double-click; mobile: pinch).
+
+<ImageGallery
+  client:visible
+  images={[
+    { src: "/gallery-test/office-hours-wireframes.png", alt: "Wireframes", caption: "Wireframes" },
+    { src: "/gallery-test/mockups.png", alt: "Mockups", caption: "Mockups" },
+    { src: "/gallery-test/slide-core.png", alt: "Emotional core slide", caption: "Emotional core" },
+  ]}
+/>
+
+Regular markdown content continues below the gallery to confirm it doesn't break the rest of the post flow.
+
+A single image still renders the normal way:
+
+![Product slide](/gallery-test/slide-product.png)
+
+## A four-image gallery
+
+Testing with 4 images to make sure the peek/scroll behavior still makes sense with more than 3.
+
+<ImageGallery
+  client:visible
+  images={[
+    { src: "/gallery-test/office-hours-wireframes.png", alt: "Wireframes" },
+    { src: "/gallery-test/mockups.png", alt: "Mockups" },
+    { src: "/gallery-test/slide-core.png", alt: "Emotional core slide" },
+    { src: "/gallery-test/slide-product.png", alt: "Product slide" },
+  ]}
+/>

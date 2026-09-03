@@ -3,6 +3,7 @@ import Layout from "./Layout.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import ShareButtons from "../components/ShareButtons.astro";
 import TagList from "../components/TagList.astro";
+import MarkdownImageLightbox from "../components/MarkdownImageLightbox";
 export interface Props {
   title: string;
   description: string;
@@ -108,6 +109,7 @@ if (heroImage) {
     <div class="markdown-content">
       <slot />
     </div>
+    <MarkdownImageLightbox client:load />
 
     <!-- Add the like button after the content -->
     <div class="mt-12 border-t border-zinc-200 pt-8 dark:border-zinc-800">

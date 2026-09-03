@@ -6,7 +6,7 @@ import readingTime from "reading-time"; // Thêm import này nếu chưa có
 const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("blog");
+  const blogEntries = await getCollection("blog", ({ data }) => !data.draft || import.meta.env.DEV);
 
   // Sort entries by date for better next/prev navigation
   const sortedEntries = [...blogEntries].sort(

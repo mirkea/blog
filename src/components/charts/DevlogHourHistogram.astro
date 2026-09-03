@@ -1,0 +1,70 @@
+---
+export interface Props {
+  data: number[];
+  id?: string;
+}
+
+const { data, id = "devlog-hours" } = Astro.props;
+const svgId = `${id}-svg`;
+---
+
+<div class="devlog-charts">
+  <div class="devlog-chart-card">
+    <svg class="devlog-hours-svg" id={svgId} viewBox="0 0 860 180" preserveAspectRatio="none"></svg>
+  </div>
+</div>
+
+<script define:vars={{ data, svgId }}>
+  (function () {
+    var hours = data;
+    var ns = "http://www.w3.org/2000/svg";
+    function el(tag, attrs) {
+      var e = document.createElementNS(ns, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+    var hsvg = document.getElementById(svgId);
+    var hIsMobile = window.matchMedia("(max-width: 639px)").matches;
+    var HW = 860,
+      HH = 180,
+      hPadL = 24,
+      hPadR = 8,
+      hPadT = 10,
+      hPadB = hIsMobile ? 48 : 22;
+    var hPlotW = HW - hPadL - hPadR,
+      hPlotH = HH - hPadT - hPadB;
+    var maxHour = Math.max.apply(null, hours);
+    var gap = 3;
+    var bw = hPlotW / 24 - gap;
+    var tickEvery = hIsMobile ? 6 : 3;
+    hours.forEach(function (v, i) {
+      var bh = (v / maxHour) * hPlotH;
+      var x = hPadL + i * (hPlotW / 24);
+      var y = hPadT + hPlotH - bh;
+      var isPeak = v === maxHour;
+      var r = el("rect", {
+        class: "devlog-hbar" + (isPeak ? " devlog-peak" : ""),
+        x: x,
+        y: y,
+        width: Math.max(bw, 1),
+        height: Math.max(bh, 1),
+        rx: 2,
+      });
+      var titleEl = document.createElementNS(ns, "title");
+      var hh = (i % 24).toString().padStart(2, "0") + ":00";
+      titleEl.textContent = hh + " — " + v + " commits";
+      r.appendChild(titleEl);
+      hsvg.appendChild(r);
+      if (i % tickEvery === 0) {
+        var t = el("text", {
+          class: "devlog-hour-tick",
+          x: x + bw / 2,
+          y: HH - (hIsMobile ? 10 : 6),
+          "text-anchor": "middle",
+        });
+        t.textContent = hh;
+        hsvg.appendChild(t);
+      }
+    });
+  })();
+</script>

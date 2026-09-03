@@ -1,0 +1,29 @@
+---
+export interface Stat {
+  value: string;
+  label: string;
+  unit?: string;
+}
+
+export interface Props {
+  stats: Stat[];
+}
+
+const { stats } = Astro.props;
+---
+
+<div class="devlog-charts">
+  <div class="devlog-stats">
+    {
+      stats.map((stat) => (
+        <div class="devlog-stat">
+          <div class="devlog-stat-val">
+            {stat.value}
+            {stat.unit && <span class="devlog-unit"> {stat.unit}</span>}
+          </div>
+          <div class="devlog-stat-label">{stat.label}</div>
+        </div>
+      ))
+    }
+  </div>
+</div>

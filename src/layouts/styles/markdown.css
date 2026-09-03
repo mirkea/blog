@@ -110,7 +110,7 @@ article .heading-visible {
 
 /* Links */
 .markdown-content a {
-  @apply underline !inline;
+  @apply !inline underline;
 }
 
 /* Bold */
@@ -132,12 +132,12 @@ article .heading-visible {
   @apply list-decimal;
 }
 
-.markdown-content li+li {
+.markdown-content li + li {
   @apply mt-0;
 }
 
-.markdown-content li>ul,
-.markdown-content li>ol {
+.markdown-content li > ul,
+.markdown-content li > ol {
   @apply my-1;
 }
 
@@ -239,7 +239,7 @@ article .heading-visible {
 
 /* Tables */
 .markdown-content table {
-  @apply w-full border-collapse text-left text-sm overflow-x-auto rounded-md border;
+  @apply w-full border-collapse overflow-x-auto rounded-md border text-left text-sm;
   border-color: rgb(var(--color-border));
 }
 
@@ -248,15 +248,39 @@ article .heading-visible {
 }
 
 .markdown-content table th {
-  @apply border-b px-4 py-3 font-semibold;
+  @apply border-b px-4 py-3 text-left align-top font-semibold;
   background-color: rgb(var(--color-bg-surface));
   color: rgb(var(--color-text));
   border-color: rgb(var(--color-border));
 }
 
 .markdown-content table td {
-  @apply border-b px-4 py-3;
+  @apply border-b px-4 py-3 align-top;
   border-color: rgb(var(--color-border));
+}
+
+@media (max-width: 639px) {
+  .markdown-content table {
+    table-layout: fixed;
+  }
+
+  .markdown-content table th,
+  .markdown-content table td {
+    overflow-wrap: break-word;
+    padding: 0.5rem;
+    font-size: 13px;
+  }
+
+  /* Tech stack table: narrow the first two columns so the notes column gets more room */
+  .tech-stack-table table th:nth-child(1),
+  .tech-stack-table table td:nth-child(1) {
+    width: 100px;
+  }
+
+  .tech-stack-table table th:nth-child(2),
+  .tech-stack-table table td:nth-child(2) {
+    width: 80px;
+  }
 }
 
 .markdown-content table tbody tr:nth-child(even) {
@@ -281,7 +305,326 @@ article .heading-visible {
 
 /* Images */
 .markdown-content img {
-  @apply my-6 h-auto max-w-full rounded-lg shadow-md;
+  @apply my-6 h-auto max-w-full cursor-zoom-in rounded-lg shadow-md;
+}
+
+/* Mobile image wrapper: cap the display size of an image */
+.markdown-content .mobile-image-wrapper img {
+  max-width: 240px;
+}
+
+@media (min-width: 640px) {
+  .markdown-content .mobile-image-wrapper img {
+    max-width: 340px;
+  }
+}
+
+/* ─── Devlog charts (inline SVG/HTML data-viz embedded in post content) ────── */
+
+.devlog-charts {
+  @apply my-8;
+}
+
+.devlog-charts * {
+  box-sizing: border-box;
+}
+
+/* Stat strip */
+.devlog-stats {
+  @apply grid grid-cols-2 gap-3 sm:grid-cols-4;
+}
+
+.devlog-stat {
+  @apply rounded-md border p-3 sm:p-4;
+  border-color: rgb(var(--color-border));
+  background-color: rgb(var(--color-bg-elevated));
+}
+
+.devlog-stat-val {
+  @apply font-mono text-xl font-bold tracking-tight whitespace-nowrap tabular-nums sm:text-2xl;
+  color: rgb(var(--color-text));
+}
+
+.devlog-stat-val .devlog-unit {
+  @apply ml-0.5 text-[0.55em] font-semibold;
+  color: rgb(var(--color-text-muted));
+}
+
+.devlog-stat-label {
+  @apply mt-1.5 font-mono text-[10px] tracking-[0.08em] uppercase;
+  color: rgb(var(--color-text-muted));
+}
+
+/* Chart card shell (rhythm chart + hour histogram) */
+.devlog-chart-card {
+  @apply relative rounded-md border p-3 pt-5 sm:p-5;
+  border-color: rgb(var(--color-border));
+  background-color: rgb(var(--color-bg-elevated));
+}
+
+.devlog-rhythm-svg,
+.devlog-hours-svg {
+  @apply block h-auto w-full overflow-visible;
+  color: rgb(var(--color-text));
+}
+
+.devlog-axis-tick,
+.devlog-hour-tick {
+  @apply font-mono;
+  fill: rgb(var(--color-text-muted));
+}
+
+.devlog-axis-tick {
+  font-size: 10px;
+}
+
+.devlog-hour-tick {
+  font-size: 9px;
+}
+
+@media (max-width: 639px) {
+  .devlog-axis-tick {
+    font-size: 32px;
+  }
+
+  .devlog-hour-tick {
+    font-size: 30px;
+  }
+}
+
+.devlog-grid-line {
+  stroke: rgb(var(--color-border));
+  stroke-width: 1;
+}
+
+.devlog-area-fill {
+  fill: url(#devlog-areaFade);
+}
+
+.devlog-area-line {
+  fill: none;
+  stroke: rgb(var(--color-text));
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.devlog-hover-dot {
+  fill: rgb(var(--color-bg-elevated));
+  stroke: rgb(var(--color-text));
+  stroke-width: 2;
+  opacity: 0;
+}
+
+.devlog-hover-rule {
+  stroke: rgb(var(--color-text-muted));
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0;
+}
+
+.devlog-tooltip {
+  @apply absolute z-10 rounded px-2.5 py-1.5 font-mono text-[11.5px] leading-normal whitespace-nowrap opacity-0 transition-opacity duration-100;
+  pointer-events: none;
+  background-color: rgb(var(--color-primary));
+  color: rgb(var(--color-primary-fg));
+  transform: translate(-50%, -100%);
+}
+
+.devlog-tooltip .devlog-t-date {
+  color: rgb(var(--color-primary-fg) / 0.6);
+}
+
+.devlog-tooltip .devlog-t-val {
+  @apply font-bold;
+}
+
+.devlog-legend-row {
+  @apply mt-2.5 flex items-center justify-between font-mono text-[10.5px];
+  color: rgb(var(--color-text-muted));
+}
+
+.devlog-legend-row .devlog-swatch {
+  @apply inline-flex items-center gap-1.5;
+}
+
+.devlog-legend-row .devlog-swatch .devlog-sq {
+  @apply h-2 w-2 rounded-[2px];
+  background-color: rgb(var(--color-text));
+}
+
+/* Commit-type bars */
+.devlog-bar-list {
+  @apply flex flex-col gap-2.5;
+}
+
+.devlog-bar-row {
+  @apply grid grid-cols-[74px_1fr_76px] items-center gap-2.5 sm:grid-cols-[78px_1fr_82px];
+}
+
+.devlog-bar-row .devlog-type-name {
+  @apply font-mono text-[12px] font-semibold whitespace-nowrap sm:text-[12.5px];
+  color: rgb(var(--color-text));
+}
+
+.devlog-bar-row .devlog-type-name .devlog-colon {
+  color: rgb(var(--color-text-muted));
+}
+
+.devlog-bar-track {
+  @apply relative overflow-hidden rounded;
+  height: 18px;
+  background-color: rgb(var(--color-bg-surface));
+}
+
+.devlog-bar-fill {
+  @apply absolute inset-y-0 left-0 rounded;
+  width: 0;
+  background-color: rgb(var(--color-text));
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.devlog-bar-row .devlog-type-count {
+  @apply text-right font-mono text-[11px] whitespace-nowrap tabular-nums sm:text-[12.5px];
+  color: rgb(var(--color-text-muted));
+}
+
+.devlog-bar-row .devlog-type-count b {
+  @apply font-bold;
+  color: rgb(var(--color-text));
+}
+
+/* Hour histogram bars */
+.devlog-hbar {
+  fill: rgb(var(--color-text-subtle));
+  transition: fill 0.15s ease;
+}
+
+.devlog-hbar.devlog-peak {
+  fill: rgb(var(--color-text));
+}
+
+.devlog-hbar:hover {
+  fill: rgb(var(--color-text));
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .devlog-bar-fill {
+    transition: none;
+  }
+}
+
+/* Image gallery (Swiper) */
+.markdown-content .image-gallery-swiper {
+  @apply overflow-hidden pb-7;
+  --swiper-pagination-bottom: 0px;
+}
+
+.markdown-content .image-gallery-swiper .swiper-slide {
+  @apply h-auto;
+}
+
+.markdown-content .image-gallery-swiper .image-gallery-thumb-button {
+  @apply flex aspect-4/3 w-full cursor-zoom-in items-center justify-center overflow-hidden rounded-lg border-0 p-0 shadow-md;
+  background-color: rgb(var(--color-bg-surface));
+}
+
+.markdown-content .image-gallery-swiper img {
+  @apply m-0 h-full w-full rounded-none object-contain shadow-none;
+}
+
+.markdown-content .image-gallery-caption {
+  @apply my-2 text-center text-sm;
+  color: rgb(var(--color-text-subtle));
+}
+
+/* Lightbox */
+.image-gallery-lightbox {
+  @apply fixed inset-0 z-[100] flex h-dvh w-screen items-center justify-center bg-black/95;
+}
+
+.image-gallery-lightbox-swiper {
+  @apply h-full w-full;
+}
+
+.image-gallery-lightbox-swiper .swiper-zoom-container {
+  @apply flex h-full w-full items-center justify-center;
+}
+
+.image-gallery-lightbox-swiper img {
+  @apply max-h-[85vh] max-w-[95vw] object-contain;
+}
+
+.image-gallery-lightbox-caption {
+  @apply absolute bottom-6 left-0 w-full text-center text-sm text-white/80;
+}
+
+.image-gallery-lightbox-close {
+  @apply absolute top-4 right-4 z-10 flex h-10 min-h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full border-0 bg-black/25 text-3xl leading-none text-white;
+}
+
+.image-gallery-lightbox-close:hover {
+  @apply bg-white/20;
+}
+
+.image-gallery-lightbox-swiper .swiper-button-next,
+.image-gallery-lightbox-swiper .swiper-button-prev {
+  @apply h-10 w-10 rounded-full bg-black/25 p-2.5 text-white;
+  /* Swiper sizes the button itself from this var (and uses it for vertical-centering
+     math), so it must match the h-10/w-10 box above; the icon SVG fills 100% of the
+     button, so padding is what actually shrinks the visible glyph. */
+  --swiper-navigation-size: 2.5rem;
+  box-sizing: border-box;
+}
+
+/* The chevron is a thin filled SVG path (no stroke); layer a CSS stroke on top
+   to make it read as bolder/more solid instead of thickening via filters. */
+.image-gallery-lightbox-swiper .swiper-navigation-icon path {
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.image-gallery-lightbox-swiper .swiper-button-next:hover,
+.image-gallery-lightbox-swiper .swiper-button-prev:hover {
+  @apply bg-white/40;
+}
+
+/* Hide the nav arrows while an image is pinch/double-tap zoomed, so they don't
+   obscure the zoomed-in content. */
+.image-gallery-lightbox-swiper.is-zoomed .swiper-button-next,
+.image-gallery-lightbox-swiper.is-zoomed .swiper-button-prev {
+  @apply hidden;
+}
+
+.markdown-content .image-gallery-swiper .swiper-button-next,
+.markdown-content .image-gallery-swiper .swiper-button-prev {
+  @apply h-8 w-8 rounded-full shadow-md;
+  background-color: rgb(var(--color-bg-surface));
+  color: rgb(var(--color-text));
+}
+
+.markdown-content .image-gallery-swiper .swiper-button-next::after,
+.markdown-content .image-gallery-swiper .swiper-button-prev::after {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.markdown-content .image-gallery-swiper .swiper-pagination-bullet {
+  background-color: rgb(var(--color-text-subtle));
+  opacity: 0.5;
+}
+
+.markdown-content .image-gallery-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background-color: rgb(var(--color-text));
+}
+
+@media (max-width: 640px) {
+  .markdown-content .image-gallery-swiper .swiper-button-next,
+  .markdown-content .image-gallery-swiper .swiper-button-prev {
+    @apply hidden;
+  }
 }
 
 /* Horizontal rule */

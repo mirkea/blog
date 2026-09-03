@@ -1,0 +1,55 @@
+---
+export interface Props {
+  data: [string, number][];
+  id?: string;
+}
+
+const { data, id = "devlog-bar-list" } = Astro.props;
+---
+
+<div class="devlog-charts">
+  <div class="devlog-bar-list" id={id}></div>
+</div>
+
+<script define:vars={{ data, id }}>
+  (function () {
+    var types = data;
+    var totalTypes = types.reduce(function (s, t) {
+      return s + t[1];
+    }, 0);
+    var maxType = Math.max.apply(
+      null,
+      types.map(function (t) {
+        return t[1];
+      }),
+    );
+    var barList = document.getElementById(id);
+    types.forEach(function (t) {
+      var row = document.createElement("div");
+      row.className = "devlog-bar-row";
+      var pct = Math.round((t[1] / totalTypes) * 100)
+        .toString()
+        .padStart(2, "0");
+      row.innerHTML =
+        '<div class="devlog-type-name">' +
+        t[0] +
+        '<span class="devlog-colon">:</span></div>' +
+        '<div class="devlog-bar-track"><div class="devlog-bar-fill" data-w="' +
+        (t[1] / maxType) * 100 +
+        '"></div></div>' +
+        '<div class="devlog-type-count"><b>' +
+        t[1] +
+        "</b> · " +
+        pct +
+        "%</div>";
+      barList.appendChild(row);
+    });
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        barList.querySelectorAll(".devlog-bar-fill").forEach(function (b) {
+          b.style.width = b.getAttribute("data-w") + "%";
+        });
+      });
+    });
+  })();
+</script>

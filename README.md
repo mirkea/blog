@@ -20,10 +20,12 @@ The whole thing went from idea to live in under a day - [here's how](https://mir
 ## Development
 
 ```bash
-npm run dev      # start local dev server at localhost:4321
+npm run dev      # start local dev server, bound to 0.0.0.0 (localhost + LAN IP printed in terminal)
 npm run build    # production build
 npm run preview  # preview production build locally
 ```
+
+To test on your phone, connect it to the same Wi-Fi and open the Network URL printed by `npm run dev`.
 
 ## Publishing a post
 
