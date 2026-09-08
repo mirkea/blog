@@ -1,7 +1,17 @@
 ---
 export const prerender = true;
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { Search, Code2, ListChecks, Users, PenTool, FileCode, Braces, Atom, Bot } from "lucide-react";
+import {
+  Search,
+  Code2,
+  ListChecks,
+  Users,
+  PenTool,
+  FileCode,
+  Braces,
+  Atom,
+  Bot,
+} from "lucide-react";
 
 const skills = [
   {
@@ -187,26 +197,49 @@ const skills = [
         just say hello, feel free to reach out.
       </p>
 
-      <a
-        href="mailto:mtz@outlook.com"
-        class="theme-transition-element inline-flex items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-zinc-100 transition-colors hover:bg-zinc-700 sm:px-8 sm:py-4 sm:text-lg dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="mr-2 h-4 w-4 sm:h-5 sm:w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div class="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <a
+          href="mailto:contact@mirkea.com"
+          class="theme-transition-element inline-flex items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-zinc-100 transition-colors hover:bg-zinc-700 sm:px-8 sm:py-4 sm:text-lg dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-          ></path>
-        </svg>
-        Say Hello
-      </a>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="mr-2 h-4 w-4 sm:h-5 sm:w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            ></path>
+          </svg>
+          Say Hello
+        </a>
+        <a
+          href="/resume.pdf"
+          download="Braescu-Mircea-Cristian-Resume.pdf"
+          class="theme-transition-element inline-flex items-center justify-center rounded-lg border-2 border-zinc-900 bg-transparent px-6 py-3 text-base font-medium text-zinc-900 transition-colors hover:bg-zinc-100 sm:px-8 sm:py-4 sm:text-lg dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-800"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="mr-2 h-4 w-4 sm:h-5 sm:w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            ></path>
+          </svg>
+          Download Resume
+        </a>
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -276,7 +309,8 @@ const skills = [
       if (
         link.getAttribute("href").includes("#") ||
         link.getAttribute("target") === "_blank" ||
-        link.hasAttribute("data-spa-handled")
+        link.hasAttribute("data-spa-handled") ||
+        link.hasAttribute("download")
       ) {
         return;
       }
