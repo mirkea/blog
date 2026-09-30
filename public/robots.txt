@@ -52,5 +52,7 @@ Disallow: /
 
 User-agent: *
 Allow: /
+# Private sales previews, shared by link only (pages also carry noindex).
+Disallow: /preview/
 
 Sitemap: https://mirkea.com/sitemap-index.xml
