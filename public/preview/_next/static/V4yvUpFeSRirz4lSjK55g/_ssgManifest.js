@@ -1,0 +1,1 @@
+self.__SSG_MANIFEST=new Set(["\u002F[site]","\u002F[site]\u002Fapple-touch-icon.png","\u002F[site]\u002Fconfidentialitate","\u002F[site]\u002Ficon-32.png","\u002F[site]\u002Fog.png"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
