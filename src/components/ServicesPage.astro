@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Bot, Smartphone, PhoneCall, Search, Hammer, ArrowRight, Check, CalendarDays, Wrench, Phone, MessageCircle } from "lucide-react";
+import { Bot, ArrowUpRight, Smartphone, PhoneCall, Search, Hammer, ArrowRight, Check, CalendarDays, Wrench, Phone, MessageCircle } from "lucide-react";
 
 export interface Props {
   lang: "ro" | "en";
@@ -11,6 +11,7 @@ const base = import.meta.env.BASE_URL;
 const leadsWorkerUrl = import.meta.env.PUBLIC_LEADS_WORKER_URL || "";
 const calLink = "braescu-mircea/15min";
 const phone = { href: "+40741141095", ro: "0741 141 095", en: "+40 741 141 095" };
+const linkedin = "https://www.linkedin.com/in/mircea-braescu/";
 
 // Romanian copy has no diacritics on purpose (Mircea's rule for anything others read).
 const copy = {
@@ -23,11 +24,15 @@ const copy = {
     eyebrow: "AI si aplicatii pentru firme mici",
     h1a: "Aveti nevoie de o aplicatie?",
     h1b: "Sau doar de mai putina munca manuala?",
+    // ?exemplu=<key> from an ad swaps in the headline that ad promised; studio (ad A) keeps the default
+    heroes: {
+      service: { h1a: "Pierdeti ore cu oferte si facturi?", h1b: "Le automatizam impreuna." },
+      inchirieri: { h1a: "Ati facut deja o aplicatie cu AI?", h1b: "O facem sa mearga pe bune." },
+    },
     lead: "Va spun sincer ce merita construit in firma voastra: o aplicatie web sau mobila, un instrument AI sau nimic nou. Primul apel, de 15 minute, e gratuit.",
     cta: "Programeaza apelul gratuit",
     ctaSecondary: "Cum lucrez",
     trust: ["20 de ani in software", "Fost PM pe verified.eu, vanduta pentru 31 mil. EUR", "Raspuns in cel mult o zi lucratoare"],
-    phoneChip: "Carvuu, construita de mine",
     examplesLabel: "Exemple de aplicatii",
     examplesNote: "Firme si date inventate, ca exemplu.",
     examples: [
@@ -68,15 +73,6 @@ const copy = {
         alt: "Aplicatia Rampa: inchirierea unui mini excavator prelungita pana pe 3 noiembrie",
       },
     ],
-    proofEyebrow: "Dovada",
-    proofTitle: "Carvuu: o aplicatie pe care am construit-o singur",
-    proofLead:
-      "Carvuu da fiecarei masini un profil public: povestea ei, poze, note lasate pe parbriz si remindere pentru RCA, rovinieta si ITP. Am facut-o de la idee la productie, cu AI. Asa lucrez si pentru voi.",
-    proofItems: [
-      { title: "Aplicatia, pe telefon", text: "Simpla de folosit, rapida, gandita pentru oameni care nu citesc instructiuni." },
-      { title: "Fiecare flux, inainte de cod", text: "Fiecare pas pe care il face un utilizator, desenat si verificat inainte sa scriu o linie de cod." },
-      { title: "Harta intregii aplicatii", text: "Toate paginile, ferestrele si emailurile, intr-un singur loc. Stiti exact ce primiti." },
-    ],
     servicesTitle: "Cu ce va pot ajuta",
     services: [
       {
@@ -102,7 +98,7 @@ const copy = {
       { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul reparatiei", value: "de la 500 EUR" },
     ],
     priceExample: "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
-    priceFoot: "Pretul exact, fix, il stiti inainte de orice linie de cod.",
+    priceFoot: "Pretul exact, fix, il stiti inainte de orice linie de cod. Fara comision pe rezervare sau pe utilizator, iar costul lunar de gazduire il stiti dinainte.",
     honestTitle: "Nu orice problema cere o aplicatie",
     honest:
       "Multe firme simt ca au nevoie de o aplicatie. Uneori un formular bun, o pagina de programari sau un instrument care exista deja rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.",
@@ -112,9 +108,9 @@ const copy = {
     calcHours: "Ore pe saptamana in toata echipa",
     calcRate: "Cat costa o ora de lucru",
     calcCurrency: "lei",
-    calcRateDefault: 100,
+    calcRateDefault: 150,
     calcLocale: "ro-RO",
-    calcResult: "Ati putea economisi pana la",
+    calcResult: "Munca repetitiva va costa acum",
     calcPerYear: "pe an",
     calcNote: "Calcul: ore pe saptamana x cost pe ora x 48 de saptamani lucratoare. In apel vedem cat din aceste ore se poate automatiza.",
     calcCta: "Vreau sa vad ce se poate automatiza",
@@ -140,6 +136,7 @@ const copy = {
     about:
       "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o aplicatie care dura luni cu o echipa intreaga o pot livra singur in cateva saptamani.",
     aboutLink: "Mai multe despre mine",
+    linkedinLabel: "LinkedIn",
     formTitle: "Programeaza apelul gratuit",
     formLead: "Alegeti singuri o ora din calendar sau lasati-mi datele si va sun eu.",
     calTitle: "Alegeti o ora direct",
@@ -159,6 +156,8 @@ const copy = {
       message: "Ce vreti sa rezolvati?",
       messagePlaceholder: "De exemplu: pierdem mult timp cu programarile la telefon",
     },
+    safety:
+      "Lucrez din Bucuresti, in UE, conform GDPR. Codul, datele si conturile sunt pe numele firmei voastre, iar daca eu nu mai sunt disponibil, aveti tot ce ii trebuie altui programator ca sa continue.",
     consent: "Folosesc datele doar ca sa va contactez despre aceasta cerere.",
     submit: "Trimite",
     sending: "Se trimite...",
@@ -175,11 +174,14 @@ const copy = {
     eyebrow: "AI and apps for small businesses",
     h1a: "Do you need an app?",
     h1b: "Or just less manual work?",
+    heroes: {
+      service: { h1a: "Losing hours to quotes and invoices?", h1b: "Let's automate them." },
+      inchirieri: { h1a: "Already built an app with AI?", h1b: "Let's make it work for real." },
+    },
     lead: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new. The first call, 15 minutes, is free.",
     cta: "Book the free call",
     ctaSecondary: "How I work",
     trust: ["20 years in software", "Former PM on verified.eu, acquired for 31M EUR", "Reply within one working day"],
-    phoneChip: "Carvuu, built by me",
     examplesLabel: "Example apps",
     examplesNote: "Invented firms and data, as an example.",
     examples: [
@@ -220,15 +222,6 @@ const copy = {
         alt: "Rampa app: a mini excavator rental extended to 3 November",
       },
     ],
-    proofEyebrow: "Proof",
-    proofTitle: "Carvuu: an app I built on my own",
-    proofLead:
-      "Carvuu gives every car a public profile: its story, photos, notes left on the windshield and reminders for insurance and inspections. I took it from idea to production with AI. That's how I work for you too.",
-    proofItems: [
-      { title: "The app, on the phone", text: "Simple, fast, made for people who never read instructions." },
-      { title: "Every flow, before any code", text: "Every step a user takes, drawn and checked before I write a line of code." },
-      { title: "A map of the whole app", text: "Every page, sheet and email in one place. You know exactly what you get." },
-    ],
     servicesTitle: "How I can help",
     services: [
       {
@@ -249,12 +242,12 @@ const copy = {
     ],
     priceTitle: "Indicative prices",
     prices: [
-      { name: "Web app, works on any phone, no download", value: "from 3.000 EUR" },
-      { name: "Mobile app in the App Store and Google Play", value: "from 5.000 EUR" },
-      { name: "Audit of an app built with AI, deducted from the fix", value: "from 500 EUR" },
+      { name: "Web app, works on any phone, no download", value: "from €3,000" },
+      { name: "Mobile app in the App Store and Google Play", value: "from €5,000" },
+      { name: "Audit of an app built with AI, deducted from the fix", value: "from €500" },
     ],
-    priceExample: "Example: a booking and membership platform for a studio usually costs 4.000-7.000 EUR.",
-    priceFoot: "You know the exact, fixed price before any code is written.",
+    priceExample: "Example: a booking and membership platform for a studio usually costs €4,000-7,000.",
+    priceFoot: "You know the exact, fixed price before any code is written. No per-booking or per-user fees, and you know the monthly hosting cost up front.",
     honestTitle: "Not every problem needs an app",
     honest:
       "Many businesses feel they need an app. Sometimes a good form, a booking page or a tool that already exists solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
@@ -263,10 +256,10 @@ const copy = {
       "Think of what repeats every week: email, quotes, invoices, bookings, posts, data copied from one place to another.",
     calcHours: "Hours per week, whole team",
     calcRate: "Cost of one working hour",
-    calcCurrency: "EUR",
-    calcRateDefault: 25,
+    calcCurrency: "GBP",
+    calcRateDefault: 30,
     calcLocale: "en-GB",
-    calcResult: "You could save up to",
+    calcResult: "Repetitive work costs you",
     calcPerYear: "a year",
     calcNote: "Math: hours per week x cost per hour x 48 working weeks. On the call we look at how many of those hours can be automated.",
     calcCta: "Show me what can be automated",
@@ -292,6 +285,7 @@ const copy = {
     about:
       "I'm Mircea Braescu. 20 years in software and 10 in product management: delivery PM on verified.eu, a B2B platform acquired for 31M EUR, then CPO at a product studio. I work with AI every day, so an app that used to take a team months I can deliver on my own in a few weeks.",
     aboutLink: "More about me",
+    linkedinLabel: "LinkedIn",
     formTitle: "Book the free call",
     formLead: "Pick a time in my calendar yourself, or leave your details and I'll call you.",
     calTitle: "Pick a time now",
@@ -311,6 +305,8 @@ const copy = {
       message: "What do you want to solve?",
       messagePlaceholder: "For example: we lose a lot of time booking appointments by phone",
     },
+    safety:
+      "I work from Bucharest, in the EU, under GDPR, 2 hours ahead of the UK. Code, data and accounts are in your company's name, and if I'm ever unavailable you have everything another developer needs to carry on.",
     consent: "I use your details only to contact you about this request.",
     submit: "Send",
     sending: "Sending...",
@@ -345,17 +341,21 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               {copy.switchLabel}
             </a>
           </div>
-          <h1 class="text-4xl leading-[1.05] font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100">
-            <span class="block">{copy.h1a}</span>
+          <h1
+            id="hero-title"
+            data-heroes={JSON.stringify(copy.heroes)}
+            class="text-[2rem] leading-[1.05] font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100"
+          >
+            <span class="block" data-h1a>{copy.h1a}</span>
             <span class="relative mt-2 inline-block">
-              {copy.h1b}
+              <span data-h1b>{copy.h1b}</span>
               <span class="hero-underline absolute -bottom-1 left-0 h-1.5 w-full origin-left bg-zinc-900 dark:bg-zinc-100"></span>
             </span>
           </h1>
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-zinc-600 sm:text-xl dark:text-zinc-400">
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-zinc-600 sm:mt-6 sm:text-xl dark:text-zinc-400">
             {copy.lead}
           </p>
-          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+          <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
             <a
               href="#call"
               class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-900 px-7 py-3 text-base font-semibold text-zinc-100 shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
@@ -363,14 +363,34 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               {copy.cta}
               <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
             </a>
-            <a
-              href="#savings"
-              class="inline-flex min-h-[44px] items-center justify-center text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
-            >
-              {copy.calcTitle}
-            </a>
+            <div class="grid grid-cols-2 gap-3 sm:flex">
+              <a
+                href={`tel:${phone.href}`}
+                data-umami-event="hero-call"
+                class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-4 text-sm font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+              >
+                <Phone size={16} />
+                {copy.callLabel}
+              </a>
+              <a
+                href={`https://wa.me/${phone.href.slice(1)}`}
+                target="_blank"
+                rel="noopener"
+                data-umami-event="hero-whatsapp"
+                class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-4 text-sm font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+              >
+                <MessageCircle size={16} />
+                {copy.whatsappLabel}
+              </a>
+            </div>
           </div>
-          <ul class="mt-10 flex flex-col gap-2 text-sm text-zinc-600 sm:flex-row sm:flex-wrap sm:gap-x-6 dark:text-zinc-400">
+          <a
+            href="#savings"
+            class="mt-4 hidden min-h-[44px] items-center text-sm font-medium text-zinc-900 underline-offset-4 hover:underline sm:inline-flex dark:text-zinc-100"
+          >
+            {copy.calcTitle}
+          </a>
+          <ul class="mt-10 hidden flex-col gap-2 text-sm text-zinc-600 sm:flex sm:flex-row sm:flex-wrap sm:gap-x-6 dark:text-zinc-400">
             {
               copy.trust.map((item) => (
                 <li class="flex items-center gap-2">
@@ -382,7 +402,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </ul>
         </div>
 
-        <div id="examples" class="reveal mt-14 sm:mt-16" data-default={copy.examples[0].key}>
+        <div id="examples" class="reveal mt-8 sm:mt-16" data-default={copy.examples[0].key}>
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <p class="text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.examplesLabel}</p>
             <div class="flex flex-wrap gap-2" role="tablist" aria-label={copy.examplesLabel}>
@@ -469,6 +489,16 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             }
             <span class="text-zinc-400"> {copy.examplesNote}</span>
           </p>
+          <ul class="mt-6 flex flex-col gap-2 text-sm text-zinc-600 sm:hidden dark:text-zinc-400">
+            {
+              copy.trust.map((item) => (
+                <li class="flex items-center gap-2">
+                  <Check size={16} class="shrink-0 text-zinc-900 dark:text-zinc-100" />
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     </section>
@@ -584,58 +614,6 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       </div>
     </section>
 
-    <!-- Proof: Carvuu, the phone screen plus the flow and app maps -->
-    <section class="bleed bg-zinc-50 py-16 sm:py-24 dark:bg-zinc-800/40">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6">
-        <div class="reveal mb-12 max-w-2xl">
-          <p class="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.proofEyebrow}</p>
-          <h2 class="mb-4 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.proofTitle}</h2>
-          <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.proofLead}</p>
-        </div>
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-[0.7fr_1.3fr]">
-          <figure class="reveal lift flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="mx-auto my-auto w-full max-w-[260px] overflow-hidden rounded-[1.8rem] border-[7px] border-zinc-900 dark:border-zinc-700">
-              <img src={`${base}services/carvuu-car.webp`} alt="" width="800" height="1824" class="aspect-[9/16] w-full object-cover object-top" loading="lazy" />
-            </div>
-            <figcaption class="mt-5">
-              <p class="font-semibold text-zinc-900 dark:text-zinc-100">{copy.proofItems[0].title}</p>
-              <p class="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.proofItems[0].text}</p>
-            </figcaption>
-          </figure>
-          <div class="grid grid-cols-1 gap-6">
-            {
-              [
-                { src: "services/carvuu-use-cases.webp", w: 1754, h: 1342, item: copy.proofItems[1] },
-                { src: "services/carvuu-app-map.webp", w: 1992, h: 1577, item: copy.proofItems[2] },
-              ].map((shot) => (
-                <figure class="reveal lift overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
-                  <div class="flex items-center gap-1.5 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
-                    <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
-                    <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
-                    <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600" />
-                  </div>
-                  <a href={`${base}${shot.src}`} target="_blank" class="block overflow-hidden">
-                    <img
-                      src={`${base}${shot.src}`}
-                      alt=""
-                      width={shot.w}
-                      height={shot.h}
-                      class="aspect-[16/8] w-full object-cover object-top transition-transform duration-700 hover:scale-[1.03]"
-                      loading="lazy"
-                    />
-                  </a>
-                  <figcaption class="border-t border-zinc-100 px-5 py-4 dark:border-zinc-800">
-                    <p class="font-semibold text-zinc-900 dark:text-zinc-100">{shot.item.title}</p>
-                    <p class="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{shot.item.text}</p>
-                  </figcaption>
-                </figure>
-              ))
-            }
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Steps -->
     <section id="how" class="reveal scroll-mt-24 py-14 sm:py-20">
       <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
@@ -680,6 +658,15 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           >
             {copy.aboutLink}
             <ArrowRight size={16} />
+          </a>
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener"
+            class="mt-4 ml-6 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+          >
+            {copy.linkedinLabel}
+            <ArrowUpRight size={16} />
           </a>
         </div>
       </div>
@@ -810,7 +797,10 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
           </div>
           <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-            <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.consent}</p>
+            <div>
+              <p class="mb-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{copy.safety}</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.consent}</p>
+            </div>
             <button
               type="submit"
               class="inline-flex min-h-[52px] cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-8 py-3 text-base font-semibold text-zinc-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
@@ -926,24 +916,6 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     }
   }
 
-  .phone {
-    transform: rotate(3deg);
-  }
-
-  .float-slow {
-    animation: float 7s ease-in-out infinite;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: rotate(3deg) translateY(0);
-    }
-    50% {
-      transform: rotate(3deg) translateY(-10px);
-    }
-  }
-
   .hero-underline {
     transform: scaleX(0);
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
@@ -951,23 +923,6 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
   .is-visible .hero-underline {
     transform: scaleX(1);
-  }
-
-  .chip {
-    opacity: 0;
-    transform: translateY(10px);
-    transition:
-      opacity 0.6s ease 0.6s,
-      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.6s;
-  }
-
-  .chip-late {
-    transition-delay: 0.9s;
-  }
-
-  .is-visible .chip {
-    opacity: 1;
-    transform: none;
   }
 
   .pulse-dot {
@@ -999,14 +954,12 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
   @media (prefers-reduced-motion: reduce) {
     .reveal,
-    .chip,
     .hero-underline {
       opacity: 1;
       transform: none;
       transition: none;
     }
 
-    .float-slow,
     .pulse-dot {
       animation: none;
     }
@@ -1068,6 +1021,15 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         });
       };
       let current = fromAd && keys.includes(fromAd) ? fromAd : examples.dataset.default || keys[0];
+      // Ads promise different things: swap in the headline the ad led with.
+      const title = document.getElementById("hero-title");
+      const heroes = JSON.parse(title?.dataset.heroes || "{}");
+      if (title && fromAd && heroes[fromAd]) {
+        const a = title.querySelector("[data-h1a]");
+        const b = title.querySelector("[data-h1b]");
+        if (a) a.textContent = heroes[fromAd].h1a;
+        if (b) b.textContent = heroes[fromAd].h1b;
+      }
       examples.querySelectorAll<HTMLElement>("[data-example]").forEach((tab) => {
         tab.addEventListener("click", () => {
           current = tab.dataset.example || current;
@@ -1092,7 +1054,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             inView = entries[0].isIntersecting;
             show(current);
           },
-          { threshold: 0.4 },
+          { threshold: 0.2 },
         ).observe(examples);
       }
       show(current);
