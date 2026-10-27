@@ -184,6 +184,7 @@ const copy = {
     success: "Multumesc! Va sun in cel mult o zi lucratoare.",
     error: "Nu s-a putut trimite. Scrieti-mi direct la contact@mirkea.com.",
     mailSubject: "Apel gratuit",
+    footerRights: "Toate drepturile rezervate.",
   },
   en: {
     title: "AI and apps for small businesses | Mircea Braescu",
@@ -353,6 +354,7 @@ const copy = {
     success: "Thank you! I'll call you within one working day.",
     error: "It couldn't be sent. Write to me directly at contact@mirkea.com.",
     mailSubject: "Free call",
+    footerRights: "All rights reserved.",
   },
 }[lang];
 
@@ -361,7 +363,7 @@ const inputClass =
 const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300";
 ---
 
-<Layout title={copy.title} description={copy.description} lang={lang}>
+<Layout title={copy.title} description={copy.description} lang={lang} landing>
   <div class="services-page">
     <!-- Hero: copy, then the three example apps. Each ad links with ?exemplu=<key> to open its app first -->
     <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
@@ -898,6 +900,18 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       </div>
     </section>
   </div>
+  <footer slot="footer" class="border-t border-zinc-100 dark:border-zinc-800">
+    <div class="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-8 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 dark:text-zinc-400">
+      <p>
+        &copy; {new Date().getFullYear()} MIRKEA INTERACTIVE S.R.L., CUI 50876040. {copy.footerRights}
+      </p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href="mailto:contact@mirkea.com" class="hover:text-zinc-900 dark:hover:text-zinc-100">contact@mirkea.com</a>
+        <a href={linkedin} target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">LinkedIn</a>
+        <a href={copy.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="hover:text-zinc-900 dark:hover:text-zinc-100">{copy.switchLabel}</a>
+      </div>
+    </div>
+  </footer>
 </Layout>
 
 <style>
