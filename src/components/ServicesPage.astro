@@ -51,11 +51,18 @@ const copy = {
       },
       {
         icon: Wrench,
-        name: "Ati inceput deja o aplicatie?",
-        text: "Ati facut un prototip cu AI sau cu o alta firma si s-a blocat? Il preiau, il repar si il duc in productie, fara sa o luati de la zero.",
+        name: "Ati facut deja o aplicatie cu AI?",
+        text: "Ati construit un prototip cu Lovable, Bolt, Cursor sau ChatGPT si s-a blocat? Il transform intr-o aplicatie care merge cu adevarat: date sigure, conturi, plati, fara sa o luati de la zero.",
       },
     ],
-    priceNote: "O prima versiune de aplicatie porneste de obicei de la 3.000 EUR. Pretul exact il stiti inainte de orice linie de cod.",
+    priceTitle: "Preturi orientative",
+    prices: [
+      { name: "Aplicatie web, merge pe orice telefon, fara descarcare", value: "de la 3.000 EUR" },
+      { name: "Aplicatie mobila in App Store si Google Play", value: "de la 5.000 EUR" },
+      { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul reparatiei", value: "de la 500 EUR" },
+    ],
+    priceExample: "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
+    priceFoot: "Pretul exact, fix, il stiti inainte de orice linie de cod.",
     honestTitle: "Nu orice problema cere o aplicatie",
     honest:
       "Multe firme simt ca au nevoie de o aplicatie. Uneori un formular bun, o pagina de programari sau un instrument care exista deja rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.",
@@ -156,11 +163,18 @@ const copy = {
       },
       {
         icon: Wrench,
-        name: "Already started an app?",
-        text: "Built a prototype with AI or with another firm and it got stuck? I take it over, fix it and get it to production, without starting from zero.",
+        name: "Already built an app with AI?",
+        text: "Made a prototype with Lovable, Bolt, Cursor or ChatGPT and it got stuck? I turn it into an app that really works: safe data, accounts, payments, without starting from zero.",
       },
     ],
-    priceNote: "A first version of an app usually starts at 3.000 EUR. You know the exact price before any code is written.",
+    priceTitle: "Indicative prices",
+    prices: [
+      { name: "Web app, works on any phone, no download", value: "from 3.000 EUR" },
+      { name: "Mobile app in the App Store and Google Play", value: "from 5.000 EUR" },
+      { name: "Audit of an app built with AI, deducted from the fix", value: "from 500 EUR" },
+    ],
+    priceExample: "Example: a booking and membership platform for a studio usually costs 4.000-7.000 EUR.",
+    priceFoot: "You know the exact, fixed price before any code is written.",
     honestTitle: "Not every problem needs an app",
     honest:
       "Many businesses feel they need an app. Sometimes a good form, a booking page or a tool that already exists solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
@@ -341,7 +355,21 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           ))
         }
       </div>
-      <p class="mt-6 text-zinc-600 dark:text-zinc-400">{copy.priceNote}</p>
+      <div class="mt-8">
+        <p class="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.priceTitle}</p>
+        <dl class="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
+          {
+            copy.prices.map((price) => (
+              <div class="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                <dt class="text-zinc-700 dark:text-zinc-300">{price.name}</dt>
+                <dd class="shrink-0 font-mono text-lg font-bold text-zinc-900 dark:text-zinc-100">{price.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">{copy.priceExample}</p>
+        <p class="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">{copy.priceFoot}</p>
+      </div>
     </section>
 
     <!-- Savings calculator: same math as the internal pricer (hours x hourly cost x 48 weeks) -->
