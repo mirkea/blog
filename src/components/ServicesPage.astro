@@ -403,12 +403,22 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               }
             </div>
           </div>
-          <div class="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-2xl shadow-zinc-900/15 dark:border-zinc-700 dark:bg-zinc-900">
-            <div class="flex items-center gap-1.5 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+          <!-- Phones: an iPhone-style frame around the portrait screens. From sm up: a browser window around the desktop ones -->
+          <div class="example-frame relative mx-auto max-w-[330px] rounded-[3rem] border-[10px] border-zinc-900 bg-zinc-900 shadow-2xl shadow-zinc-900/25 ring-1 ring-zinc-700 sm:max-w-none sm:rounded-xl sm:border sm:border-zinc-200 sm:bg-white sm:shadow-zinc-900/15 sm:ring-0 dark:sm:border-zinc-700 dark:sm:bg-zinc-900">
+            <div class="overflow-hidden rounded-[2.3rem] sm:rounded-[0.7rem]">
+            <div class="relative flex h-9 items-center justify-between bg-zinc-900 px-6 text-[13px] font-semibold text-white sm:hidden" aria-hidden="true">
+              <span>9:41</span>
+              <span class="absolute top-2 left-1/2 h-[22px] w-[88px] -translate-x-1/2 rounded-full bg-black"></span>
+              <span class="flex items-center gap-1">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1" /><rect x="4.5" y="5" width="3" height="6" rx="1" /><rect x="9" y="2.5" width="3" height="8.5" rx="1" /><rect x="13.5" y="0" width="3" height="11" rx="1" /></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="3" stroke="currentColor" opacity="0.4" /><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor" /><rect x="21.5" y="3.5" width="1.5" height="4" rx="0.75" fill="currentColor" opacity="0.4" /></svg>
+              </span>
+            </div>
+            <div class="hidden items-center gap-1.5 border-b border-zinc-100 px-4 py-3 sm:flex dark:border-zinc-800">
               <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
               <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
               <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
-              <span class="ml-3 hidden font-mono text-xs text-zinc-400 sm:inline" data-example-url>{copy.examples[0].url}</span>
+              <span class="ml-3 font-mono text-xs text-zinc-400" data-example-url>{copy.examples[0].url}</span>
             </div>
             <div class="relative aspect-[9/16] bg-zinc-100 sm:aspect-[16/10] dark:bg-zinc-800">
               {
@@ -446,6 +456,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
                   </div>
                 ))
               }
+            </div>
             </div>
           </div>
           <p class="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -890,6 +901,29 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
   .lift:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 40px -20px rgb(24 24 27 / 0.25);
+  }
+
+  /* Side buttons of the phone frame, phones only */
+  @media (max-width: 639px) {
+    .example-frame::before,
+    .example-frame::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      border-radius: 2px;
+      background: #27272a;
+    }
+    .example-frame::before {
+      left: -13px;
+      top: 110px;
+      height: 56px;
+      box-shadow: 0 -40px 0 -10px #27272a;
+    }
+    .example-frame::after {
+      right: -13px;
+      top: 140px;
+      height: 80px;
+    }
   }
 
   .phone {
