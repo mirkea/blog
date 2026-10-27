@@ -371,7 +371,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div class="reveal max-w-3xl">
           <div class="mb-6 flex items-center justify-between gap-4">
-            <span class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium tracking-wide text-zinc-600 uppercase backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
+            <span class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-600 backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
               <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-zinc-900 dark:bg-zinc-100"></span>
               {copy.eyebrow}
             </span>
@@ -412,7 +412,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               <a
                 href={`tel:${phone.href}`}
                 data-umami-event="hero-call"
-                class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-4 text-sm font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+                class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-5 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
               >
                 <Phone size={16} />
                 {copy.callLabel}
@@ -422,7 +422,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
                 target="_blank"
                 rel="noopener"
                 data-umami-event="hero-whatsapp"
-                class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-4 text-sm font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+                class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-5 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
               >
                 <MessageCircle size={16} />
                 {copy.whatsappLabel}
@@ -689,11 +689,11 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
         {copy.stepsTitle}
       </h2>
-      <ol class="relative grid grid-cols-1 items-start gap-10 sm:grid-cols-3 sm:gap-6">
+      <ol class="relative grid grid-cols-1 gap-10 sm:grid-cols-3 sm:grid-rows-[repeat(6,auto)] sm:gap-x-6 sm:gap-y-0">
         <span class="absolute top-6 right-[16%] left-[16%] hidden h-px bg-zinc-200 sm:block dark:bg-zinc-700" aria-hidden="true"></span>
         {
           copy.steps.map((step, index) => (
-            <li class="relative flex flex-col items-start sm:items-center sm:text-center">
+            <li class="relative flex flex-col items-start sm:row-span-6 sm:grid sm:grid-rows-subgrid sm:content-start sm:items-start sm:justify-items-center sm:text-center">
               <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 sm:mx-auto dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
                 <step.icon size={20} />
               </div>
