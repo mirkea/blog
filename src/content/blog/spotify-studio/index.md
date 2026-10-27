@@ -26,8 +26,6 @@ I was expecting a chat panel inside Spotify. Instead, Studio is its own standalo
 
 Once it was open, though, it worked exactly as I hoped: a chat interface over my Spotify data that generates playlists on demand. Shortly after, my [Kingdom Come: Deliverance, Calm Work Mix](https://open.spotify.com/playlist/4kf7zjROahNOINeJSNNeF2?si=87332c54812e4cd6) was ready, with the combat and chase cues left out. Exactly what I needed.
 
-![Studio's result: the calm work mix](./assets/studio-result.webp)
-
 ## Look under the hood
 
 Look closer at what Studio shows while it works. "Kit" (the agent) announces "Now I'll add the tracks in order, in batches of 10", and then this scrolls by:
