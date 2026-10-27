@@ -7,7 +7,6 @@ import "./styles/logo-anim.css";
 import "./styles/transitions.css";
 import "./styles/markdown.css";
 import logoStrokeRaw from "../../public/logo-stroke.svg?raw";
-import logoRaw from "../../public/logo.svg?raw";
 
 export interface Props {
   title: string;
@@ -75,15 +74,7 @@ const base = import.meta.env.BASE_URL;
 
     <div class="mx-auto w-full max-w-3xl flex-grow px-4 sm:px-6">
       {
-        landing ? (
-          <header class="flex h-16 items-center">
-            <a href={base} rel="external" class="flex items-center text-xl font-bold text-zinc-900 dark:text-white">
-              <span class="inline-block size-8 [&>svg]:h-full [&>svg]:w-full" aria-label="Logo" set:html={logoRaw} />
-            </a>
-          </header>
-        ) : (
-          <Navigation />
-        )
+        landing ? null : <Navigation />
       }
       <main class="py-12">
         <slot />
