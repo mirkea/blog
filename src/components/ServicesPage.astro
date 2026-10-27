@@ -39,6 +39,8 @@ const copy = {
         url: "nordterm.ro/oferta",
         image: "nordterm.webp",
         video: "nordterm_send_quote.mp4",
+        mobileImage: "nordterm_mobile.webp",
+        mobileVideo: "nordterm_mobile_send_quote.mp4",
         alt: "Aplicatia Nordterm: o oferta de 9.740 lei trimisa pe Facebook",
       },
       {
@@ -49,6 +51,8 @@ const copy = {
         url: "forma.ro/clasa",
         image: "forma.webp",
         video: "forma_seat_booked.mp4",
+        mobileImage: "forma_mobile.webp",
+        mobileVideo: "forma_mobile_seat_booked.mp4",
         alt: "Aplicatia Forma: un loc la Reformer, miercuri 18:00, rezervat din lista de asteptare",
       },
       {
@@ -59,6 +63,8 @@ const copy = {
         url: "rampa.ro/santier",
         image: "rampa.webp",
         video: "rampa_extend_rental.mp4",
+        mobileImage: "rampa_mobile.webp",
+        mobileVideo: "rampa_mobile_extend_rental.mp4",
         alt: "Aplicatia Rampa: inchirierea unui mini excavator prelungita pana pe 3 noiembrie",
       },
     ],
@@ -185,6 +191,8 @@ const copy = {
         url: "nordterm.ro/oferta",
         image: "nordterm.webp",
         video: "nordterm_send_quote.mp4",
+        mobileImage: "nordterm_mobile.webp",
+        mobileVideo: "nordterm_mobile_send_quote.mp4",
         alt: "Nordterm app: a 9.740 lei quote sent on Facebook",
       },
       {
@@ -195,6 +203,8 @@ const copy = {
         url: "forma.ro/clasa",
         image: "forma.webp",
         video: "forma_seat_booked.mp4",
+        mobileImage: "forma_mobile.webp",
+        mobileVideo: "forma_mobile_seat_booked.mp4",
         alt: "Forma app: a Reformer seat on Wednesday 18:00 booked from the waiting list",
       },
       {
@@ -205,6 +215,8 @@ const copy = {
         url: "rampa.ro/santier",
         image: "rampa.webp",
         video: "rampa_extend_rental.mp4",
+        mobileImage: "rampa_mobile.webp",
+        mobileVideo: "rampa_mobile_extend_rental.mp4",
         alt: "Rampa app: a mini excavator rental extended to 3 November",
       },
     ],
@@ -398,7 +410,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
               <span class="ml-3 hidden font-mono text-xs text-zinc-400 sm:inline" data-example-url>{copy.examples[0].url}</span>
             </div>
-            <div class="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-800">
+            <div class="relative aspect-[9/16] bg-zinc-100 sm:aspect-[16/10] dark:bg-zinc-800">
               {
                 copy.examples.map((example, index) => (
                   <div
@@ -410,14 +422,26 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
                     class={`example-panel absolute inset-0 ${index === 0 ? "" : "is-hidden"}`}
                   >
                     <video
-                      class="h-full w-full object-cover"
+                      class="hidden h-full w-full object-cover sm:block"
+                      data-size="desktop"
                       poster={`${base}services/examples/${example.image}`}
                       muted
                       playsinline
-                      preload={index === 0 ? "auto" : "none"}
+                      preload="none"
                       aria-label={example.alt}
                     >
                       <source src={`${base}services/examples/${example.video}`} type="video/mp4" />
+                    </video>
+                    <video
+                      class="h-full w-full object-cover sm:hidden"
+                      data-size="mobile"
+                      poster={`${base}services/examples/${example.mobileImage}`}
+                      muted
+                      playsinline
+                      preload="none"
+                      aria-label={example.alt}
+                    >
+                      <source src={`${base}services/examples/${example.mobileVideo}`} type="video/mp4" />
                     </video>
                   </div>
                 ))
@@ -981,6 +1005,8 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const keys = [...examples.querySelectorAll<HTMLElement>("[data-panel]")].map((el) => el.dataset.panel || "");
       const fromAd = new URLSearchParams(window.location.search).get("exemplu");
+      // Phones get the portrait screens, larger screens the desktop ones (same breakpoint as sm:).
+      const wide = window.matchMedia("(min-width: 640px)");
       let inView = false;
       const show = (key: string) => {
         examples.querySelectorAll<HTMLElement>("[data-example]").forEach((tab) => {
@@ -989,14 +1015,15 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         examples.querySelectorAll<HTMLElement>("[data-panel]").forEach((panel) => {
           const active = panel.dataset.panel === key;
           panel.classList.toggle("is-hidden", !active);
-          const video = panel.querySelector("video");
-          if (!video) return;
-          if (active && inView && !reduce) {
-            video.currentTime = 0;
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
+          const size = wide.matches ? "desktop" : "mobile";
+          panel.querySelectorAll<HTMLVideoElement>("video").forEach((video) => {
+            if (active && inView && !reduce && video.dataset.size === size) {
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          });
           if (active) {
             const url = examples.querySelector("[data-example-url]");
             if (url) url.textContent = panel.dataset.url || "";
@@ -1014,10 +1041,11 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         });
       });
       // Each clip ends on its confirmation; hold it for a moment, then play the screen again.
-      examples.querySelectorAll("video").forEach((video) => {
+      wide.addEventListener("change", () => show(current));
+      examples.querySelectorAll<HTMLVideoElement>("video").forEach((video) => {
         video.addEventListener("ended", () => {
           setTimeout(() => {
-            if (inView && !video.closest(".is-hidden")) {
+            if (inView && !video.closest(".is-hidden") && video.dataset.size === (wide.matches ? "desktop" : "mobile")) {
               video.currentTime = 0;
               video.play().catch(() => {});
             }
