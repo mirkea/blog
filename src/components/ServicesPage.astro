@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Bot, Smartphone, PhoneCall, Search, Hammer, ArrowRight, Check, CalendarDays } from "lucide-react";
+import { Bot, Smartphone, PhoneCall, Search, Hammer, ArrowRight, Check, CalendarDays, Wrench, Phone, MessageCircle } from "lucide-react";
 
 export interface Props {
   lang: "ro" | "en";
@@ -10,6 +10,7 @@ const { lang } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const leadsWorkerUrl = import.meta.env.PUBLIC_LEADS_WORKER_URL || "";
 const calLink = "braescu-mircea/15min";
+const phone = { href: "+40741141095", ro: "0741 141 095", en: "+40 741 141 095" };
 
 // Romanian copy has no diacritics on purpose (Mircea's rule for anything others read).
 const copy = {
@@ -48,7 +49,13 @@ const copy = {
         name: "Aplicatii web si mobile",
         text: "Cand chiar aveti nevoie de o aplicatie, o construiesc de la prima schita la lansare: web, mobil sau amandoua. Codul si datele raman ale voastre.",
       },
+      {
+        icon: Wrench,
+        name: "Ati inceput deja o aplicatie?",
+        text: "Ati facut un prototip cu AI sau cu o alta firma si s-a blocat? Il preiau, il repar si il duc in productie, fara sa o luati de la zero.",
+      },
     ],
+    priceNote: "O prima versiune de aplicatie porneste de obicei de la 3.000 EUR. Pretul exact il stiti inainte de orice linie de cod.",
     honestTitle: "Nu orice problema cere o aplicatie",
     honest:
       "Multe firme simt ca au nevoie de o aplicatie. Uneori un formular bun, o pagina de programari sau un instrument care exista deja rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.",
@@ -92,6 +99,9 @@ const copy = {
     calText: "15 minute, online. Vedeti orele libere si rezervati pe loc.",
     calButton: "Alege o ora in calendar",
     orForm: "Sau va sun eu, in cel mult o zi lucratoare:",
+    callLabel: "Sunati-ma",
+    whatsappLabel: "WhatsApp",
+    moreDetails: "Adaugati detalii (optional)",
     fields: {
       name: "Nume",
       company: "Firma",
@@ -144,7 +154,13 @@ const copy = {
         name: "Web and mobile apps",
         text: "When you really need an app, I build it from the first sketch to launch: web, mobile or both. The code and the data stay yours.",
       },
+      {
+        icon: Wrench,
+        name: "Already started an app?",
+        text: "Built a prototype with AI or with another firm and it got stuck? I take it over, fix it and get it to production, without starting from zero.",
+      },
     ],
+    priceNote: "A first version of an app usually starts at 3.000 EUR. You know the exact price before any code is written.",
     honestTitle: "Not every problem needs an app",
     honest:
       "Many businesses feel they need an app. Sometimes a good form, a booking page or a tool that already exists solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
@@ -188,6 +204,9 @@ const copy = {
     calText: "15 minutes, online. See the free slots and book on the spot.",
     calButton: "Pick a time in my calendar",
     orForm: "Or I call you, within one working day:",
+    callLabel: "Call me",
+    whatsappLabel: "WhatsApp",
+    moreDetails: "Add details (optional)",
     fields: {
       name: "Name",
       company: "Company",
@@ -214,7 +233,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
 <Layout title={copy.title} description={copy.description} lang={lang}>
   <div class="services-page">
-    <!-- Hero: copy left, the Carvuu phone right -->
+    <!-- Hero: copy left, a phone right. PLACEHOLDER: Carvuu screen until the fictional SMB app mock replaces it -->
     <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
       <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
       <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
@@ -234,8 +253,9 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </div>
           <h1 class="text-4xl leading-[1.05] font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100">
             <span class="block">{copy.h1a}</span>
-            <span class="relative mt-2 inline-block text-zinc-500 dark:text-zinc-400">
+            <span class="relative mt-2 inline-block">
               {copy.h1b}
+              <span class="hero-underline absolute -bottom-1 left-0 h-1.5 w-full origin-left bg-zinc-900 dark:bg-zinc-100"></span>
             </span>
           </h1>
           <p class="mt-6 max-w-xl text-lg leading-relaxed text-zinc-600 sm:text-xl dark:text-zinc-400">
@@ -281,10 +301,6 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               />
             </div>
           </div>
-          <div class="chip absolute top-10 -left-6 rounded-lg border border-zinc-200 bg-white px-4 py-3 shadow-xl sm:-left-14 dark:border-zinc-700 dark:bg-zinc-800">
-            <p class="font-mono text-2xl leading-none font-bold text-zinc-900 dark:text-zinc-100">32</p>
-            <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">honks</p>
-          </div>
           <div class="chip chip-late absolute -right-4 bottom-12 rounded-lg bg-zinc-900 px-4 py-3 text-sm font-medium text-zinc-100 shadow-xl sm:-right-10 dark:bg-zinc-100 dark:text-zinc-900">
             {copy.phoneChip}
           </div>
@@ -292,15 +308,25 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       </div>
     </section>
 
-    <!-- Services -->
+    <!-- Honest note -->
     <section class="reveal py-14 sm:py-20">
+      <p class="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
+        {copy.honestTitle}
+      </p>
+      <p class="text-2xl leading-snug font-semibold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
+        {copy.honest}
+      </p>
+    </section>
+
+    <!-- Services -->
+    <section class="reveal pb-14 sm:pb-20">
       <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
         {copy.servicesTitle}
       </h2>
       <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
         {
           copy.services.map((service, index) => (
-            <div class="lift group relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-7 dark:border-zinc-700 dark:bg-zinc-800/60">
+            <div class={`lift group relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-7 dark:border-zinc-700 dark:bg-zinc-800/60 ${index === 2 ? "sm:col-span-2" : ""}`}>
               <span class="pointer-events-none absolute -top-6 -right-2 font-mono text-[7rem] leading-none font-bold text-zinc-100 transition-colors duration-300 group-hover:text-zinc-200 dark:text-zinc-800 dark:group-hover:text-zinc-700">
                 {index + 1}
               </span>
@@ -315,16 +341,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           ))
         }
       </div>
-    </section>
-
-    <!-- Honest note -->
-    <section class="reveal pb-14 sm:pb-20">
-      <p class="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
-        {copy.honestTitle}
-      </p>
-      <p class="text-2xl leading-snug font-semibold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
-        {copy.honest}
-      </p>
+      <p class="mt-6 text-zinc-600 dark:text-zinc-400">{copy.priceNote}</p>
     </section>
 
     <!-- Savings calculator: same math as the internal pricer (hours x hourly cost x 48 weeks) -->
@@ -522,6 +539,25 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </a>
         </div>
 
+        <div class="mb-10 grid grid-cols-2 gap-3">
+          <a
+            href={`tel:${phone.href}`}
+            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
+          >
+            <Phone size={18} />
+            <span>{copy.callLabel}<span class="hidden sm:inline">: {phone[lang]}</span></span>
+          </a>
+          <a
+            href={`https://wa.me/${phone.href.slice(1)}`}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
+          >
+            <MessageCircle size={18} />
+            {copy.whatsappLabel}
+          </a>
+        </div>
+
         <p class="mb-6 font-medium text-zinc-900 dark:text-zinc-100">{copy.orForm}</p>
 
         <form
@@ -540,45 +576,53 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             <input id="lead-name" name="name" type="text" autocomplete="name" required class={inputClass} />
           </div>
           <div>
-            <label for="lead-company" class={labelClass}>{copy.fields.company}</label>
-            <input id="lead-company" name="company" type="text" autocomplete="organization" class={inputClass} />
-          </div>
-          <div>
             <label for="lead-phone" class={labelClass}>{copy.fields.phone}</label>
             <input id="lead-phone" name="phone" type="tel" autocomplete="tel" required class={inputClass} />
           </div>
-          <div>
-            <label for="lead-email" class={labelClass}>{copy.fields.email}</label>
-            <input id="lead-email" name="email" type="email" autocomplete="email" class={inputClass} />
-          </div>
-          <fieldset class="sm:col-span-2">
-            <legend class={labelClass}>{copy.fields.interest}</legend>
-            <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
-              {
-                copy.fields.interestOptions.map((option, index) => (
-                  <label class="interest-option flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-4 text-zinc-700 transition-colors duration-200 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-300">
-                    <input
-                      type="radio"
-                      name="interest"
-                      value={option}
-                      checked={index === 2}
-                      class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100"
-                    />
-                    {option}
-                  </label>
-                ))
-              }
+          <details class="details group sm:col-span-2">
+            <summary class="flex min-h-[44px] cursor-pointer list-none items-center gap-2 font-medium text-zinc-700 dark:text-zinc-300">
+              <span class="details-plus inline-block w-4 text-center font-mono">+</span>
+              {copy.moreDetails}
+            </summary>
+            <div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div>
+              <label for="lead-company" class={labelClass}>{copy.fields.company}</label>
+              <input id="lead-company" name="company" type="text" autocomplete="organization" class={inputClass} />
             </div>
-          </fieldset>
-          <div class="sm:col-span-2">
-            <label for="lead-message" class={labelClass}>{copy.fields.message}</label>
-            <textarea
-              id="lead-message"
-              name="message"
-              rows="4"
-              placeholder={copy.fields.messagePlaceholder}
-              class={inputClass}></textarea>
-          </div>
+            <div>
+              <label for="lead-email" class={labelClass}>{copy.fields.email}</label>
+              <input id="lead-email" name="email" type="email" autocomplete="email" class={inputClass} />
+            </div>
+            <fieldset class="sm:col-span-2">
+              <legend class={labelClass}>{copy.fields.interest}</legend>
+              <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
+                {
+                  copy.fields.interestOptions.map((option, index) => (
+                    <label class="interest-option flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-4 text-zinc-700 transition-colors duration-200 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-300">
+                      <input
+                        type="radio"
+                        name="interest"
+                        value={option}
+                        checked={index === 2}
+                        class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100"
+                      />
+                      {option}
+                    </label>
+                  ))
+                }
+              </div>
+            </fieldset>
+            <div class="sm:col-span-2">
+              <label for="lead-message" class={labelClass}>{copy.fields.message}</label>
+              <textarea
+                id="lead-message"
+                name="message"
+                rows="4"
+                placeholder={copy.fields.messagePlaceholder}
+                class={inputClass}></textarea>
+            </div>
+            </div>
+          </details>
           <input type="hidden" name="hours_per_week" id="lead-hours" />
           <input type="hidden" name="hourly_cost" id="lead-rate" />
           <input type="hidden" name="yearly_savings" id="lead-savings" />
@@ -636,6 +680,14 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     accent-color: #18181b;
   }
 
+  .details[open] .details-plus {
+    transform: rotate(45deg);
+  }
+
+  .details-plus {
+    transition: transform 0.2s ease;
+  }
+
   .interest-option:has(input:checked) {
     border-color: currentColor;
   }
@@ -667,6 +719,15 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     50% {
       transform: rotate(3deg) translateY(-10px);
     }
+  }
+
+  .hero-underline {
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+  }
+
+  .is-visible .hero-underline {
+    transform: scaleX(1);
   }
 
   .chip {
@@ -715,7 +776,8 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
   @media (prefers-reduced-motion: reduce) {
     .reveal,
-    .chip {
+    .chip,
+    .hero-underline {
       opacity: 1;
       transform: none;
       transition: none;
