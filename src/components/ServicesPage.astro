@@ -110,7 +110,7 @@ const copy = {
     ],
     honestTitle: "Nu orice problema cere o aplicatie",
     honest:
-      'Multe firme simt ca au nevoie de o aplicatie. Uneori <mark>un formular bun, o pagina de programari sau un instrument care exista deja</mark> rezolva aceeasi problema <strong>mai repede si mai ieftin</strong>. Daca asa e, <u>va spun din primul apel</u>.',
+      'Multe firme simt ca au nevoie de o aplicatie. Uneori <mark>un formular bun, o pagina de programari sau un instrument care exista deja</mark> rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.',
     calcTitle: "Cat va costa munca repetitiva?",
     calcLead:
       "Ganditi-va la ce se repeta in fiecare saptamana: emailuri, oferte, facturi, programari, postari, date copiate dintr-un loc in altul.",
@@ -279,7 +279,7 @@ const copy = {
     ],
     honestTitle: "Not every problem needs an app",
     honest:
-      "Many businesses feel they need an app. Sometimes <mark>a good form, a booking page or a tool that already exists</mark> solves the same problem <strong>faster and for less</strong>. If that's the case, <u>I'll tell you on the first call</u>.",
+      "Many businesses feel they need an app. Sometimes <mark>a good form, a booking page or a tool that already exists</mark> solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
     calcTitle: "What does repetitive work cost you?",
     calcLead:
       "Think of what repeats every week: email, quotes, invoices, bookings, posts, data copied from one place to another.",
@@ -569,7 +569,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       <p class="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
         {copy.honestTitle}
       </p>
-      <p class="honest text-2xl leading-snug font-medium tracking-tight text-zinc-500 sm:text-3xl dark:text-zinc-400" set:html={copy.honest} />
+      <p class="honest text-2xl leading-snug font-semibold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100" set:html={copy.honest} />
     </section>
 
     <!-- Services -->
@@ -1031,19 +1031,6 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     border-radius: 0.2em;
     box-decoration-break: clone;
     -webkit-box-decoration-break: clone;
-  }
-  .honest :global(strong) {
-    color: #18181b;
-    font-weight: 700;
-  }
-  .honest :global(u) {
-    color: #18181b;
-    text-decoration-thickness: 3px;
-    text-underline-offset: 5px;
-  }
-  :global(.dark) .honest :global(strong),
-  :global(.dark) .honest :global(u) {
-    color: #f4f4f5;
   }
 
   .reveal {
