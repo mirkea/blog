@@ -1,0 +1,571 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Bot, Smartphone, PhoneCall, Search, Hammer } from "lucide-react";
+
+export interface Props {
+  lang: "ro" | "en";
+}
+
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const leadsWorkerUrl = import.meta.env.PUBLIC_LEADS_WORKER_URL || "";
+
+// Romanian copy has no diacritics on purpose (Mircea's rule for anything others read).
+const copy = {
+  ro: {
+    title: "AI si aplicatii pentru firme mici | Mircea Braescu",
+    description:
+      "Va spun sincer ce merita construit in firma voastra: o aplicatie web sau mobila, un instrument AI sau nimic nou. Primul apel de 15 minute e gratuit.",
+    switchLabel: "English",
+    switchHref: `${base}en/services`,
+    eyebrow: "AI si aplicatii pentru firme mici",
+    h1a: "Aveti nevoie de o aplicatie?",
+    h1b: "Sau doar de mai putina munca manuala?",
+    lead: "Va spun sincer ce merita construit in firma voastra: o aplicatie web sau mobila, un instrument AI sau nimic nou. Primul apel, de 15 minute, e gratuit.",
+    cta: "Programeaza apelul gratuit",
+    ctaSecondary: "Cum lucrez",
+    servicesTitle: "Cu ce va pot ajuta",
+    services: [
+      {
+        icon: Bot,
+        name: "AI in firma voastra",
+        text: "Gasim orele pierdute pe emailuri, oferte, facturi si postari, apoi le automatizam cu instrumente care exista deja. Va arat cum sa le folositi, ca sa nu depindeti de mine.",
+      },
+      {
+        icon: Smartphone,
+        name: "Aplicatii web si mobile",
+        text: "Cand chiar aveti nevoie de o aplicatie, o construiesc de la prima schita la lansare: web, mobil sau amandoua. Codul si datele raman ale voastre.",
+      },
+    ],
+    honestTitle: "Nu orice problema cere o aplicatie",
+    honest:
+      "Multe firme simt ca au nevoie de o aplicatie. Uneori un formular bun, o pagina de programari sau un instrument care exista deja rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.",
+    calcTitle: "Cat va costa munca repetitiva?",
+    calcLead:
+      "Ganditi-va la ce se repeta in fiecare saptamana: emailuri, oferte, facturi, programari, postari, date copiate dintr-un loc in altul.",
+    calcHours: "Ore pe saptamana in toata echipa",
+    calcRate: "Cat costa o ora de lucru",
+    calcCurrency: "lei",
+    calcRateDefault: 100,
+    calcLocale: "ro-RO",
+    calcResult: "Ati putea economisi pana la",
+    calcPerYear: "pe an",
+    calcNote: "Calcul: ore pe saptamana x cost pe ora x 48 de saptamani lucratoare. In apel vedem cat din aceste ore se poate automatiza.",
+    calcCta: "Vreau sa vad ce se poate automatiza",
+    stepsTitle: "Cum lucrez",
+    steps: [
+      {
+        icon: PhoneCall,
+        name: "Apel gratuit, 15 minute",
+        text: "Imi spuneti ce vreti sa rezolvati. Va spun daca va pot ajuta si cum.",
+      },
+      {
+        icon: Search,
+        name: "Analiza",
+        text: "Ne uitam impreuna la cum lucrati azi si stabilim ce merita facut, cu un pret fix inainte de orice cod.",
+      },
+      {
+        icon: Hammer,
+        name: "Construim",
+        text: "Livrez pe etape si vedeti fiecare pas. La final primiti tot: aplicatia, codul si instructiunile.",
+      },
+    ],
+    aboutTitle: "Cine sunt",
+    about:
+      "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o aplicatie care dura luni cu o echipa intreaga o pot livra singur in cateva saptamani.",
+    aboutLink: "Mai multe despre mine",
+    formTitle: "Programeaza apelul gratuit",
+    formLead: "Lasati-mi datele si va sun in cel mult o zi lucratoare.",
+    fields: {
+      name: "Nume",
+      company: "Firma",
+      phone: "Telefon",
+      email: "Email",
+      interest: "Ce va intereseaza",
+      interestOptions: ["AI in firma", "O aplicatie web sau mobila", "Nu stiu inca"],
+      message: "Ce vreti sa rezolvati?",
+      messagePlaceholder: "De exemplu: pierdem mult timp cu programarile la telefon",
+    },
+    consent: "Folosesc datele doar ca sa va contactez despre aceasta cerere.",
+    submit: "Trimite",
+    sending: "Se trimite...",
+    success: "Multumesc! Va sun in cel mult o zi lucratoare.",
+    error: "Nu s-a putut trimite. Scrieti-mi direct la contact@mirkea.com.",
+    mailSubject: "Apel gratuit",
+  },
+  en: {
+    title: "AI and apps for small businesses | Mircea Braescu",
+    description:
+      "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new. The first 15-minute call is free.",
+    switchLabel: "Romana",
+    switchHref: `${base}servicii`,
+    eyebrow: "AI and apps for small businesses",
+    h1a: "Do you need an app?",
+    h1b: "Or just less manual work?",
+    lead: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new. The first call, 15 minutes, is free.",
+    cta: "Book the free call",
+    ctaSecondary: "How I work",
+    servicesTitle: "How I can help",
+    services: [
+      {
+        icon: Bot,
+        name: "AI in your business",
+        text: "We find the hours lost to email, quotes, invoices and posts, then automate them with tools that already exist. I show you how to run them, so you don't depend on me.",
+      },
+      {
+        icon: Smartphone,
+        name: "Web and mobile apps",
+        text: "When you really need an app, I build it from the first sketch to launch: web, mobile or both. The code and the data stay yours.",
+      },
+    ],
+    honestTitle: "Not every problem needs an app",
+    honest:
+      "Many businesses feel they need an app. Sometimes a good form, a booking page or a tool that already exists solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
+    calcTitle: "What does repetitive work cost you?",
+    calcLead:
+      "Think of what repeats every week: email, quotes, invoices, bookings, posts, data copied from one place to another.",
+    calcHours: "Hours per week, whole team",
+    calcRate: "Cost of one working hour",
+    calcCurrency: "EUR",
+    calcRateDefault: 25,
+    calcLocale: "en-GB",
+    calcResult: "You could save up to",
+    calcPerYear: "a year",
+    calcNote: "Math: hours per week x cost per hour x 48 working weeks. On the call we look at how many of those hours can be automated.",
+    calcCta: "Show me what can be automated",
+    stepsTitle: "How I work",
+    steps: [
+      {
+        icon: PhoneCall,
+        name: "Free call, 15 minutes",
+        text: "You tell me what you want to solve. I tell you whether I can help and how.",
+      },
+      {
+        icon: Search,
+        name: "Assessment",
+        text: "We look at how you work today and agree on what's worth doing, at a fixed price, before any code.",
+      },
+      {
+        icon: Hammer,
+        name: "Build",
+        text: "I deliver in stages and you see every step. At the end you get everything: the app, the code and the instructions.",
+      },
+    ],
+    aboutTitle: "Who I am",
+    about:
+      "I'm Mircea Braescu. 20 years in software and 10 in product management: delivery PM on verified.eu, a B2B platform acquired for 31M EUR, then CPO at a product studio. I work with AI every day, so an app that used to take a team months I can deliver on my own in a few weeks.",
+    aboutLink: "More about me",
+    formTitle: "Book the free call",
+    formLead: "Leave your details and I'll call you within one working day.",
+    fields: {
+      name: "Name",
+      company: "Company",
+      phone: "Phone",
+      email: "Email",
+      interest: "What are you interested in",
+      interestOptions: ["AI in my business", "A web or mobile app", "Not sure yet"],
+      message: "What do you want to solve?",
+      messagePlaceholder: "For example: we lose a lot of time booking appointments by phone",
+    },
+    consent: "I use your details only to contact you about this request.",
+    submit: "Send",
+    sending: "Sending...",
+    success: "Thank you! I'll call you within one working day.",
+    error: "It couldn't be sent. Write to me directly at contact@mirkea.com.",
+    mailSubject: "Free call",
+  },
+}[lang];
+
+const inputClass =
+  "w-full rounded-md border border-zinc-200 bg-white px-3 py-2.5 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-100 dark:focus:ring-zinc-100";
+const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300";
+---
+
+<Layout title={copy.title} description={copy.description} lang={lang}>
+  <div class="services-page">
+    <div class="mb-6 flex justify-end">
+      <a
+        href={copy.switchHref}
+        hreflang={lang === "ro" ? "en" : "ro"}
+        class="text-sm font-medium text-zinc-500 underline-offset-4 hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-100"
+      >
+        {copy.switchLabel}
+      </a>
+    </div>
+
+    <!-- Hero -->
+    <section class="reveal pb-14 sm:pb-20">
+      <p class="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
+        {copy.eyebrow}
+      </p>
+      <h1
+        class="text-3xl font-extrabold tracking-tight text-zinc-900 sm:text-4xl md:text-5xl dark:text-zinc-100"
+      >
+        <span class="block">{copy.h1a}</span>
+        <span class="relative mt-1 inline-block">
+          {copy.h1b}
+          <span
+            class="hero-underline absolute -bottom-1 left-0 h-1 w-full origin-left bg-zinc-800 dark:bg-zinc-200"
+          ></span>
+        </span>
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
+        {copy.lead}
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
+        <a
+          href="#call"
+          class="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-zinc-100 transition-colors duration-200 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        >
+          {copy.cta}
+        </a>
+        <a
+          href="#how"
+          class="inline-flex min-h-[44px] items-center justify-center text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+        >
+          {copy.ctaSecondary}
+        </a>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="reveal border-t border-zinc-100 py-12 sm:py-16 dark:border-zinc-800">
+      <h2 class="mb-8 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
+        {copy.servicesTitle}
+      </h2>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {
+          copy.services.map((service) => (
+            <div class="rounded-md border border-zinc-200 bg-white p-6 transition-shadow duration-300 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-800/50">
+              <div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                <service.icon size={20} />
+              </div>
+              <h3 class="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">{service.name}</h3>
+              <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">{service.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Honest note -->
+    <section class="reveal py-4 sm:py-6">
+      <div class="rounded-md bg-zinc-50 p-6 sm:p-8 dark:bg-zinc-800/40">
+        <h2 class="mb-3 text-xl font-bold text-zinc-900 sm:text-2xl dark:text-zinc-100">
+          {copy.honestTitle}
+        </h2>
+        <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.honest}</p>
+      </div>
+    </section>
+
+    <!-- Savings calculator: same math as the internal pricer (hours x hourly cost x 48 weeks) -->
+    <section id="savings" class="reveal scroll-mt-24 py-12 sm:py-16">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
+        {copy.calcTitle}
+      </h2>
+      <p class="mb-8 max-w-xl text-zinc-600 dark:text-zinc-400">{copy.calcLead}</p>
+      <div
+        id="savings-calc"
+        class="grid grid-cols-1 gap-8 rounded-md border border-zinc-200 bg-white p-6 sm:grid-cols-2 sm:p-8 dark:border-zinc-700 dark:bg-zinc-800/50"
+        data-currency={copy.calcCurrency}
+        data-locale={copy.calcLocale}
+      >
+        <div class="flex flex-col gap-6">
+          <div>
+            <div class="mb-2 flex items-baseline justify-between gap-4">
+              <label for="calc-hours" class={labelClass}>{copy.calcHours}</label>
+              <output id="calc-hours-out" for="calc-hours" class="font-mono text-lg font-semibold text-zinc-900 dark:text-zinc-100">10</output>
+            </div>
+            <input id="calc-hours" type="range" min="1" max="60" step="1" value="10" class="w-full cursor-pointer accent-zinc-900 dark:accent-zinc-100" />
+          </div>
+          <div>
+            <label for="calc-rate" class={labelClass}>{copy.calcRate}</label>
+            <div class="flex items-center gap-2">
+              <input id="calc-rate" type="number" inputmode="decimal" min="0" step="5" value={copy.calcRateDefault} class={inputClass} />
+              <span class="text-zinc-600 dark:text-zinc-400">{copy.calcCurrency}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col justify-between gap-6">
+          <div>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.calcResult}</p>
+            <p class="mt-1 text-4xl font-extrabold tracking-tight text-zinc-900 tabular-nums sm:text-5xl dark:text-zinc-100">
+              <span id="calc-result">0</span>
+              <span class="text-2xl font-bold sm:text-3xl">{copy.calcCurrency}</span>
+            </p>
+            <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.calcPerYear}</p>
+          </div>
+          <a
+            href="#call"
+            id="calc-cta"
+            class="inline-flex min-h-[48px] items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-zinc-100 transition-colors duration-200 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          >
+            {copy.calcCta}
+          </a>
+        </div>
+        <p class="text-xs leading-relaxed text-zinc-500 sm:col-span-2 dark:text-zinc-400">{copy.calcNote}</p>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section id="how" class="reveal scroll-mt-24 py-12 sm:py-16">
+      <h2 class="mb-8 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
+        {copy.stepsTitle}
+      </h2>
+      <ol class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
+        {
+          copy.steps.map((step, index) => (
+            <li>
+              <div class="mb-3 flex items-center gap-3">
+                <span class="font-mono text-3xl font-bold text-zinc-300 dark:text-zinc-600">
+                  {index + 1}
+                </span>
+                <step.icon size={20} class="text-zinc-700 dark:text-zinc-300" />
+              </div>
+              <h3 class="mb-2 font-semibold text-zinc-900 dark:text-zinc-100">{step.name}</h3>
+              <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- About -->
+    <section class="reveal border-t border-zinc-100 py-12 sm:py-16 dark:border-zinc-800">
+      <div class="flex flex-col items-start gap-6 sm:flex-row sm:gap-8">
+        <img
+          src={`${base}profile.webp`}
+          alt="Mircea Braescu"
+          width="112"
+          height="112"
+          class="h-28 w-28 shrink-0 rounded-full object-cover"
+          loading="lazy"
+        />
+        <div>
+          <h2 class="mb-3 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            {copy.aboutTitle}
+          </h2>
+          <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.about}</p>
+          <a
+            href={`${base}about`}
+            class="mt-4 inline-flex min-h-[44px] items-center text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+          >
+            {copy.aboutLink}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section id="call" class="reveal scroll-mt-24 border-t border-zinc-100 py-12 sm:py-16 dark:border-zinc-800">
+      <h2 class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">
+        {copy.formTitle}
+      </h2>
+      <p class="mb-8 text-zinc-600 dark:text-zinc-400">{copy.formLead}</p>
+
+      <form
+        id="lead-form"
+        class="grid grid-cols-1 gap-5 sm:grid-cols-2"
+        data-endpoint={leadsWorkerUrl}
+        data-lang={lang}
+        data-sending={copy.sending}
+        data-success={copy.success}
+        data-error={copy.error}
+        data-mail-subject={copy.mailSubject}
+        novalidate
+      >
+        <div>
+          <label for="lead-name" class={labelClass}>{copy.fields.name}</label>
+          <input id="lead-name" name="name" type="text" autocomplete="name" required class={inputClass} />
+        </div>
+        <div>
+          <label for="lead-company" class={labelClass}>{copy.fields.company}</label>
+          <input id="lead-company" name="company" type="text" autocomplete="organization" class={inputClass} />
+        </div>
+        <div>
+          <label for="lead-phone" class={labelClass}>{copy.fields.phone}</label>
+          <input id="lead-phone" name="phone" type="tel" autocomplete="tel" required class={inputClass} />
+        </div>
+        <div>
+          <label for="lead-email" class={labelClass}>{copy.fields.email}</label>
+          <input id="lead-email" name="email" type="email" autocomplete="email" class={inputClass} />
+        </div>
+        <fieldset class="sm:col-span-2">
+          <legend class={labelClass}>{copy.fields.interest}</legend>
+          <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-6">
+            {
+              copy.fields.interestOptions.map((option, index) => (
+                <label class="flex min-h-[44px] cursor-pointer items-center gap-2 text-zinc-700 dark:text-zinc-300">
+                  <input
+                    type="radio"
+                    name="interest"
+                    value={option}
+                    checked={index === 2}
+                    class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100"
+                  />
+                  {option}
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+        <div class="sm:col-span-2">
+          <label for="lead-message" class={labelClass}>{copy.fields.message}</label>
+          <textarea
+            id="lead-message"
+            name="message"
+            rows="4"
+            placeholder={copy.fields.messagePlaceholder}
+            class={inputClass}></textarea>
+        </div>
+        <input type="hidden" name="hours_per_week" id="lead-hours" />
+        <input type="hidden" name="hourly_cost" id="lead-rate" />
+        <input type="hidden" name="yearly_savings" id="lead-savings" />
+        <!-- Honeypot: real people never see or fill this -->
+        <div class="hidden" aria-hidden="true">
+          <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.consent}</p>
+          <button
+            type="submit"
+            class="inline-flex min-h-[48px] cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-8 py-3 text-base font-medium text-zinc-100 transition-colors duration-200 hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          >
+            {copy.submit}
+          </button>
+        </div>
+        <p id="lead-status" role="status" class="text-base font-medium text-zinc-900 sm:col-span-2 dark:text-zinc-100"></p>
+      </form>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-underline {
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+  }
+
+  .is-visible .hero-underline {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .hero-underline {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  function setupServicesPage() {
+    const sections = document.querySelectorAll(".services-page .reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      sections.forEach((section) => observer.observe(section));
+    } else {
+      sections.forEach((section) => section.classList.add("is-visible"));
+    }
+
+    const calc = document.getElementById("savings-calc");
+    const hoursInput = document.getElementById("calc-hours") as HTMLInputElement | null;
+    const rateInput = document.getElementById("calc-rate") as HTMLInputElement | null;
+    if (calc && hoursInput && rateInput && !calc.dataset.ready) {
+      calc.dataset.ready = "true";
+      const formatter = new Intl.NumberFormat(calc.dataset.locale, { maximumFractionDigits: 0 });
+      const update = () => {
+        const hours = Number(hoursInput.value) || 0;
+        const rate = Math.max(0, Number(rateInput.value) || 0);
+        const yearly = hours * rate * 48;
+        const hoursOut = document.getElementById("calc-hours-out");
+        const result = document.getElementById("calc-result");
+        if (hoursOut) hoursOut.textContent = String(hours);
+        if (result) result.textContent = formatter.format(yearly);
+        // Carry the numbers into the form so the lead arrives with them.
+        const currency = calc.dataset.currency || "";
+        (document.getElementById("lead-hours") as HTMLInputElement).value = String(hours);
+        (document.getElementById("lead-rate") as HTMLInputElement).value = `${rate} ${currency}`;
+        (document.getElementById("lead-savings") as HTMLInputElement).value = `${formatter.format(yearly)} ${currency}`;
+      };
+      hoursInput.addEventListener("input", update);
+      rateInput.addEventListener("input", update);
+      update();
+    }
+
+    const form = document.getElementById("lead-form") as HTMLFormElement | null;
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = "true";
+
+    const status = document.getElementById("lead-status");
+    const button = form.querySelector("button[type=submit]") as HTMLButtonElement;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      data.lang = form.dataset.lang || "";
+      data.page = window.location.pathname + window.location.search;
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        // No worker configured yet: hand the lead to the visitor's mail app instead.
+        const body = Object.entries(data)
+          .filter(([key, value]) => value && key !== "website")
+          .map(([key, value]) => `${key}: ${value}`)
+          .join("\n");
+        window.location.href = `mailto:contact@mirkea.com?subject=${encodeURIComponent(form.dataset.mailSubject || "")}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      button.disabled = true;
+      if (status) status.textContent = form.dataset.sending || "";
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error(String(response.status));
+        form.reset();
+        if (status) status.textContent = form.dataset.success || "";
+        // Conversion events for analytics and, once added, the Meta pixel.
+        (window as any).umami?.track?.("lead", { lang: data.lang, interest: data.interest });
+        (window as any).fbq?.("track", "Lead");
+      } catch {
+        if (status) status.textContent = form.dataset.error || "";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupServicesPage);
+  document.addEventListener("astro:page-load", setupServicesPage);
+</script>

@@ -36,6 +36,7 @@ jobs:
         env:
           GITHUB_PAGES_SITE: https://mirkea.com/
           PUBLIC_SPOTIFY_WORKER_URL: ${{ secrets.PUBLIC_SPOTIFY_WORKER_URL }}
+          PUBLIC_LEADS_WORKER_URL: ${{ secrets.PUBLIC_LEADS_WORKER_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

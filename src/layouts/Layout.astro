@@ -11,13 +11,14 @@ import logoStrokeRaw from "../../public/logo-stroke.svg?raw";
 export interface Props {
   title: string;
   description?: string;
+  lang?: string;
 }
 
-const { title, description = "A minimalist personal blog" } = Astro.props;
+const { title, description = "A minimalist personal blog", lang = "en" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
