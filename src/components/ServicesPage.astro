@@ -1,0 +1,1324 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Bot, ArrowUpRight, Smartphone, PhoneCall, Search, Hammer, ArrowRight, Check, CalendarDays, Wrench, Phone, MessageCircle } from "lucide-react";
+
+export interface Props {
+  lang: "ro" | "en";
+}
+
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const leadsWorkerUrl = import.meta.env.PUBLIC_LEADS_WORKER_URL || "";
+const calLink = "braescu-mircea/15min";
+const phone = { href: "+40741141095", ro: "0741 141 095", en: "+40 741 141 095" };
+const linkedin = "https://www.linkedin.com/in/mircea-braescu/";
+
+// Romanian copy has no diacritics on purpose (Mircea's rule for anything others read).
+const copy = {
+  ro: {
+    title: "AI si aplicatii pentru firme mici | Mircea Braescu",
+    description:
+      "Va spun sincer ce merita construit in firma voastra: o aplicatie web sau mobila, un instrument AI sau nimic nou. Primul apel de 15 minute e gratuit.",
+    switchLabel: "English",
+    switchHref: `${base}en/services`,
+    eyebrow: "AI si aplicatii pentru firme mici",
+    h1a: "Aveti nevoie de o aplicatie?",
+    h1b: "Sau doar de mai putina",
+    h1u: "munca manuala?",
+    // ?exemplu=<key> from an ad swaps in the headline that ad promised; studio (ad A) keeps the default
+    heroes: {
+      service: { h1a: "Pierdeti ore cu oferte si facturi?", h1b: "Le", h1u: "automatizam impreuna." },
+      inchirieri: { h1a: "Ati facut deja o aplicatie cu AI?", h1b: "O facem sa", h1u: "mearga pe bune." },
+    },
+    lead: "Va spun sincer ce merita construit in firma voastra: o aplicatie web sau mobila, un instrument AI sau nimic nou. Primul apel, de 15 minute, e gratuit.",
+    cta: "Programati apelul gratuit",
+    ctaSecondary: "Cum lucrez",
+    trustWork: "Construite pe cont propriu: Carvuu, AcoMag",
+    trust: ["20 de ani in software", "Fost PM pe verified.eu, vanduta pentru 31 mil. EUR", "Raspuns in cel mult o zi lucratoare"],
+    examplesLabel: "Exemple de aplicatii",
+    examplesNote: "Firme si date inventate, ca exemplu.",
+    examplesPlay: "Porneste exemplul",
+    examples: [
+      {
+        key: "service",
+        tab: "Service",
+        name: "Nordterm, climatizare",
+        caption: "Cererile fara oferta, oferta completata si trimisa pe canalul de unde a venit: Facebook, email sau WhatsApp.",
+        url: "nordterm.ro/oferta",
+        image: "nordterm.webp",
+        video: "nordterm_send_quote.mp4",
+        mobileImage: "nordterm_mobile.webp",
+        mobileVideo: "nordterm_mobile_send_quote.mp4",
+        alt: "Aplicatia Nordterm: o oferta de 9.740 lei trimisa pe Facebook",
+      },
+      {
+        key: "studio",
+        tab: "Studio",
+        name: "Forma, pilates si fizioterapie",
+        caption: "Saptamana de clase, abonamentele care expira si locul liber dat clientei de pe lista de asteptare.",
+        url: "forma.ro/clasa",
+        image: "forma.webp",
+        video: "forma_seat_booked.mp4",
+        mobileImage: "forma_mobile.webp",
+        mobileVideo: "forma_mobile_seat_booked.mp4",
+        alt: "Aplicatia Forma: un loc la Reformer, miercuri 18:00, rezervat din lista de asteptare",
+      },
+      {
+        key: "inchirieri",
+        tab: "Inchirieri",
+        name: "Rampa, inchirieri utilaje",
+        caption: "Utilajele intarziate sus, apoi prelungirea cu noua data de retur si pretul, pentru ambele depozite.",
+        url: "rampa.ro/santier",
+        image: "rampa.webp",
+        video: "rampa_extend_rental.mp4",
+        mobileImage: "rampa_mobile.webp",
+        mobileVideo: "rampa_mobile_extend_rental.mp4",
+        alt: "Aplicatia Rampa: inchirierea unui mini excavator prelungita pana pe 3 noiembrie",
+      },
+    ],
+    servicesTitle: "Cu ce va pot ajuta",
+    services: [
+      {
+        icon: Bot,
+        name: "AI in firma voastra",
+        text: "Gasim orele pierdute pe emailuri, oferte, facturi si postari, apoi le automatizam cu instrumente care exista deja. Va arat cum sa le folositi, ca sa nu depindeti de mine.",
+      },
+      {
+        icon: Smartphone,
+        name: "Aplicatii web si mobile",
+        text: "Cand chiar aveti nevoie de o aplicatie, o construiesc de la prima schita la lansare: web, mobil sau amandoua. Codul si datele raman ale voastre.",
+      },
+      {
+        icon: Wrench,
+        name: "Ati facut deja o aplicatie cu AI?",
+        text: "Ati construit un prototip cu Lovable, Bolt, Cursor sau ChatGPT si s-a blocat? Il transform intr-o aplicatie care tine cu toata echipa pe ea: date sigure, conturi, plati, fara sa o luati de la zero.",
+      },
+    ],
+    priceTitle: "Preturi orientative",
+    prices: [
+      { name: "Aplicatie web, merge pe orice telefon, fara descarcare", value: "de la 3.000 EUR" },
+      { name: "Aplicatie mobila in App Store si Google Play", value: "de la 5.000 EUR" },
+      { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul lucrarii", value: "de la 500 EUR" },
+    ],
+    priceExample: "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
+    priceFoot: [
+      "Pretul exact, fix, il stiti inainte de orice linie de cod.",
+      "Platiti pe etape: primul pas e analiza, cu pret fix, iar daca nu va convine ce propun, va opriti acolo.",
+      "Fara comision pe rezervare sau pe utilizator.",
+      "Aplicatia ruleaza pe conturile firmei voastre, de obicei in jur de 40 EUR pe luna, platiti direct furnizorilor, fara adaos.",
+      "Dupa lansare, alegeti cum platiti modificarile: fiecare separat, de la 150 EUR, sau un abonament lunar de la 150 EUR, cu modificarile mici incluse, pe care il opriti oricand. Separat de gazduire.",
+    ],
+    honestTitle: "Nu orice problema cere o aplicatie",
+    honest:
+      'Multe firme simt ca au nevoie de o aplicatie. Uneori <mark>un formular bun, o pagina de programari sau un instrument care exista deja</mark> rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.',
+    calcTitle: "Cat va costa munca repetitiva?",
+    calcLead:
+      "Ganditi-va la ce se repeta in fiecare saptamana: emailuri, oferte, facturi, programari, postari, date copiate dintr-un loc in altul.",
+    calcHours: "Ore pe saptamana in toata echipa",
+    calcRate: "Cat costa o ora de lucru",
+    calcCurrency: "lei",
+    calcRateDefault: 150,
+    calcLocale: "ro-RO",
+    calcResult: "Munca repetitiva va costa acum",
+    calcPerYear: "pe an",
+    calcNote: "Calcul: ore pe saptamana x cost pe ora x 48 de saptamani lucratoare. In apel vedem cat din aceste ore se poate automatiza.",
+    calcCta: "Vreau sa vad ce se poate automatiza",
+    stepsTitle: "Cum lucrez",
+    steps: [
+      {
+        icon: PhoneCall,
+        name: "Apel gratuit",
+        time: "15 minute",
+        you: "Timpul vostru: 15 minute",
+        text: "Imi spuneti ce vreti sa rezolvati. Va spun daca va pot ajuta si cum.",
+      },
+      {
+        icon: Search,
+        name: "Analiza",
+        time: "2-5 zile",
+        you: "Timpul vostru: o ora de discutie si cateva raspunsuri",
+        text: "Ma uit la cum lucrati azi si stabilim ce merita facut, cu un pret fix inainte de orice cod.",
+      },
+      {
+        icon: Hammer,
+        name: "Construim",
+        time: "2-4 saptamani",
+        you: "Timpul vostru: cate o privire pe fiecare etapa",
+        text: "Livrez pe etape si vedeti fiecare pas. La final primiti tot: aplicatia, codul si instructiunile.",
+      },
+    ],
+    aboutTitle: "Cine sunt",
+    about:
+      "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o aplicatie care dura luni cu o echipa intreaga o pot livra singur in cateva saptamani.",
+    projectsLead: "In echipe am livrat mult mai multe. Pe cont propriu am construit:",
+    projects: [
+      { name: "Carvuu", url: "https://carvuu.com", text: "aplicatie mobila de social media pentru masina ta, de la idee la productie in 2 luni" },
+      { name: "AcoMag", url: "https://acomag.ro", text: "magazin online de suruburi si accesorii pentru acoperis, prima versiune lansata in mai putin de o luna, merge de peste doi ani" },
+    ],
+    aboutLink: "Mai multe despre mine",
+    linkedinLabel: "LinkedIn",
+    formTitle: "Programati apelul gratuit",
+    formLead: "Alegeti singuri o ora din calendar sau lasati-mi datele si va sun eu.",
+    calTitle: "Alegeti o ora direct",
+    calText: "15 minute, online. Vedeti orele libere si rezervati pe loc.",
+    calButton: "Alegeti o ora in calendar",
+    orForm: "Sau va sun eu, in cel mult o zi lucratoare:",
+    callLabel: "Sunati-ma",
+    whatsappLabel: "WhatsApp",
+    moreDetails: "Adaugati detalii (optional)",
+    fields: {
+      name: "Nume",
+      company: "Firma",
+      phone: "Telefon",
+      email: "Email",
+      interest: "Ce va intereseaza",
+      interestOptions: ["AI in firma", "O aplicatie web sau mobila", "Nu stiu inca"],
+      message: "Ce vreti sa rezolvati?",
+      messagePlaceholder: "De exemplu: pierdem mult timp cu programarile la telefon",
+    },
+    safety:
+      "Lucrez din Bucuresti, in UE, conform GDPR. Codul, datele si conturile sunt pe numele firmei voastre, iar daca eu nu mai sunt disponibil, aveti tot ce ii trebuie altui programator ca sa continue. Facturez prin MIRKEA INTERACTIVE S.R.L., CUI 50876040.",
+    consent: "Folosesc datele doar ca sa va contactez despre aceasta cerere.",
+    submit: "Trimite",
+    sending: "Se trimite...",
+    success: "Multumesc! Va sun in cel mult o zi lucratoare.",
+    error: "Nu s-a putut trimite. Scrieti-mi direct la contact@mirkea.com.",
+    mailSubject: "Apel gratuit",
+  },
+  en: {
+    title: "AI and apps for small businesses | Mircea Braescu",
+    description:
+      "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new. The first 15-minute call is free.",
+    switchLabel: "Romana",
+    switchHref: `${base}servicii`,
+    eyebrow: "AI and apps for small businesses",
+    h1a: "Do you need an app?",
+    h1b: "Or just less",
+    h1u: "manual work?",
+    heroes: {
+      service: { h1a: "Losing hours to quotes and invoices?", h1b: "Let's", h1u: "automate them." },
+      inchirieri: { h1a: "Already built an app with AI?", h1b: "Let's make it", h1u: "work for real." },
+    },
+    lead: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new. The first call, 15 minutes, is free.",
+    cta: "Book the free call",
+    ctaSecondary: "How I work",
+    trustWork: "Built on my own: Carvuu, AcoMag",
+    trust: ["20 years in software", "Former PM on verified.eu, acquired for 31M EUR", "Reply within one working day"],
+    examplesLabel: "Example apps",
+    examplesNote: "Invented firms and data, as an example.",
+    examplesPlay: "Play the example",
+    examples: [
+      {
+        key: "service",
+        tab: "Service",
+        name: "Nordterm, heating and cooling",
+        caption: "Requests still waiting for a quote, the quote filled in and sent back on the channel it came from: Facebook, email or WhatsApp.",
+        url: "nordterm.ro/oferta",
+        image: "nordterm.webp",
+        video: "nordterm_send_quote.mp4",
+        mobileImage: "nordterm_mobile.webp",
+        mobileVideo: "nordterm_mobile_send_quote.mp4",
+        alt: "Nordterm app: a 9.740 lei quote sent on Facebook",
+      },
+      {
+        key: "studio",
+        tab: "Studio",
+        name: "Forma, pilates and physio",
+        caption: "The week of classes, passes about to run out, and a free seat given to the client on the waiting list.",
+        url: "forma.ro/clasa",
+        image: "forma.webp",
+        video: "forma_seat_booked.mp4",
+        mobileImage: "forma_mobile.webp",
+        mobileVideo: "forma_mobile_seat_booked.mp4",
+        alt: "Forma app: a Reformer seat on Wednesday 18:00 booked from the waiting list",
+      },
+      {
+        key: "inchirieri",
+        tab: "Rental",
+        name: "Rampa, equipment rental",
+        caption: "Late machines on top, then an extension with the new return date and the price, across both depots.",
+        url: "rampa.ro/santier",
+        image: "rampa.webp",
+        video: "rampa_extend_rental.mp4",
+        mobileImage: "rampa_mobile.webp",
+        mobileVideo: "rampa_mobile_extend_rental.mp4",
+        alt: "Rampa app: a mini excavator rental extended to 3 November",
+      },
+    ],
+    servicesTitle: "How I can help",
+    services: [
+      {
+        icon: Bot,
+        name: "AI in your business",
+        text: "We find the hours lost to email, quotes, invoices and posts, then automate them with tools that already exist. I show you how to run them, so you don't depend on me.",
+      },
+      {
+        icon: Smartphone,
+        name: "Web and mobile apps",
+        text: "When you really need an app, I build it from the first sketch to launch: web, mobile or both. The code and the data stay yours.",
+      },
+      {
+        icon: Wrench,
+        name: "Already built an app with AI?",
+        text: "Made a prototype with Lovable, Bolt, Cursor or ChatGPT and it got stuck? I turn it into an app your whole team can rely on: safe data, accounts, payments, without starting from zero.",
+      },
+    ],
+    priceTitle: "Indicative prices",
+    prices: [
+      { name: "Web app, works on any phone, no download", value: "from €3,000" },
+      { name: "Mobile app in the App Store and Google Play", value: "from €5,000" },
+      { name: "Audit of an app built with AI, deducted from the fix", value: "from €500" },
+    ],
+    priceExample: "Example: a booking and membership platform for a studio usually costs €4,000-7,000.",
+    priceFoot: [
+      "You know the exact, fixed price before any code is written.",
+      "You pay in stages: the first step is the assessment, at a fixed price, and if you don't like what I propose, you stop there.",
+      "No per-booking or per-user fees.",
+      "The app runs on your own accounts, usually around €40 a month, paid directly to the providers with no markup.",
+      "After launch, you choose how to pay for changes: each one separately, from €150, or a monthly plan from €150 with small changes included, which you can cancel anytime. Separate from hosting.",
+    ],
+    honestTitle: "Not every problem needs an app",
+    honest:
+      "Many businesses feel they need an app. Sometimes <mark>a good form, a booking page or a tool that already exists</mark> solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
+    calcTitle: "What does repetitive work cost you?",
+    calcLead:
+      "Think of what repeats every week: email, quotes, invoices, bookings, posts, data copied from one place to another.",
+    calcHours: "Hours per week, whole team",
+    calcRate: "Cost of one working hour",
+    calcCurrency: "GBP",
+    calcRateDefault: 30,
+    calcLocale: "en-GB",
+    calcResult: "Repetitive work costs you",
+    calcPerYear: "a year",
+    calcNote: "Math: hours per week x cost per hour x 48 working weeks. On the call we look at how many of those hours can be automated.",
+    calcCta: "Show me what can be automated",
+    stepsTitle: "How I work",
+    steps: [
+      {
+        icon: PhoneCall,
+        name: "Free call",
+        time: "15 minutes",
+        you: "Your time: 15 minutes",
+        text: "You tell me what you want to solve. I tell you whether I can help and how.",
+      },
+      {
+        icon: Search,
+        name: "Assessment",
+        time: "2-5 days",
+        you: "Your time: an hour's talk and a few answers",
+        text: "I look at how you work today and we agree on what's worth doing, at a fixed price, before any code.",
+      },
+      {
+        icon: Hammer,
+        name: "Build",
+        time: "2-4 weeks",
+        you: "Your time: a look at each stage",
+        text: "I deliver in stages and you see every step. At the end you get everything: the app, the code and the instructions.",
+      },
+    ],
+    aboutTitle: "Who I am",
+    about:
+      "I'm Mircea Braescu. 20 years in software and 10 in product management: delivery PM on verified.eu, a B2B platform acquired for 31M EUR, then CPO at a product studio. I work with AI every day, so an app that used to take a team months I can deliver on my own in a few weeks.",
+    projectsLead: "With teams I've shipped many more. On my own I built:",
+    projects: [
+      { name: "Carvuu", url: "https://carvuu.com", text: "a social media app for your car, from idea to production in 2 months" },
+      { name: "AcoMag", url: "https://acomag.ro", text: "an online shop for roofing screws and accessories, first version live in under a month, running for over two years" },
+    ],
+    aboutLink: "More about me",
+    linkedinLabel: "LinkedIn",
+    formTitle: "Book the free call",
+    formLead: "Pick a time in my calendar yourself, or leave your details and I'll call you.",
+    calTitle: "Pick a time now",
+    calText: "15 minutes, online. See the free slots and book on the spot.",
+    calButton: "Pick a time in my calendar",
+    orForm: "Or I call you, within one working day:",
+    callLabel: "Call me",
+    whatsappLabel: "WhatsApp",
+    moreDetails: "Add details (optional)",
+    fields: {
+      name: "Name",
+      company: "Company",
+      phone: "Phone",
+      email: "Email",
+      interest: "What are you interested in",
+      interestOptions: ["AI in my business", "A web or mobile app", "Not sure yet"],
+      message: "What do you want to solve?",
+      messagePlaceholder: "For example: we lose a lot of time booking appointments by phone",
+    },
+    safety:
+      "I work from Bucharest, in the EU, under GDPR, 2 hours ahead of the UK. Code, data and accounts are in your company's name, and if I'm ever unavailable you have everything another developer needs to carry on. Invoiced by MIRKEA INTERACTIVE S.R.L., Romania, company ID 50876040.",
+    consent: "I use your details only to contact you about this request.",
+    submit: "Send",
+    sending: "Sending...",
+    success: "Thank you! I'll call you within one working day.",
+    error: "It couldn't be sent. Write to me directly at contact@mirkea.com.",
+    mailSubject: "Free call",
+  },
+}[lang];
+
+const inputClass =
+  "w-full rounded-md border border-zinc-200 bg-white px-3 py-2.5 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-100 dark:focus:ring-zinc-100";
+const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300";
+---
+
+<Layout title={copy.title} description={copy.description} lang={lang}>
+  <div class="services-page">
+    <!-- Hero: copy, then the three example apps. Each ad links with ?exemplu=<key> to open its app first -->
+    <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
+      <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="reveal max-w-3xl">
+          <div class="mb-6 flex items-center justify-between gap-4">
+            <span class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium tracking-wide text-zinc-600 uppercase backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
+              <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-zinc-900 dark:bg-zinc-100"></span>
+              {copy.eyebrow}
+            </span>
+            <a
+              href={copy.switchHref}
+              hreflang={lang === "ro" ? "en" : "ro"}
+              class="text-sm font-medium text-zinc-500 underline-offset-4 hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-100"
+            >
+              {copy.switchLabel}
+            </a>
+          </div>
+          <h1
+            id="hero-title"
+            data-heroes={JSON.stringify(copy.heroes)}
+            class="text-[2rem] leading-[1.05] font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100"
+          >
+            <span class="block" data-h1a>{copy.h1a}</span>
+            <span class="mt-2 block">
+              <span data-h1b>{copy.h1b}</span>{" "}
+              <span class="relative inline-block whitespace-nowrap">
+                <span data-h1u>{copy.h1u}</span>
+                <span class="hero-underline absolute -bottom-1 left-0 h-1.5 w-full origin-left bg-zinc-900 dark:bg-zinc-100"></span>
+              </span>
+            </span>
+          </h1>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-zinc-600 sm:mt-6 sm:text-xl dark:text-zinc-400">
+            {copy.lead}
+          </p>
+          <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
+            <a
+              href="#call"
+              class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-900 px-7 py-3 text-base font-semibold text-zinc-100 shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            >
+              {copy.cta}
+              <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+            <div class="grid grid-cols-2 gap-3 sm:flex">
+              <a
+                href={`tel:${phone.href}`}
+                data-umami-event="hero-call"
+                class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-4 text-sm font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+              >
+                <Phone size={16} />
+                {copy.callLabel}
+              </a>
+              <a
+                href={`https://wa.me/${phone.href.slice(1)}`}
+                target="_blank"
+                rel="noopener"
+                data-umami-event="hero-whatsapp"
+                class="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-4 text-sm font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+              >
+                <MessageCircle size={16} />
+                {copy.whatsappLabel}
+              </a>
+            </div>
+          </div>
+          <a
+            href="#savings"
+            class="mt-3 inline-flex min-h-[44px] items-center text-sm font-medium text-zinc-900 underline underline-offset-4 sm:no-underline sm:hover:underline dark:text-zinc-100"
+          >
+            {copy.calcTitle}
+          </a>
+          <ul class="mt-10 hidden flex-col gap-2 text-sm text-zinc-600 sm:flex sm:flex-row sm:flex-wrap sm:gap-x-6 dark:text-zinc-400">
+            {
+              copy.trust.map((item) => (
+                <li class="flex items-center gap-2">
+                  <Check size={16} class="shrink-0 text-zinc-900 dark:text-zinc-100" />
+                  {item}
+                </li>
+              ))
+            }
+            <li class="flex items-center gap-2">
+              <span class="shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
+              <a href="#despre" class="hover:text-zinc-900 hover:underline hover:underline-offset-4 dark:hover:text-zinc-100">{copy.trustWork}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div id="examples" class="reveal mt-8 sm:mt-16" data-default={copy.examples[0].key}>
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <p class="text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.examplesLabel}</p>
+            <div class="flex flex-wrap gap-2" role="tablist" aria-label={copy.examplesLabel}>
+              {
+                copy.examples.map((example, index) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${example.key}`}
+                    aria-controls={`panel-${example.key}`}
+                    aria-selected={index === 0 ? "true" : "false"}
+                    data-example={example.key}
+                    class="example-tab min-h-[44px] cursor-pointer rounded-full border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-300 dark:hover:border-zinc-100"
+                  >
+                    {example.tab}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+          <!-- Phones: an iPhone-style frame around the portrait screens. From sm up: a browser window around the desktop ones -->
+          <div class="example-frame relative mx-auto max-w-[330px] rounded-[3rem] border-[10px] border-zinc-900 bg-zinc-900 shadow-2xl shadow-zinc-900/25 ring-1 ring-zinc-700 sm:max-w-none sm:rounded-xl sm:border sm:border-zinc-200 sm:bg-white sm:shadow-zinc-900/15 sm:ring-0 dark:sm:border-zinc-700 dark:sm:bg-zinc-900">
+            <div class="overflow-hidden rounded-[2.3rem] sm:rounded-[0.7rem]">
+            <div class="relative flex h-9 items-center justify-between bg-zinc-900 px-6 text-[13px] font-semibold text-white sm:hidden" aria-hidden="true">
+              <span>9:41</span>
+              <span class="absolute top-2 left-1/2 h-[22px] w-[88px] -translate-x-1/2 rounded-full bg-black"></span>
+              <span class="flex items-center gap-1">
+                <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1" /><rect x="4.5" y="5" width="3" height="6" rx="1" /><rect x="9" y="2.5" width="3" height="8.5" rx="1" /><rect x="13.5" y="0" width="3" height="11" rx="1" /></svg>
+                <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="3" stroke="currentColor" opacity="0.4" /><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor" /><rect x="21.5" y="3.5" width="1.5" height="4" rx="0.75" fill="currentColor" opacity="0.4" /></svg>
+              </span>
+            </div>
+            <div class="hidden items-center gap-1.5 border-b border-zinc-100 px-4 py-3 sm:flex dark:border-zinc-800">
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
+              <span class="ml-3 font-mono text-xs text-zinc-400" data-example-url>{copy.examples[0].url}</span>
+            </div>
+            <div class="relative aspect-[9/16] bg-zinc-100 sm:aspect-[16/10] dark:bg-zinc-800">
+              <!-- Shown only with "reduce motion": the clips wait for a tap instead of autoplaying -->
+              <button
+                type="button"
+                data-example-play
+                hidden
+                class="absolute bottom-4 left-1/2 z-10 inline-flex min-h-[44px] -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full bg-zinc-900/90 px-5 text-sm font-semibold text-white shadow-lg backdrop-blur hover:bg-zinc-900"
+              >
+                <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true"><path d="M0 0l12 7-12 7z" /></svg>
+                {copy.examplesPlay}
+              </button>
+              {
+                copy.examples.map((example, index) => (
+                  <div
+                    id={`panel-${example.key}`}
+                    role="tabpanel"
+                    aria-labelledby={`tab-${example.key}`}
+                    data-panel={example.key}
+                    data-url={example.url}
+                    class={`example-panel absolute inset-0 ${index === 0 ? "" : "is-hidden"}`}
+                  >
+                    <video
+                      class="hidden h-full w-full object-cover sm:block"
+                      data-size="desktop"
+                      poster={`${base}services/examples/${example.image}`}
+                      muted
+                      playsinline
+                      preload="none"
+                      aria-label={example.alt}
+                    >
+                      <source src={`${base}services/examples/${example.video}`} type="video/mp4" />
+                    </video>
+                    <video
+                      class="h-full w-full object-cover sm:hidden"
+                      data-size="mobile"
+                      poster={`${base}services/examples/${example.mobileImage}`}
+                      muted
+                      playsinline
+                      preload="none"
+                      aria-label={example.alt}
+                    >
+                      <source src={`${base}services/examples/${example.mobileVideo}`} type="video/mp4" />
+                    </video>
+                  </div>
+                ))
+              }
+            </div>
+            </div>
+          </div>
+          <p class="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            {
+              copy.examples.map((example, index) => (
+                <span data-caption={example.key} class={index === 0 ? "" : "hidden"}>
+                  <span class="font-semibold text-zinc-900 dark:text-zinc-100">{example.name}.</span> {example.caption}
+                </span>
+              ))
+            }
+            <span class="text-zinc-400"> {copy.examplesNote}</span>
+          </p>
+          <ul class="mt-6 flex flex-col gap-2 text-sm text-zinc-600 sm:hidden dark:text-zinc-400">
+            {
+              copy.trust.map((item) => (
+                <li class="flex items-center gap-2">
+                  <Check size={16} class="shrink-0 text-zinc-900 dark:text-zinc-100" />
+                  {item}
+                </li>
+              ))
+            }
+            <li class="flex items-center gap-2">
+              <span class="shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
+              <a href="#despre" class="hover:text-zinc-900 hover:underline hover:underline-offset-4 dark:hover:text-zinc-100">{copy.trustWork}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Honest note -->
+    <section class="reveal py-14 sm:py-20">
+      <p class="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
+        {copy.honestTitle}
+      </p>
+      <p class="honest text-2xl leading-snug font-semibold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100" set:html={copy.honest} />
+    </section>
+
+    <!-- Services -->
+    <section class="reveal pb-14 sm:pb-20">
+      <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
+        {copy.servicesTitle}
+      </h2>
+      <div id="services-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        {
+          copy.services.map((service, index) => (
+            <div data-service={index} class={`lift group relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-7 dark:border-zinc-700 dark:bg-zinc-800/60 ${index === 2 ? "sm:col-span-2" : ""}`}>
+              <span data-num class="pointer-events-none absolute -top-6 -right-2 font-mono text-[7rem] leading-none font-bold text-zinc-100 transition-colors duration-300 group-hover:text-zinc-200 dark:text-zinc-800 dark:group-hover:text-zinc-700">
+                {index + 1}
+              </span>
+              <div class="relative">
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">
+                  <service.icon size={22} />
+                </div>
+                <h3 class="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-100">{service.name}</h3>
+                <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">{service.text}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-8">
+        <p class="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.priceTitle}</p>
+        <dl class="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
+          {
+            copy.prices.map((price) => (
+              <div class="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                <dt class="text-zinc-700 dark:text-zinc-300">{price.name}</dt>
+                <dd class="shrink-0 font-mono text-lg font-bold text-zinc-900 dark:text-zinc-100">{price.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">{copy.priceExample}</p>
+        <ul class="mt-4 flex flex-col gap-2 text-sm text-zinc-900 dark:text-zinc-100">
+          {
+            copy.priceFoot.map((line) => (
+              <li class="flex items-start gap-2">
+                <span class="mt-0.5 shrink-0"><Check size={16} /></span>
+                <span>{line}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- Savings calculator: same math as the internal pricer (hours x hourly cost x 48 weeks) -->
+    <section id="savings" class="reveal scroll-mt-24 pb-14 sm:pb-20">
+      <div
+        id="savings-calc"
+        class="relative overflow-hidden rounded-2xl bg-zinc-900 p-7 text-zinc-100 sm:p-10 dark:bg-zinc-100 dark:text-zinc-900"
+        data-currency={copy.calcCurrency}
+        data-locale={copy.calcLocale}
+      >
+        <div class="calc-grid pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true"></div>
+        <div class="relative">
+          <h2 class="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">{copy.calcTitle}</h2>
+          <p class="mb-10 max-w-xl text-zinc-400 dark:text-zinc-600">{copy.calcLead}</p>
+          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2">
+            <div class="flex flex-col gap-8">
+              <div>
+                <div class="mb-3 flex items-baseline justify-between gap-4">
+                  <label for="calc-hours" class="text-sm font-medium text-zinc-300 dark:text-zinc-700">{copy.calcHours}</label>
+                  <output id="calc-hours-out" for="calc-hours" class="font-mono text-2xl font-bold">10</output>
+                </div>
+                <input id="calc-hours" type="range" min="1" max="60" step="1" value="10" class="calc-range w-full cursor-pointer" />
+              </div>
+              <div>
+                <label for="calc-rate" class="mb-3 block text-sm font-medium text-zinc-300 dark:text-zinc-700">{copy.calcRate}</label>
+                <div class="flex items-center gap-3">
+                  <input
+                    id="calc-rate"
+                    type="number"
+                    inputmode="decimal"
+                    min="0"
+                    step="5"
+                    value={copy.calcRateDefault}
+                    class="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2.5 font-mono text-lg text-zinc-100 focus:border-zinc-100 focus:ring-1 focus:ring-zinc-100 focus:outline-none dark:border-zinc-300 dark:bg-white dark:text-zinc-900 dark:focus:border-zinc-900 dark:focus:ring-zinc-900"
+                  />
+                  <span class="text-zinc-400 dark:text-zinc-600">{copy.calcCurrency}</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-between gap-8">
+              <div>
+                <p class="text-sm text-zinc-400 dark:text-zinc-600">{copy.calcResult}</p>
+                <p class="mt-2 text-5xl font-extrabold tracking-tight tabular-nums sm:text-6xl">
+                  <span id="calc-result">0</span>
+                  <span class="text-2xl font-bold text-zinc-400 sm:text-3xl dark:text-zinc-500">{copy.calcCurrency}</span>
+                </p>
+                <p class="mt-1 text-sm text-zinc-400 dark:text-zinc-600">{copy.calcPerYear}</p>
+              </div>
+              <a
+                href="#call"
+                id="calc-cta"
+                class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-100 px-6 py-3 text-base font-semibold text-zinc-900 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-700"
+              >
+                {copy.calcCta}
+                <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
+              </a>
+            </div>
+          </div>
+          <p class="mt-8 text-xs leading-relaxed text-zinc-500">{copy.calcNote}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section id="how" class="reveal scroll-mt-24 py-14 sm:py-20">
+      <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
+        {copy.stepsTitle}
+      </h2>
+      <ol class="relative grid grid-cols-1 items-start gap-10 sm:grid-cols-3 sm:gap-6">
+        <span class="absolute top-6 right-[16%] left-[16%] hidden h-px bg-zinc-200 sm:block dark:bg-zinc-700" aria-hidden="true"></span>
+        {
+          copy.steps.map((step, index) => (
+            <li class="relative flex flex-col items-start sm:items-center sm:text-center">
+              <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 sm:mx-auto dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
+                <step.icon size={20} />
+              </div>
+              <p class="mb-1 font-mono text-xs text-zinc-400">0{index + 1}</p>
+              <h3 class="mb-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">{step.name}</h3>
+              <p class="mb-3 inline-flex rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-semibold text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">{step.time}</p>
+              <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{step.text}</p>
+              <p class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">{step.you}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- About -->
+    <section id="despre" class="reveal scroll-mt-24 border-t border-zinc-100 py-14 sm:py-20 dark:border-zinc-800">
+      <div class="flex flex-col items-start gap-6 sm:flex-row sm:gap-10">
+        <img
+          src={`${base}profile.webp`}
+          alt="Mircea Braescu"
+          width="144"
+          height="144"
+          class="h-28 w-28 shrink-0 rounded-full object-cover ring-4 ring-zinc-100 sm:h-36 sm:w-36 dark:ring-zinc-800"
+          loading="lazy"
+        />
+        <div>
+          <h2 class="mb-3 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
+            {copy.aboutTitle}
+          </h2>
+          <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.about}</p>
+          <p class="mt-5 text-base font-medium text-zinc-900 dark:text-zinc-100">{copy.projectsLead}</p>
+          <ul class="mt-2 flex flex-col gap-2 text-base text-zinc-600 dark:text-zinc-400">
+            {
+              copy.projects.map((project) => (
+                <li>
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener"
+                    class="font-semibold text-zinc-900 underline underline-offset-4 hover:text-zinc-600 dark:text-zinc-100 dark:hover:text-zinc-300"
+                  >{project.name}</a>{`: ${project.text}`}
+                </li>
+              ))
+            }
+          </ul>
+          <a
+            href={`${base}about`}
+            class="mt-4 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+          >
+            {copy.aboutLink}
+            <ArrowRight size={16} />
+          </a>
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener"
+            class="mt-4 ml-6 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+          >
+            {copy.linkedinLabel}
+            <ArrowUpRight size={16} />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form -->
+    <section id="call" class="reveal scroll-mt-24 pb-6">
+      <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl shadow-zinc-900/5 sm:p-10 dark:border-zinc-700 dark:bg-zinc-800/60">
+        <h2 class="mb-2 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
+          {copy.formTitle}
+        </h2>
+        <p class="mb-8 text-zinc-600 dark:text-zinc-400">{copy.formLead}</p>
+
+        <div class="mb-10 flex flex-col gap-5 rounded-xl bg-zinc-900 p-6 text-zinc-100 sm:flex-row sm:items-center sm:justify-between sm:p-7 dark:bg-zinc-100 dark:text-zinc-900">
+          <div class="flex items-start gap-4">
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-zinc-800 dark:bg-zinc-200">
+              <CalendarDays size={20} />
+            </div>
+            <div>
+              <p class="text-lg font-semibold">{copy.calTitle}</p>
+              <p class="text-sm text-zinc-400 dark:text-zinc-600">{copy.calText}</p>
+            </div>
+          </div>
+          <a
+            href={`https://cal.com/${calLink}`}
+            target="_blank"
+            rel="noopener"
+            id="cal-button"
+            data-cal-link={calLink}
+            data-cal-namespace="15min"
+            data-cal-config='{"layout":"month_view"}'
+            class="group inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-lg bg-zinc-100 px-6 py-3 text-base font-semibold text-zinc-900 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-700"
+          >
+            {copy.calButton}
+            <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
+          </a>
+        </div>
+
+        <div class="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <a
+            href={`tel:${phone.href}`}
+            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
+          >
+            <Phone size={18} />
+            <span>{copy.callLabel}: {phone[lang]}</span>
+          </a>
+          <a
+            href={`https://wa.me/${phone.href.slice(1)}`}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
+          >
+            <MessageCircle size={18} />
+            {copy.whatsappLabel}
+          </a>
+        </div>
+
+        <p class="mb-6 font-medium text-zinc-900 dark:text-zinc-100">{copy.orForm}</p>
+
+        <form
+          id="lead-form"
+          class="grid grid-cols-1 gap-5 sm:grid-cols-2"
+          data-endpoint={leadsWorkerUrl}
+          data-lang={lang}
+          data-sending={copy.sending}
+          data-success={copy.success}
+          data-error={copy.error}
+          data-mail-subject={copy.mailSubject}
+          novalidate
+        >
+          <div>
+            <label for="lead-name" class={labelClass}>{copy.fields.name}</label>
+            <input id="lead-name" name="name" type="text" autocomplete="name" required class={inputClass} />
+          </div>
+          <div>
+            <label for="lead-phone" class={labelClass}>{copy.fields.phone}</label>
+            <input id="lead-phone" name="phone" type="tel" autocomplete="tel" required class={inputClass} />
+          </div>
+          <details class="details group sm:col-span-2">
+            <summary class="flex min-h-[44px] cursor-pointer list-none items-center gap-2 font-medium text-zinc-700 dark:text-zinc-300">
+              <span class="details-plus inline-block w-4 text-center font-mono">+</span>
+              {copy.moreDetails}
+            </summary>
+            <div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div>
+              <label for="lead-company" class={labelClass}>{copy.fields.company}</label>
+              <input id="lead-company" name="company" type="text" autocomplete="organization" class={inputClass} />
+            </div>
+            <div>
+              <label for="lead-email" class={labelClass}>{copy.fields.email}</label>
+              <input id="lead-email" name="email" type="email" autocomplete="email" class={inputClass} />
+            </div>
+            <fieldset class="sm:col-span-2">
+              <legend class={labelClass}>{copy.fields.interest}</legend>
+              <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
+                {
+                  copy.fields.interestOptions.map((option, index) => (
+                    <label class="interest-option flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-4 text-zinc-700 transition-colors duration-200 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-300">
+                      <input
+                        type="radio"
+                        name="interest"
+                        value={option}
+                        checked={index === 2}
+                        class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100"
+                      />
+                      {option}
+                    </label>
+                  ))
+                }
+              </div>
+            </fieldset>
+            <div class="sm:col-span-2">
+              <label for="lead-message" class={labelClass}>{copy.fields.message}</label>
+              <textarea
+                id="lead-message"
+                name="message"
+                rows="4"
+                placeholder={copy.fields.messagePlaceholder}
+                class={inputClass}></textarea>
+            </div>
+            </div>
+          </details>
+          <input type="hidden" name="hours_per_week" id="lead-hours" />
+          <input type="hidden" name="hourly_cost" id="lead-rate" />
+          <input type="hidden" name="yearly_savings" id="lead-savings" />
+          <!-- Honeypot: real people never see or fill this -->
+          <div class="hidden" aria-hidden="true">
+            <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="mb-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{copy.safety}</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.consent}</p>
+            </div>
+            <button
+              type="submit"
+              class="inline-flex min-h-[52px] cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-8 py-3 text-base font-semibold text-zinc-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            >
+              {copy.submit}
+            </button>
+          </div>
+          <p id="lead-status" role="status" class="text-base font-medium text-zinc-900 sm:col-span-2 dark:text-zinc-100"></p>
+        </form>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Wide sections break out of the blog's narrow column */
+  .bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .hero-glow {
+    background:
+      radial-gradient(40rem 24rem at 80% 30%, rgb(228 228 231 / 0.7), transparent 70%),
+      radial-gradient(30rem 20rem at 10% 90%, rgb(244 244 245 / 0.9), transparent 70%);
+  }
+
+  :global(.dark) .hero-glow {
+    background:
+      radial-gradient(40rem 24rem at 80% 30%, rgb(63 63 70 / 0.5), transparent 70%),
+      radial-gradient(30rem 20rem at 10% 90%, rgb(39 39 42 / 0.6), transparent 70%);
+  }
+
+  .calc-grid {
+    background-image:
+      linear-gradient(currentColor 1px, transparent 1px),
+      linear-gradient(90deg, currentColor 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .calc-range {
+    accent-color: #f4f4f5;
+  }
+
+  :global(.dark) .calc-range {
+    accent-color: #18181b;
+  }
+
+  .example-panel {
+    transition: opacity 0.4s ease;
+  }
+
+  .example-panel.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .example-tab[aria-selected="true"] {
+    background: var(--color-zinc-900);
+    border-color: var(--color-zinc-900);
+    color: var(--color-zinc-100);
+  }
+
+  :global(.dark) .example-tab[aria-selected="true"] {
+    background: var(--color-zinc-100);
+    border-color: var(--color-zinc-100);
+    color: var(--color-zinc-900);
+  }
+
+  .details[open] .details-plus {
+    transform: rotate(45deg);
+  }
+
+  .details-plus {
+    transition: transform 0.2s ease;
+  }
+
+  .interest-option:has(input:checked) {
+    border-color: currentColor;
+  }
+
+  .lift {
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease;
+  }
+
+  .lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgb(24 24 27 / 0.25);
+  }
+
+  /* Side buttons of the phone frame, phones only */
+  @media (max-width: 639px) {
+    .example-frame::before,
+    .example-frame::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      border-radius: 2px;
+      background: #27272a;
+    }
+    .example-frame::before {
+      left: -13px;
+      top: 110px;
+      height: 56px;
+      box-shadow: 0 -40px 0 -10px #27272a;
+    }
+    .example-frame::after {
+      right: -13px;
+      top: 140px;
+      height: 80px;
+    }
+  }
+
+  .hero-underline {
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+  }
+
+  .is-visible .hero-underline {
+    transform: scaleX(1);
+  }
+
+  .pulse-dot {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .honest :global(mark) {
+    background: #fde68a;
+    color: #18181b;
+    padding: 0 0.15em;
+    border-radius: 0.2em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .hero-underline {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .pulse-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function setupServicesPage() {
+    const sections = document.querySelectorAll(".services-page .reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      sections.forEach((section) => observer.observe(section));
+    } else {
+      sections.forEach((section) => section.classList.add("is-visible"));
+    }
+
+    const examples = document.getElementById("examples");
+    if (examples && !examples.dataset.ready) {
+      examples.dataset.ready = "true";
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const keys = [...examples.querySelectorAll<HTMLElement>("[data-panel]")].map((el) => el.dataset.panel || "");
+      const fromAd = new URLSearchParams(window.location.search).get("exemplu");
+      // Phones get the portrait screens, larger screens the desktop ones (same breakpoint as sm:).
+      const wide = window.matchMedia("(min-width: 640px)");
+      let inView = false;
+      // Reduce motion: no autoplay, but a tap plays the clip (once, no loop).
+      let started = !reduce;
+      const playButton = examples.querySelector<HTMLButtonElement>("[data-example-play]");
+      if (playButton && reduce) playButton.hidden = false;
+      playButton?.addEventListener("click", () => {
+        started = true;
+        playButton.hidden = true;
+        show(current);
+      });
+      const show = (key: string) => {
+        examples.querySelectorAll<HTMLElement>("[data-example]").forEach((tab) => {
+          tab.setAttribute("aria-selected", String(tab.dataset.example === key));
+        });
+        examples.querySelectorAll<HTMLElement>("[data-panel]").forEach((panel) => {
+          const active = panel.dataset.panel === key;
+          panel.classList.toggle("is-hidden", !active);
+          const size = wide.matches ? "desktop" : "mobile";
+          panel.querySelectorAll<HTMLVideoElement>("video").forEach((video) => {
+            if (active && (inView || reduce) && started && video.dataset.size === size) {
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          });
+          if (active) {
+            const url = examples.querySelector("[data-example-url]");
+            if (url) url.textContent = panel.dataset.url || "";
+          }
+        });
+        examples.querySelectorAll<HTMLElement>("[data-caption]").forEach((caption) => {
+          caption.classList.toggle("hidden", caption.dataset.caption !== key);
+        });
+      };
+      let current = fromAd && keys.includes(fromAd) ? fromAd : examples.dataset.default || keys[0];
+      // Ads promise different things: swap in the headline the ad led with.
+      const title = document.getElementById("hero-title");
+      const heroes = JSON.parse(title?.dataset.heroes || "{}");
+      if (title && fromAd && heroes[fromAd]) {
+        const a = title.querySelector("[data-h1a]");
+        const b = title.querySelector("[data-h1b]");
+        if (a) a.textContent = heroes[fromAd].h1a;
+        if (b) b.textContent = heroes[fromAd].h1b;
+        const u = title.querySelector("[data-h1u]");
+        if (u) u.textContent = heroes[fromAd].h1u;
+      }
+      // Radu (ad D) came for the AI-built app rescue: show that card first.
+      const grid = document.getElementById("services-grid");
+      const rescue = grid?.querySelector('[data-service="2"]');
+      if (fromAd === "inchirieri" && grid && rescue) {
+        grid.prepend(rescue);
+        grid.querySelectorAll("[data-num]").forEach((num, i) => (num.textContent = String(i + 1)));
+      }
+      examples.querySelectorAll<HTMLElement>("[data-example]").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          current = tab.dataset.example || current;
+          if (reduce && playButton) {
+            started = false;
+            playButton.hidden = false;
+          }
+          show(current);
+        });
+      });
+      // Each clip ends on its confirmation; hold it for a moment, then play the screen again.
+      wide.addEventListener("change", () => show(current));
+      examples.querySelectorAll<HTMLVideoElement>("video").forEach((video) => {
+        video.addEventListener("ended", () => {
+          setTimeout(() => {
+            if (!reduce && inView && !video.closest(".is-hidden") && video.dataset.size === (wide.matches ? "desktop" : "mobile")) {
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            }
+          }, 2500);
+        });
+      });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(
+          (entries) => {
+            inView = entries[0].isIntersecting;
+            show(current);
+          },
+          { threshold: 0.2 },
+        ).observe(examples);
+      }
+      show(current);
+    }
+
+    const calc = document.getElementById("savings-calc");
+    const hoursInput = document.getElementById("calc-hours") as HTMLInputElement | null;
+    const rateInput = document.getElementById("calc-rate") as HTMLInputElement | null;
+    if (calc && hoursInput && rateInput && !calc.dataset.ready) {
+      calc.dataset.ready = "true";
+      const formatter = new Intl.NumberFormat(calc.dataset.locale, { maximumFractionDigits: 0 });
+      const update = () => {
+        const hours = Number(hoursInput.value) || 0;
+        const rate = Math.max(0, Number(rateInput.value) || 0);
+        const yearly = hours * rate * 48;
+        const hoursOut = document.getElementById("calc-hours-out");
+        const result = document.getElementById("calc-result");
+        if (hoursOut) hoursOut.textContent = String(hours);
+        if (result) {
+          // Count up to the new total so the change is felt, not just read.
+          const from = Number(result.dataset.value || 0);
+          result.dataset.value = String(yearly);
+          const start = performance.now();
+          const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          const step = (now: number) => {
+            const t = reduce ? 1 : Math.min(1, (now - start) / 400);
+            result.textContent = formatter.format(from + (yearly - from) * (1 - (1 - t) ** 3));
+            if (t < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }
+        // Carry the numbers into the form so the lead arrives with them.
+        const currency = calc.dataset.currency || "";
+        (document.getElementById("lead-hours") as HTMLInputElement).value = String(hours);
+        (document.getElementById("lead-rate") as HTMLInputElement).value = `${rate} ${currency}`;
+        (document.getElementById("lead-savings") as HTMLInputElement).value = `${formatter.format(yearly)} ${currency}`;
+      };
+      hoursInput.addEventListener("input", update);
+      rateInput.addEventListener("input", update);
+      update();
+    }
+
+    const form = document.getElementById("lead-form") as HTMLFormElement | null;
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = "true";
+
+    const status = document.getElementById("lead-status");
+    const button = form.querySelector("button[type=submit]") as HTMLButtonElement;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      data.lang = form.dataset.lang || "";
+      data.page = window.location.pathname + window.location.search;
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        // No worker configured yet: hand the lead to the visitor's mail app instead.
+        const body = Object.entries(data)
+          .filter(([key, value]) => value && key !== "website")
+          .map(([key, value]) => `${key}: ${value}`)
+          .join("\n");
+        window.location.href = `mailto:contact@mirkea.com?subject=${encodeURIComponent(form.dataset.mailSubject || "")}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      button.disabled = true;
+      if (status) status.textContent = form.dataset.sending || "";
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error(String(response.status));
+        form.reset();
+        if (status) status.textContent = form.dataset.success || "";
+        // Conversion events for analytics and, once added, the Meta pixel.
+        (window as any).umami?.track?.("lead", { lang: data.lang, interest: data.interest });
+        (window as any).fbq?.("track", "Lead");
+      } catch {
+        if (status) status.textContent = form.dataset.error || "";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupServicesPage);
+  document.addEventListener("astro:page-load", setupServicesPage);
+</script>
+
+<script is:inline>
+  // Cal.com embed (official loader): the booking button opens a pop-up instead of a new tab.
+  (function (C, A, L) {
+    let p = function (a, ar) {
+      a.q.push(ar);
+    };
+    let d = C.document;
+    C.Cal =
+      C.Cal ||
+      function () {
+        let cal = C.Cal;
+        let ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          d.head.appendChild(d.createElement("script")).src = A;
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api = function () {
+            p(api, arguments);
+          };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, ["initNamespace", namespace]);
+          } else p(cal, ar);
+          return;
+        }
+        p(cal, ar);
+      };
+  })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", "15min", { origin: "https://cal.com" });
+  var calScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
+  if (calScript)
+    calScript.addEventListener("load", function () {
+      window.calEmbedReady = true;
+    });
+  Cal.ns["15min"]("ui", { layout: "month_view" });
+  // A booking counts as a lead, same as a form submission.
+  Cal.ns["15min"]("on", {
+    action: "bookingSuccessful",
+    callback: function () {
+      if (window.umami && window.umami.track) window.umami.track("lead", { source: "cal" });
+      if (window.fbq) window.fbq("track", "Lead");
+    },
+  });
+  // The link stays a plain cal.com link if the embed never loads; once it has, open the pop-up instead.
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest("#cal-button");
+    if (link && window.calEmbedReady) {
+      event.preventDefault();
+    }
+  });
+</script>

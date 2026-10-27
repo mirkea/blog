@@ -11,13 +11,14 @@ import logoStrokeRaw from "../../public/logo-stroke.svg?raw";
 export interface Props {
   title: string;
   description?: string;
+  lang?: string;
 }
 
-const { title, description = "A minimalist personal blog" } = Astro.props;
+const { title, description = "A minimalist personal blog", lang = "en" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -68,7 +69,7 @@ const { title, description = "A minimalist personal blog" } = Astro.props;
     <Background />
 
     <div class="mx-auto w-full max-w-3xl flex-grow px-4 sm:px-6">
-      <Navigation />
+      <Navigation lang={lang} />
       <main class="py-12">
         <slot />
       </main>
