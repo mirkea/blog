@@ -3,14 +3,12 @@ import ThemeToggle from "./ThemeToggle.astro";
 import logoRaw from "../../public/logo.svg?raw";
 
 const base = import.meta.env.BASE_URL;
-const { lang = "en" } = Astro.props;
-const ro = lang === "ro";
 
 const navItems = [
-  { text: ro ? "Acasa" : "Home", href: base },
+  { text: "Home", href: base },
   { text: "Blog", href: `${base}blog` },
-  { text: ro ? "Etichete" : "Tags", href: `${base}tags` },
-  { text: ro ? "Despre" : "About", href: `${base}about` },
+  { text: "Tags", href: `${base}tags` },
+  { text: "About", href: `${base}about` },
   { text: "RSS", href: `${base}rss.xml` },
 ];
 
