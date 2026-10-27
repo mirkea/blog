@@ -98,7 +98,7 @@ const copy = {
       { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul reparatiei", value: "de la 500 EUR" },
     ],
     priceExample: "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
-    priceFoot: "Pretul exact, fix, il stiti inainte de orice linie de cod. Fara comision pe rezervare sau pe utilizator. Aplicatia ruleaza pe conturile firmei voastre, de obicei in jur de 40 EUR pe luna, platiti direct furnizorilor, fara adaos.",
+    priceFoot: "Pretul exact, fix, il stiti inainte de orice linie de cod. Platiti pe etape: primul pas e analiza, cu pret fix, iar daca nu va convine ce propun, va opriti acolo. Fara comision pe rezervare sau pe utilizator. Aplicatia ruleaza pe conturile firmei voastre, de obicei in jur de 40 EUR pe luna, platiti direct furnizorilor, fara adaos.",
     honestTitle: "Nu orice problema cere o aplicatie",
     honest:
       "Multe firme simt ca au nevoie de o aplicatie. Uneori un formular bun, o pagina de programari sau un instrument care exista deja rezolva aceeasi problema mai repede si mai ieftin. Daca asa e, va spun din primul apel.",
@@ -135,6 +135,17 @@ const copy = {
     aboutTitle: "Cine sunt",
     about:
       "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o aplicatie care dura luni cu o echipa intreaga o pot livra singur in cateva saptamani.",
+    projects: [
+      { name: "Carvuu", url: "https://carvuu.com", text: "de la idee la productie in 2 luni" },
+      { name: "AcoMag", url: "https://acomag.ro", text: "prima versiune online in mai putin de o luna, ruleaza de peste doi ani" },
+    ],
+    quotesTitle: "Ce spun cei cu care am lucrat",
+    quotes: [
+      { text: "Singurul din echipa care poate gestiona bine relatia cu clientul si partea operationala in acelasi timp.", who: "CEO, Code11" },
+      { text: "M-a impresionat cum ti-ai asumat produsul si definirea functionalitatilor.", who: "CTO, TasteForge" },
+      { text: "Munca de product discovery, gandirea functionalitatilor si machetarea lor, a facut dezvoltarea foarte lina.", who: "Lead developer Code11 pe TasteForge" },
+    ],
+    quotesNote: "Traduse din engleza.",
     aboutLink: "Mai multe despre mine",
     linkedinLabel: "LinkedIn",
     formTitle: "Programeaza apelul gratuit",
@@ -157,7 +168,7 @@ const copy = {
       messagePlaceholder: "De exemplu: pierdem mult timp cu programarile la telefon",
     },
     safety:
-      "Lucrez din Bucuresti, in UE, conform GDPR. Codul, datele si conturile sunt pe numele firmei voastre, iar daca eu nu mai sunt disponibil, aveti tot ce ii trebuie altui programator ca sa continue.",
+      "Lucrez din Bucuresti, in UE, conform GDPR. Codul, datele si conturile sunt pe numele firmei voastre, iar daca eu nu mai sunt disponibil, aveti tot ce ii trebuie altui programator ca sa continue. Facturez prin MIRKEA INTERACTIVE S.R.L., CUI 50876040.",
     consent: "Folosesc datele doar ca sa va contactez despre aceasta cerere.",
     submit: "Trimite",
     sending: "Se trimite...",
@@ -247,7 +258,7 @@ const copy = {
       { name: "Audit of an app built with AI, deducted from the fix", value: "from €500" },
     ],
     priceExample: "Example: a booking and membership platform for a studio usually costs €4,000-7,000.",
-    priceFoot: "You know the exact, fixed price before any code is written. No per-booking or per-user fees. The app runs on your own accounts, usually around €40 a month, paid directly to the providers with no markup.",
+    priceFoot: "You know the exact, fixed price before any code is written. You pay in stages: the first step is the assessment, at a fixed price, and if you don't like what I propose, you stop there. No per-booking or per-user fees. The app runs on your own accounts, usually around €40 a month, paid directly to the providers with no markup.",
     honestTitle: "Not every problem needs an app",
     honest:
       "Many businesses feel they need an app. Sometimes a good form, a booking page or a tool that already exists solves the same problem faster and for less. If that's the case, I'll tell you on the first call.",
@@ -284,6 +295,17 @@ const copy = {
     aboutTitle: "Who I am",
     about:
       "I'm Mircea Braescu. 20 years in software and 10 in product management: delivery PM on verified.eu, a B2B platform acquired for 31M EUR, then CPO at a product studio. I work with AI every day, so an app that used to take a team months I can deliver on my own in a few weeks.",
+    projects: [
+      { name: "Carvuu", url: "https://carvuu.com", text: "from idea to production in 2 months" },
+      { name: "AcoMag", url: "https://acomag.ro", text: "first version live in under a month, running for over two years" },
+    ],
+    quotesTitle: "What people I worked with say",
+    quotes: [
+      { text: "The only one in the team who can properly handle the client interaction part at the same time as the operational one.", who: "CEO, Code11" },
+      { text: "I was impressed with how you took ownership over the product and defining features.", who: "CTO, TasteForge" },
+      { text: "The product discovery work, braining out features and mocking them, allowed for a very smooth development process.", who: "Lead Developer for Code11 on TasteForge" },
+    ],
+    quotesNote: "",
     aboutLink: "More about me",
     linkedinLabel: "LinkedIn",
     formTitle: "Book the free call",
@@ -306,7 +328,7 @@ const copy = {
       messagePlaceholder: "For example: we lose a lot of time booking appointments by phone",
     },
     safety:
-      "I work from Bucharest, in the EU, under GDPR, 2 hours ahead of the UK. Code, data and accounts are in your company's name, and if I'm ever unavailable you have everything another developer needs to carry on.",
+      "I work from Bucharest, in the EU, under GDPR, 2 hours ahead of the UK. Code, data and accounts are in your company's name, and if I'm ever unavailable you have everything another developer needs to carry on. Invoiced by MIRKEA INTERACTIVE S.R.L., Romania, company ID 50876040.",
     consent: "I use your details only to contact you about this request.",
     submit: "Send",
     sending: "Sending...",
@@ -652,6 +674,22 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             {copy.aboutTitle}
           </h2>
           <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.about}</p>
+          <ul class="mt-4 flex flex-col gap-2 text-base text-zinc-600 dark:text-zinc-400">
+            {
+              copy.projects.map((project) => (
+                <li>
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener"
+                    class="font-semibold text-zinc-900 underline underline-offset-4 hover:text-zinc-600 dark:text-zinc-100 dark:hover:text-zinc-300"
+                  >
+                    {project.name}
+                  </a>{`: ${project.text}`}
+                </li>
+              ))
+            }
+          </ul>
           <a
             href={`${base}about`}
             class="mt-4 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
@@ -670,6 +708,22 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </a>
         </div>
       </div>
+    </section>
+
+    <!-- Quotes from people he worked with (from his resume; roles, no names) -->
+    <section class="reveal border-t border-zinc-100 py-14 sm:py-20 dark:border-zinc-800">
+      <h2 class="mb-8 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.quotesTitle}</h2>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        {
+          copy.quotes.map((quote) => (
+            <figure class="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-900">
+              <blockquote class="text-base leading-relaxed text-zinc-800 dark:text-zinc-200">"{quote.text}"</blockquote>
+              <figcaption class="mt-4 text-sm font-medium text-zinc-500 dark:text-zinc-400">{quote.who}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+      {copy.quotesNote && <p class="mt-4 text-xs text-zinc-400">{copy.quotesNote}</p>}
     </section>
 
     <!-- Form -->
