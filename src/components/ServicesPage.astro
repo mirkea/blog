@@ -28,6 +28,40 @@ const copy = {
     ctaSecondary: "Cum lucrez",
     trust: ["20 de ani in software", "Fost PM pe verified.eu, vanduta pentru 31 mil. EUR", "Raspuns in cel mult o zi lucratoare"],
     phoneChip: "Carvuu, construita de mine",
+    examplesLabel: "Exemple de aplicatii",
+    examplesNote: "Firme si date inventate, ca exemplu.",
+    examples: [
+      {
+        key: "service",
+        tab: "Firma de service",
+        name: "Nordterm, climatizare",
+        caption: "Cererile fara oferta, oferta completata si trimisa pe canalul de unde a venit: Facebook, email sau WhatsApp.",
+        url: "nordterm.ro/oferta",
+        image: "nordterm.webp",
+        video: "nordterm_send_quote.mp4",
+        alt: "Aplicatia Nordterm: o oferta de 9.740 lei trimisa pe Facebook",
+      },
+      {
+        key: "studio",
+        tab: "Studio si programari",
+        name: "Forma, pilates si kinetoterapie",
+        caption: "Saptamana de clase, abonamentele care expira si locul liber dat clientei de pe lista de asteptare.",
+        url: "forma.ro/clasa",
+        image: "forma.webp",
+        video: "forma_seat_booked.mp4",
+        alt: "Aplicatia Forma: un loc la Reformer, miercuri 18:00, rezervat din lista de asteptare",
+      },
+      {
+        key: "inchirieri",
+        tab: "Inchirieri utilaje",
+        name: "Rampa, inchirieri utilaje",
+        caption: "Utilajele intarziate sus, apoi prelungirea cu noua data de retur si pretul, pentru ambele depozite.",
+        url: "rampa.ro/santier",
+        image: "rampa.webp",
+        video: "rampa_extend_rental.mp4",
+        alt: "Aplicatia Rampa: inchirierea unui mini excavator prelungita pana pe 3 noiembrie",
+      },
+    ],
     proofEyebrow: "Dovada",
     proofTitle: "Carvuu: o aplicatie pe care am construit-o singur",
     proofLead:
@@ -140,6 +174,40 @@ const copy = {
     ctaSecondary: "How I work",
     trust: ["20 years in software", "Former PM on verified.eu, acquired for 31M EUR", "Reply within one working day"],
     phoneChip: "Carvuu, built by me",
+    examplesLabel: "Example apps",
+    examplesNote: "Invented firms and data, as an example.",
+    examples: [
+      {
+        key: "service",
+        tab: "Service firm",
+        name: "Nordterm, heating and cooling",
+        caption: "Requests still waiting for a quote, the quote filled in and sent back on the channel it came from: Facebook, email or WhatsApp.",
+        url: "nordterm.ro/oferta",
+        image: "nordterm.webp",
+        video: "nordterm_send_quote.mp4",
+        alt: "Nordterm app: a 9.740 lei quote sent on Facebook",
+      },
+      {
+        key: "studio",
+        tab: "Studio and bookings",
+        name: "Forma, pilates and physio",
+        caption: "The week of classes, passes about to run out, and a free seat given to the client on the waiting list.",
+        url: "forma.ro/clasa",
+        image: "forma.webp",
+        video: "forma_seat_booked.mp4",
+        alt: "Forma app: a Reformer seat on Wednesday 18:00 booked from the waiting list",
+      },
+      {
+        key: "inchirieri",
+        tab: "Equipment rental",
+        name: "Rampa, equipment rental",
+        caption: "Late machines on top, then an extension with the new return date and the price, across both depots.",
+        url: "rampa.ro/santier",
+        image: "rampa.webp",
+        video: "rampa_extend_rental.mp4",
+        alt: "Rampa app: a mini excavator rental extended to 3 November",
+      },
+    ],
     proofEyebrow: "Proof",
     proofTitle: "Carvuu: an app I built on my own",
     proofLead:
@@ -247,11 +315,11 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
 <Layout title={copy.title} description={copy.description} lang={lang}>
   <div class="services-page">
-    <!-- Hero: copy left, a phone right. PLACEHOLDER: Carvuu screen until the fictional SMB app mock replaces it -->
+    <!-- Hero: copy, then the three example apps. Each ad links with ?exemplu=<key> to open its app first -->
     <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
       <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
-      <div class="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-        <div class="reveal">
+      <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
+        <div class="reveal max-w-3xl">
           <div class="mb-6 flex items-center justify-between gap-4">
             <span class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium tracking-wide text-zinc-600 uppercase backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
               <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-zinc-900 dark:bg-zinc-100"></span>
@@ -302,22 +370,70 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </ul>
         </div>
 
-        <div class="reveal relative mx-auto w-full max-w-[300px] lg:max-w-[320px]">
-          <div class="phone float-slow relative">
-            <div class="overflow-hidden rounded-[2.6rem] border-[10px] border-zinc-900 bg-zinc-900 shadow-2xl shadow-zinc-900/30 dark:border-zinc-700">
-              <img
-                src={`${base}services/carvuu-car.webp`}
-                alt="Carvuu"
-                width="800"
-                height="1824"
-                class="aspect-[9/17] w-full object-cover object-top"
-                loading="eager"
-              />
+        <div id="examples" class="reveal mt-14 sm:mt-16" data-default={copy.examples[0].key}>
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <p class="text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.examplesLabel}</p>
+            <div class="flex flex-wrap gap-2" role="tablist" aria-label={copy.examplesLabel}>
+              {
+                copy.examples.map((example, index) => (
+                  <button
+                    type="button"
+                    role="tab"
+                    id={`tab-${example.key}`}
+                    aria-controls={`panel-${example.key}`}
+                    aria-selected={index === 0 ? "true" : "false"}
+                    data-example={example.key}
+                    class="example-tab min-h-[44px] cursor-pointer rounded-full border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-300 dark:hover:border-zinc-100"
+                  >
+                    {example.tab}
+                  </button>
+                ))
+              }
             </div>
           </div>
-          <div class="chip chip-late absolute -right-4 bottom-12 rounded-lg bg-zinc-900 px-4 py-3 text-sm font-medium text-zinc-100 shadow-xl sm:-right-10 dark:bg-zinc-100 dark:text-zinc-900">
-            {copy.phoneChip}
+          <div class="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-2xl shadow-zinc-900/15 dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="flex items-center gap-1.5 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
+              <span class="ml-3 hidden font-mono text-xs text-zinc-400 sm:inline" data-example-url>{copy.examples[0].url}</span>
+            </div>
+            <div class="relative aspect-[16/10] bg-zinc-100 dark:bg-zinc-800">
+              {
+                copy.examples.map((example, index) => (
+                  <div
+                    id={`panel-${example.key}`}
+                    role="tabpanel"
+                    aria-labelledby={`tab-${example.key}`}
+                    data-panel={example.key}
+                    data-url={example.url}
+                    class={`example-panel absolute inset-0 ${index === 0 ? "" : "is-hidden"}`}
+                  >
+                    <video
+                      class="h-full w-full object-cover"
+                      poster={`${base}services/examples/${example.image}`}
+                      muted
+                      playsinline
+                      preload={index === 0 ? "auto" : "none"}
+                      aria-label={example.alt}
+                    >
+                      <source src={`${base}services/examples/${example.video}`} type="video/mp4" />
+                    </video>
+                  </div>
+                ))
+              }
+            </div>
           </div>
+          <p class="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            {
+              copy.examples.map((example, index) => (
+                <span data-caption={example.key} class={index === 0 ? "" : "hidden"}>
+                  <span class="font-semibold text-zinc-900 dark:text-zinc-100">{example.name}.</span> {example.caption}
+                </span>
+              ))
+            }
+            <span class="text-zinc-400"> {copy.examplesNote}</span>
+          </p>
         </div>
       </div>
     </section>
@@ -708,6 +824,27 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     accent-color: #18181b;
   }
 
+  .example-panel {
+    transition: opacity 0.4s ease;
+  }
+
+  .example-panel.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .example-tab[aria-selected="true"] {
+    background: var(--color-zinc-900);
+    border-color: var(--color-zinc-900);
+    color: var(--color-zinc-100);
+  }
+
+  :global(.dark) .example-tab[aria-selected="true"] {
+    background: var(--color-zinc-100);
+    border-color: var(--color-zinc-100);
+    color: var(--color-zinc-900);
+  }
+
   .details[open] .details-plus {
     transform: rotate(45deg);
   }
@@ -836,6 +973,67 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       sections.forEach((section) => observer.observe(section));
     } else {
       sections.forEach((section) => section.classList.add("is-visible"));
+    }
+
+    const examples = document.getElementById("examples");
+    if (examples && !examples.dataset.ready) {
+      examples.dataset.ready = "true";
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const keys = [...examples.querySelectorAll<HTMLElement>("[data-panel]")].map((el) => el.dataset.panel || "");
+      const fromAd = new URLSearchParams(window.location.search).get("exemplu");
+      let inView = false;
+      const show = (key: string) => {
+        examples.querySelectorAll<HTMLElement>("[data-example]").forEach((tab) => {
+          tab.setAttribute("aria-selected", String(tab.dataset.example === key));
+        });
+        examples.querySelectorAll<HTMLElement>("[data-panel]").forEach((panel) => {
+          const active = panel.dataset.panel === key;
+          panel.classList.toggle("is-hidden", !active);
+          const video = panel.querySelector("video");
+          if (!video) return;
+          if (active && inView && !reduce) {
+            video.currentTime = 0;
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+          if (active) {
+            const url = examples.querySelector("[data-example-url]");
+            if (url) url.textContent = panel.dataset.url || "";
+          }
+        });
+        examples.querySelectorAll<HTMLElement>("[data-caption]").forEach((caption) => {
+          caption.classList.toggle("hidden", caption.dataset.caption !== key);
+        });
+      };
+      let current = fromAd && keys.includes(fromAd) ? fromAd : examples.dataset.default || keys[0];
+      examples.querySelectorAll<HTMLElement>("[data-example]").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          current = tab.dataset.example || current;
+          show(current);
+        });
+      });
+      // Each clip ends on its confirmation; hold it for a moment, then play the screen again.
+      examples.querySelectorAll("video").forEach((video) => {
+        video.addEventListener("ended", () => {
+          setTimeout(() => {
+            if (inView && !video.closest(".is-hidden")) {
+              video.currentTime = 0;
+              video.play().catch(() => {});
+            }
+          }, 2500);
+        });
+      });
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(
+          (entries) => {
+            inView = entries[0].isIntersecting;
+            show(current);
+          },
+          { threshold: 0.4 },
+        ).observe(examples);
+      }
+      show(current);
     }
 
     const calc = document.getElementById("savings-calc");
