@@ -30,7 +30,7 @@ const copy = {
       inchirieri: { h1a: "Ati facut deja o aplicatie cu AI?", h1b: "O facem sa mearga pe bune." },
     },
     lead: "Va spun sincer ce merita construit in firma voastra: o aplicatie web sau mobila, un instrument AI sau nimic nou. Primul apel, de 15 minute, e gratuit.",
-    cta: "Programeaza apelul gratuit",
+    cta: "Programati apelul gratuit",
     ctaSecondary: "Cum lucrez",
     trustWork: "Aplicatii livrate: Carvuu, AcoMag",
     trust: ["20 de ani in software", "Fost PM pe verified.eu, vanduta pentru 31 mil. EUR", "Raspuns in cel mult o zi lucratoare"],
@@ -96,7 +96,7 @@ const copy = {
     prices: [
       { name: "Aplicatie web, merge pe orice telefon, fara descarcare", value: "de la 3.000 EUR" },
       { name: "Aplicatie mobila in App Store si Google Play", value: "de la 5.000 EUR" },
-      { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul reparatiei", value: "de la 500 EUR" },
+      { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul lucrarii", value: "de la 500 EUR" },
     ],
     priceExample: "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
     priceFoot: [
@@ -104,7 +104,7 @@ const copy = {
       "Platiti pe etape: primul pas e analiza, cu pret fix, iar daca nu va convine ce propun, va opriti acolo.",
       "Fara comision pe rezervare sau pe utilizator.",
       "Aplicatia ruleaza pe conturile firmei voastre, de obicei in jur de 40 EUR pe luna, platiti direct furnizorilor, fara adaos.",
-      "Dupa lansare, modificarile: pret fix pe fiecare, de la 150 EUR, sau abonament lunar de la 150 EUR, cu modificarile mici incluse, oprit oricand. Separat de gazduire.",
+      "Dupa lansare, alegeti cum platiti modificarile: fiecare separat, de la 150 EUR, sau un abonament lunar de la 150 EUR, cu modificarile mici incluse, pe care il opriti oricand. Separat de gazduire.",
     ],
     honestTitle: "Nu orice problema cere o aplicatie",
     honest:
@@ -144,15 +144,15 @@ const copy = {
       "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o aplicatie care dura luni cu o echipa intreaga o pot livra singur in cateva saptamani.",
     projects: [
       { name: "Carvuu", url: "https://carvuu.com", text: "aplicatie mobila de social media pentru masina ta, de la idee la productie in 2 luni" },
-      { name: "AcoMag", url: "https://acomag.ro", text: "magazin online de suruburi si accesorii pentru acoperis, prima versiune online in mai putin de o luna, merge de peste doi ani" },
+      { name: "AcoMag", url: "https://acomag.ro", text: "magazin online de suruburi si accesorii pentru acoperis, prima versiune lansata in mai putin de o luna, merge de peste doi ani" },
     ],
     aboutLink: "Mai multe despre mine",
     linkedinLabel: "LinkedIn",
-    formTitle: "Programeaza apelul gratuit",
+    formTitle: "Programati apelul gratuit",
     formLead: "Alegeti singuri o ora din calendar sau lasati-mi datele si va sun eu.",
     calTitle: "Alegeti o ora direct",
     calText: "15 minute, online. Vedeti orele libere si rezervati pe loc.",
-    calButton: "Alege o ora in calendar",
+    calButton: "Alegeti o ora in calendar",
     orForm: "Sau va sun eu, in cel mult o zi lucratoare:",
     callLabel: "Sunati-ma",
     whatsappLabel: "WhatsApp",
@@ -264,7 +264,7 @@ const copy = {
       "You pay in stages: the first step is the assessment, at a fixed price, and if you don't like what I propose, you stop there.",
       "No per-booking or per-user fees.",
       "The app runs on your own accounts, usually around €40 a month, paid directly to the providers with no markup.",
-      "After launch, changes: a fixed price each, from €150, or a monthly plan from €150 with small changes included, cancel anytime. Separate from hosting.",
+      "After launch, you choose how to pay for changes: each one separately, from €150, or a monthly plan from €150 with small changes included, which you can cancel anytime. Separate from hosting.",
     ],
     honestTitle: "Not every problem needs an app",
     honest:
@@ -422,7 +422,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               ))
             }
             <li class="flex items-center gap-2">
-              <Check size={16} class="shrink-0 text-zinc-900 dark:text-zinc-100" />
+              <span class="shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
               <a href="#despre" class="underline underline-offset-4 hover:text-zinc-900 dark:hover:text-zinc-100">{copy.trustWork}</a>
             </li>
           </ul>
@@ -525,7 +525,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               ))
             }
             <li class="flex items-center gap-2">
-              <Check size={16} class="shrink-0 text-zinc-900 dark:text-zinc-100" />
+              <span class="shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
               <a href="#despre" class="underline underline-offset-4 hover:text-zinc-900 dark:hover:text-zinc-100">{copy.trustWork}</a>
             </li>
           </ul>
