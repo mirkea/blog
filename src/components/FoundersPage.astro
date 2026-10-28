@@ -717,7 +717,10 @@ const optionClass =
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-        if (!response.ok) throw new Error(String(response.status));
+        if (!response.ok) {
+          const reason = (await response.text().catch(() => "")).slice(0, 80);
+          throw new Error(`${response.status} ${reason}`.trim());
+        }
         form.reset();
         if (status) status.textContent = "";
         // Swap the form for a clear confirmation, so the founder sees it worked.
@@ -731,8 +734,10 @@ const optionClass =
         // Founder leads are counted apart from the /servicii ones.
         (window as any).umami?.track?.("founder-lead", { stage: data.stage, reply_by: data.reply_by });
         (window as any).fbq?.("track", "Lead", { content_category: "founder" });
-      } catch {
+      } catch (error) {
         if (status) status.textContent = form.dataset.error || "";
+        // Failed sends are counted too, with the HTTP status or the network error, so they can't hide.
+        (window as any).umami?.track?.("founder-lead-error", { reason: String((error as Error)?.message || error).slice(0, 100) });
       } finally {
         button.disabled = false;
       }
