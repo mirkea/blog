@@ -82,6 +82,7 @@ const copy = {
         "Pret fix pe etape, stiut inainte de orice linie de cod.",
         "Bun daca vrei sa pastrezi mai mult din firma.",
       ],
+      example: "Exemplu: prima versiune valoreaza 10.000 EUR. Tu platesti 4.000, eu acopar 6.000 in schimbul partii din firma.",
     },
   ],
   waysFoot: "Totul scris intr-un contract, pe care il verifica si avocatul tau. Procentul il stabilim dupa ce intelegem ideea, nu in primul apel.",
@@ -150,7 +151,7 @@ const copy = {
     },
     {
       q: "Cat platesc in varianta cu pret redus?",
-      a: "De la 3.000 EUR pentru web si 5.000 EUR pentru mobil, aceleasi preturi de pornire ca la serviciile mele, platit pe etape cu pret fix. Restul costului il acopar eu, in schimbul partii din firma. Facturez prin MIRKEA INTERACTIVE S.R.L.",
+      a: "De la 3.000 EUR pentru web si 5.000 EUR pentru mobil, aceleasi preturi de pornire ca la serviciile mele, platit pe etape cu pret fix. Restul costului il acopar eu, in schimbul partii din firma. De exemplu, daca prima versiune valoreaza 10.000 EUR, tu platesti 4.000 si eu acopar 6.000. Facturez prin MIRKEA INTERACTIVE S.R.L.",
     },
     {
       q: "De ce trebuie sa mai aiba cineva problema, in afara de mine?",
@@ -159,6 +160,10 @@ const copy = {
     {
       q: "Cu cati fondatori lucrezi in acelasi timp?",
       a: "Cu cel mult 3, ca fiecare sa aiba timpul meu si raspunsuri repede.",
+    },
+    {
+      q: "Cat timp ai pentru produsul meu?",
+      a: "Lucrez 2-4 ore pe zi la produsul tau, si la prima versiune, si dupa lansare. De asta iau cel mult 3 fondatori in acelasi timp.",
     },
     {
       q: "Trebuie sa am deja o firma?",
@@ -175,7 +180,7 @@ const copy = {
     idea: "Ideea, intr-o propozitie sau doua",
     ideaPlaceholder: "De exemplu: o aplicatie in care casele de expeditii verifica un transportator inainte sa ii dea marfa",
     asking: "Cine, in afara de tine, are problema asta? Cui aratam prima versiune?",
-    askingPlaceholder: "De exemplu: 6 clienti ai consultantei mele, doi vor sa o testeze",
+    askingPlaceholder: "De exemplu: 6 clienti ai consultantei mele, doi vor sa o testeze. Orice conteaza: clienti, cereri repetate, oameni gata sa plateasca.",
     stage: "Ce exista azi",
     stageOptions: ["Nimic inca", "Schite sau ecrane", "Un prototip"],
     link: "Un link, daca ai (optional)",
@@ -328,14 +333,17 @@ const optionClass =
                   <span class="text-xl font-bold text-zinc-900 dark:text-zinc-100">{way.price}</span>
                   <span class="text-sm text-zinc-500 dark:text-zinc-400">{way.priceNote}</span>
                 </p>
-                <ul class="flex flex-col gap-3 text-zinc-600 dark:text-zinc-400">
-                  {way.points.map((point) => (
-                    <li class="flex items-start gap-3 leading-relaxed">
-                      <span class="mt-1 shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div>
+                  <ul class="flex flex-col gap-3 text-zinc-600 dark:text-zinc-400">
+                    {way.points.map((point) => (
+                      <li class="flex items-start gap-3 leading-relaxed">
+                        <span class="mt-1 shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  {way.example && <p class="mt-5 rounded-md bg-zinc-50 px-4 py-3 text-sm leading-relaxed text-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-400">{way.example}</p>}
+                </div>
               </div>
             </div>
           ))
@@ -479,7 +487,7 @@ const optionClass =
           </div>
           <div class="sm:col-span-2">
             <label for="founder-asking" class={labelClass}>{copy.fields.asking}</label>
-            <textarea id="founder-asking" name="asking" rows="2" required placeholder={copy.fields.askingPlaceholder} class={inputClass}></textarea>
+            <textarea id="founder-asking" name="asking" rows="4" required placeholder={copy.fields.askingPlaceholder} class={inputClass}></textarea>
           </div>
           <fieldset class="sm:col-span-2">
             <legend class={labelClass}>{copy.fields.stage}</legend>
