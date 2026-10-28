@@ -199,8 +199,8 @@ const optionClass =
 <Layout title={copy.title} description={copy.description} lang="ro" landing>
   <div class="founders-page">
     <!-- Hero -->
-    <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
-      <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <!-- Flat, solid band: the edge sits halfway between the trust list and the cards below -->
+    <section class="bleed relative -mt-12 overflow-hidden bg-zinc-50 pt-10 pb-12 sm:pt-14 sm:pb-16 dark:bg-zinc-800/50">
       <div class="relative mx-auto max-w-3xl px-4 sm:px-6">
         <div class="mb-8 flex flex-wrap items-center gap-x-5 gap-y-4 sm:mb-10">
           <a href={base} rel="external" class="flex shrink-0 items-center" aria-label="Mircea Braescu">
@@ -258,7 +258,7 @@ const optionClass =
     </section>
 
     <!-- Who it is for, and who it is not for. The hard requirement (someone besides the founder has the problem) sits at the end, above the form: sell first -->
-    <section class="reveal grid grid-cols-1 gap-5 pb-14 sm:grid-cols-2 sm:pb-20">
+    <section class="reveal grid grid-cols-1 gap-5 pt-12 pb-14 sm:grid-cols-2 sm:pt-16 sm:pb-20">
       <div class="rounded-xl border border-zinc-900 bg-zinc-900 p-7 text-zinc-100 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">
         <h2 class="mb-4 text-xl font-semibold">{copy.fitTitle}</h2>
         <ul class="flex flex-col gap-3">
@@ -557,18 +557,6 @@ const optionClass =
   .bleed {
     width: 100vw;
     margin-left: calc(50% - 50vw);
-  }
-
-  .hero-glow {
-    background:
-      radial-gradient(40rem 24rem at 80% 30%, rgb(228 228 231 / 0.7), transparent 70%),
-      radial-gradient(30rem 20rem at 10% 90%, rgb(244 244 245 / 0.9), transparent 70%);
-  }
-
-  :global(.dark) .hero-glow {
-    background:
-      radial-gradient(40rem 24rem at 80% 30%, rgb(63 63 70 / 0.5), transparent 70%),
-      radial-gradient(30rem 20rem at 10% 90%, rgb(39 39 42 / 0.6), transparent 70%);
   }
 
   .details[open] .details-plus {
