@@ -1,5 +1,5 @@
 /**
- * Cloudflare Worker - free-call form on /servicii and /en/services
+ * Cloudflare Worker - free-call form on /servicii and /en/services, idea form on /fondatori
  *
  * Deploy via wrangler (from cloudflare-worker/lead-form/):
  *   npx wrangler deploy
@@ -25,6 +25,11 @@ const FIELDS = [
   ["hours_per_week", "Repetitive hours / week"],
   ["hourly_cost", "Cost per hour"],
   ["yearly_savings", "Calculator: savings / year"],
+  ["idea", "Idea"],
+  ["asking", "Who is asking for it"],
+  ["stage", "What exists today"],
+  ["link", "Link"],
+  ["reply_by", "Prefers"],
   ["lang", "Page language"],
   ["page", "Page"],
 ];
@@ -68,8 +73,10 @@ export default {
     if (lead.website) {
       return new Response("OK", { status: 200, headers });
     }
-    if (!lead.name || !lead.phone) {
-      return new Response("Name and phone are required", { status: 400, headers });
+    // Founders write first and may leave no phone; the free-call form needs one.
+    const founder = lead.offer === "founder";
+    if (!lead.name || !(founder ? lead.email : lead.phone)) {
+      return new Response(founder ? "Name and email are required" : "Name and phone are required", { status: 400, headers });
     }
 
     const rows = FIELDS.filter(([key]) => lead[key])
@@ -89,8 +96,8 @@ export default {
         from: env.FROM_EMAIL,
         to: env.NOTIFY_EMAIL,
         reply_to: lead.email || undefined,
-        subject: `New free-call request: ${String(lead.name).slice(0, 80)}${lead.company ? ` (${String(lead.company).slice(0, 80)})` : ""}`,
-        html: `<p>Call back within one working day.</p><table>${rows}</table>`,
+        subject: `${founder ? "New founder idea" : "New free-call request"}: ${String(lead.name).slice(0, 80)}${lead.company ? ` (${String(lead.company).slice(0, 80)})` : ""}`,
+        html: `<p>${founder ? "Reply in writing within one working day." : "Call back within one working day."}</p><table>${rows}</table>`,
       }),
     });
 
