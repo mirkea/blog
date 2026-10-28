@@ -9,16 +9,17 @@ const calUrl = "https://cal.com/braescu-mircea/15min";
 const linkedin = "https://www.linkedin.com/in/mircea-braescu/";
 
 // Romanian only, "tu" register: founders, not the firms /servicii talks to. No diacritics on purpose.
+// Every founder deal includes a stake for him; paid-only builds live on /servicii.
 // Plain words for the equity terms: the founders this page is for are local, not YC regulars.
 const copy = {
-  title: "Prima versiune a aplicatiei tale, pentru fondatori cu clienti | Mircea Braescu",
+  title: "Cofondator tehnic pentru fondatori cu clienti | Mircea Braescu",
   description:
-    "Ai clientii si ideea, iti lipseste cine sa construiasca aplicatia. Construiesc prima versiune in cateva saptamani, cu pret fix. Codul, datele si ideea raman ale firmei tale.",
+    "Ai clientii si ideea, iti lipseste cine sa construiasca aplicatia. Intru ca cofondator tehnic: construiesc produsul pentru o parte din firma, sau la pret redus si o parte mai mica.",
   eyebrow: "Pentru fondatori cu clienti",
   h1a: "Ai clientii.",
   h1b: "Iti lipseste cine sa construiasca",
   h1u: "aplicatia.",
-  lead: "Construiesc prima versiune in cateva saptamani, cu pret fix, ca primii tai clienti sa o foloseasca. Codul, datele si ideea raman ale firmei tale.",
+  lead: "Intru alaturi de tine ca cofondator tehnic: construiesc prima versiune in cateva saptamani si raman in produs dupa aceea, pentru o parte din firma. Nu sunt o agentie care livreaza si dispare.",
   cta: "Spune-mi ideea",
   ctaSecondary: "Programeaza un apel",
   trust: [
@@ -31,7 +32,7 @@ const copy = {
   fit: [
     "Ai deja oameni care o cer sau ar plati pentru ea: clienti, o lista de asteptare, piloti.",
     "Cunosti domeniul din interior, de ani de zile.",
-    "Nu ai un cofondator tehnic si nu vrei o agentie.",
+    "Cauti un partener care ramane in produs, nu un furnizor.",
   ],
   notFitTitle: "Nu e pentru tine daca",
   notFit: [
@@ -39,31 +40,34 @@ const copy = {
     "Ai deja un produs matur si o echipa tehnica.",
     "Vrei o platforma uriasa cu zeci de module din prima zi.",
   ],
+  paidOnly: "Ai nevoie doar de o aplicatie livrata, fara parteneriat?",
+  paidOnlyLink: "Vezi serviciile mele",
   waysTitle: "Doua feluri de a lucra impreuna",
-  waysLead: "Incepem mereu cu prima varianta. A doua o discutam doar daca pilotii merg.",
+  waysLead: "In amandoua sunt partener si am o parte din firma. Tu alegi cat platesti.",
   ways: [
     {
-      tag: "Acum",
-      name: "Platesti prima versiune",
+      tag: "Doar parteneriat",
+      name: "Cofondator tehnic",
       points: [
-        "Pret fix pe etape, stiut inainte de orice linie de cod.",
-        "De la 3.000 EUR pentru o aplicatie web, de la 5.000 EUR pentru una mobila.",
-        "Codul, datele si conturile sunt pe numele firmei tale.",
+        "Construiesc si tin produsul pentru o parte din firma, fara plata pentru constructie.",
+        "Decidem impreuna ce construim si ce nu, ca doi fondatori.",
+        "Partea mea se castiga treptat, in cativa ani. Daca plec mai devreme, raman doar cu cat am castigat pana atunci.",
       ],
     },
     {
-      tag: "Daca pilotii merg",
-      name: "Pot deveni cofondatorul tehnic",
+      tag: "Pret redus si parteneriat",
+      name: "Platesti mai putin, am o parte mai mica",
       points: [
-        "Continui sa construiesc pentru o parte din firma, in loc de plata pe etape.",
-        "Partea mea se castiga treptat, in cativa ani. Daca plec mai devreme, raman doar cu cat am castigat pana atunci.",
-        "Totul scris intr-un contract, pe care il verifica si avocatul tau. Fara procente in primul apel.",
+        "Platesti o parte din constructie, sub pretul meu obisnuit, iar eu primesc o parte mai mica din firma.",
+        "Pret fix pe etape, stiut inainte de orice linie de cod.",
+        "Bun daca vrei sa pastrezi mai mult din firma.",
       ],
     },
   ],
+  waysFoot: "Totul scris intr-un contract, pe care il verifica si avocatul tau. Procentul il stabilim dupa ce intelegem ideea, nu in primul apel.",
   aboutTitle: "Cine sunt",
   about:
-    "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Nu construiesc doar ce scrie in lista: intreb de ce, tai ce nu trebuie construit inca si iti spun sincer ce nu merita facut.",
+    "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Nu construiesc doar ce scrie in lista: intreb de ce, tai ce nu trebuie construit inca si iti spun sincer ce nu merita facut. Pentru produsele in care cred vreau sa fiu partener, sa risc alaturi de tine.",
   proofTitle: "Ce am construit pe cont propriu",
   proof: [
     {
@@ -89,41 +93,44 @@ const copy = {
       text: "In scris sau intr-un apel scurt. Iti raspund in cel mult o zi lucratoare, cu ce cred si ce intrebari am.",
     },
     {
-      icon: ListChecks,
-      name: "Ce intra in prima versiune",
-      time: "2-5 zile",
-      text: "Alegem ce trebuie sa faca prima versiune ca pilotii sa o foloseasca, si nimic in plus. Primesti pretul fix.",
+      icon: Handshake,
+      name: "Ne cunoastem",
+      time: "1-2 saptamani",
+      text: "Cateva discutii despre idee, clienti si cum lucram. Daca ne potrivim, alegem ce intra in prima versiune si scriem termenii.",
     },
     {
       icon: Hammer,
-      name: "Construim pe etape",
-      time: "2-4 saptamani pe etapa",
-      text: "Vezi fiecare etapa si o dai pilotilor. Timpul tau: un apel pe saptamana si ce spun pilotii.",
+      name: "Construim prima versiune",
+      time: "cateva saptamani",
+      text: "Pe etape, ca primii clienti sa o foloseasca repede. Tu aduci clientii si ce spun ei, eu produsul.",
     },
     {
-      icon: Handshake,
-      name: "Decidem impreuna",
-      time: "dupa piloti",
-      text: "Continuam platit pe etape, devin cofondatorul tehnic sau ne oprim. Oricum, ramai cu tot ce am construit.",
+      icon: ListChecks,
+      name: "Mergem mai departe",
+      time: "dupa lansare",
+      text: "Raman in produs si il crestem dupa ce spun clientii. Partea mea se castiga pe masura ce lucram.",
     },
   ],
-  ownTitle: "Ce ramane al tau, orice ar fi",
+  ownTitle: "Ce e sigur pentru tine",
   own: [
-    "Codul, in contul firmei tale, de la prima linie.",
-    "Conturile de gazduire si datele, pe numele firmei tale.",
-    "Ideea si drepturile asupra ei, si in varianta de cofondator, pana semnam altceva.",
-    "Daca ne oprim dupa prima versiune, pastrezi tot si poti continua cu oricine.",
+    "Codul, conturile si datele sunt pe numele firmei de la prima linie, nu pe al meu.",
+    "Ideea ramane a firmei. Eu am doar partea scrisa in contract.",
+    "Daca ne despartim, raman doar cu partea castigata pana atunci, iar firma pastreaza tot codul.",
     "Semnez un acord de confidentialitate inainte de primul apel, daca vrei.",
   ],
   faqTitle: "Intrebari frecvente",
   faq: [
     {
-      q: "Cum ar functiona partea mea din firma ta?",
-      a: "Doar daca pilotii merg si vrem amandoi. Procentul il stabilim dupa piloti, cand stim cat valoreaza munca. Partea mea se castiga treptat, in cativa ani, ca sa fie corect daca unul dintre noi se retrage. Totul e scris intr-un contract.",
+      q: "Ce parte din firma ai lua?",
+      a: "Depinde cat platesti si cat e de construit. O stabilim dupa ce intelegem ideea, nu in primul apel, si o scriem intr-un contract. Partea mea se castiga treptat, in cativa ani, ca sa fie corect daca unul dintre noi se retrage.",
     },
     {
-      q: "Ce se intampla daca ne oprim dupa prima versiune?",
-      a: "Ai platit-o, deci e a ta: codul, datele, conturile. Poti continua cu alt programator sau cu o echipa, au tot ce le trebuie.",
+      q: "De ce nu lucrezi doar pe bani?",
+      a: "Pentru ca vreau sa am acelasi interes ca tine: sa mearga produsul, nu sa se termine proiectul. Daca vrei doar o aplicatie livrata, pentru asta am serviciile mele, pe mirkea.com/servicii.",
+    },
+    {
+      q: "Cat platesc in varianta cu pret redus?",
+      a: "Mai putin decat o constructie platita integral, care la mine porneste de la 3.000 EUR pentru web si 5.000 EUR pentru mobil. Cat de mult mai putin depinde de partea din firma. Facturez prin MIRKEA INTERACTIVE S.R.L.",
     },
     {
       q: "Cu cati fondatori lucrezi in acelasi timp?",
@@ -131,11 +138,7 @@ const copy = {
     },
     {
       q: "Trebuie sa am deja o firma?",
-      a: "Nu ca sa incepem. Codul si conturile trec pe firma ta cand o infiintezi.",
-    },
-    {
-      q: "Cat costa, de fapt?",
-      a: "Depinde ce intra in prima versiune. Pornim de la 3.000 EUR pentru web si 5.000 EUR pentru mobil, platit pe etape, cu pretul fix stiut inainte de cod. Facturez prin MIRKEA INTERACTIVE S.R.L.",
+      a: "Nu ca sa incepem. O infiintam cand scriem termenii, iar codul si conturile trec pe ea.",
     },
   ],
   formTitle: "Spune-mi ideea",
@@ -220,7 +223,7 @@ const optionClass =
               {copy.ctaSecondary}
             </a>
           </div>
-          <ul class="mt-10 grid grid-cols-1 gap-2 text-sm text-zinc-600 sm:grid-cols-2 sm:gap-x-6 dark:text-zinc-400">
+          <ul class="mt-10 grid grid-cols-1 gap-2 text-sm text-zinc-600 sm:grid-cols-[auto_1fr] sm:gap-x-10 dark:text-zinc-400">
             {
               copy.trust.map((item) => (
                 <li class="flex items-center gap-2">
@@ -262,9 +265,13 @@ const optionClass =
           }
         </ul>
       </div>
+      <p class="text-zinc-600 sm:col-span-2 dark:text-zinc-400">
+        {copy.paidOnly}{" "}
+        <a href={`${base}servicii`} class="font-medium text-zinc-900 underline underline-offset-4 hover:text-zinc-600 dark:text-zinc-100 dark:hover:text-zinc-300">{copy.paidOnlyLink}</a>
+      </p>
     </section>
 
-    <!-- Two ways: paid first, partner only after the pilots -->
+    <!-- Two ways: both make him a partner; the founder picks how much she pays -->
     <section class="reveal pb-14 sm:pb-20">
       <h2 class="mb-3 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.waysTitle}</h2>
       <p class="mb-10 text-lg text-zinc-600 dark:text-zinc-400">{copy.waysLead}</p>
@@ -288,6 +295,7 @@ const optionClass =
           ))
         }
       </div>
+      <p class="mt-6 leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.waysFoot}</p>
     </section>
 
     <!-- About and proof: she checks the person before she writes -->
@@ -340,22 +348,19 @@ const optionClass =
     <!-- Steps -->
     <section class="reveal py-14 sm:py-20">
       <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.stepsTitle}</h2>
-      <ol class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10">
+      <!-- Same four rows in every step (number, title, duration, text), shared across a row through subgrid -->
+      <ol class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-0">
         {
           copy.steps.map((step, index) => (
-            <li class="relative flex gap-4">
+            <li class="relative grid grid-cols-[2.5rem_1fr] content-start gap-x-4 sm:row-span-4 sm:grid-rows-subgrid">
               {index < copy.steps.length - 1 && <span class="absolute top-12 -bottom-6 left-5 w-px bg-zinc-200 sm:hidden dark:bg-zinc-700" aria-hidden="true"></span>}
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
+              <div class="row-span-4 flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
                 <step.icon size={20} />
               </div>
-              <div class="min-w-0 flex-1">
-                <p class="mb-1 font-mono text-xs text-zinc-400">0{index + 1}</p>
-                <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{step.name}</h3>
-                  <p class="inline-flex rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-semibold text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">{step.time}</p>
-                </div>
-                <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{step.text}</p>
-              </div>
+              <p class="col-start-2 mb-1 font-mono text-xs text-zinc-400">0{index + 1}</p>
+              <h3 class="col-start-2 text-lg font-semibold text-zinc-900 dark:text-zinc-100">{step.name}</h3>
+              <p class="col-start-2 mt-2 mb-3 inline-flex justify-self-start rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-semibold text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">{step.time}</p>
+              <p class="col-start-2 text-sm leading-relaxed text-zinc-600 sm:pb-10 dark:text-zinc-400">{step.text}</p>
             </li>
           ))
         }
