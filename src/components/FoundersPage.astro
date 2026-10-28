@@ -30,13 +30,13 @@ const copy = {
   ],
   fitTitle: "E pentru tine daca",
   fit: [
-    "Ai deja oameni care o cer sau ar plati pentru ea: clienti, o lista de asteptare, piloti.",
+    "Ai vorbit deja cu oameni care au problema, sau o ai chiar tu: clienti, o lista de asteptare, piloti.",
     "Cunosti domeniul din interior, de ani de zile.",
     "Cauti un partener care ramane in produs, nu un furnizor.",
   ],
   notFitTitle: "Nu e pentru tine daca",
   notFit: [
-    "Cauti inca o idee.",
+    "Ai o idee, dar n-ai vorbit inca cu nimeni care are problema.",
     "Ai deja un produs matur si o echipa tehnica.",
     "Vrei o platforma uriasa cu zeci de module din prima zi.",
   ],
@@ -109,14 +109,14 @@ const copy = {
     },
     {
       icon: Handshake,
-      name: "Ne cunoastem",
+      name: "Exploram problema",
       time: "1-2 saptamani",
-      text: "Cateva discutii despre idee, clienti si cum lucram. Daca ne potrivim, alegem ce intra in prima versiune si scriem termenii.",
+      text: "Imi dai contextul si vorbesc cu cel putin un om care are problema, poti fi si tu. Apoi alegem ce intra in prima versiune si scriem termenii.",
     },
     {
       icon: Hammer,
       name: "Construim prima versiune",
-      time: "cateva saptamani",
+      time: "2-4 saptamani",
       text: "Pe etape, ca primii clienti sa o foloseasca repede. Tu aduci clientii si ce spun ei, eu produsul.",
     },
     {
@@ -148,6 +148,10 @@ const copy = {
       a: "Mai putin decat o constructie platita integral, care la mine porneste de la 3.000 EUR pentru web si 5.000 EUR pentru mobil. Cat de mult mai putin depinde de partea din firma. Facturez prin MIRKEA INTERACTIVE S.R.L.",
     },
     {
+      q: "De ce vrei sa vorbesti cu cei care au problema?",
+      a: "Pentru ca am facut si eu greseala asta: am construit pornind doar de la o idee. Inainte de prima linie de cod vreau sa aud problema de la cineva care o are, ca sa construim ce trebuie, nu ce pare bine pe hartie.",
+    },
+    {
       q: "Cu cati fondatori lucrezi in acelasi timp?",
       a: "Cu cel mult 3, ca fiecare sa aiba timpul meu si raspunsuri repede.",
     },
@@ -164,7 +168,7 @@ const copy = {
     phone: "Telefon (optional)",
     idea: "Ideea, intr-o propozitie sau doua",
     ideaPlaceholder: "De exemplu: o aplicatie in care casele de expeditii verifica un transportator inainte sa ii dea marfa",
-    asking: "Cine o cere azi?",
+    asking: "Cine are problema asta? Cu cine ai vorbit despre ea?",
     askingPlaceholder: "De exemplu: 6 clienti ai consultantei mele, doi vor sa o testeze",
     stage: "Ce exista azi",
     stageOptions: ["Nimic inca", "Schite sau ecrane", "Un prototip"],
@@ -463,7 +467,7 @@ const optionClass =
           </div>
           <div class="sm:col-span-2">
             <label for="founder-asking" class={labelClass}>{copy.fields.asking}</label>
-            <textarea id="founder-asking" name="asking" rows="2" placeholder={copy.fields.askingPlaceholder} class={inputClass}></textarea>
+            <textarea id="founder-asking" name="asking" rows="2" required placeholder={copy.fields.askingPlaceholder} class={inputClass}></textarea>
           </div>
           <fieldset class="sm:col-span-2">
             <legend class={labelClass}>{copy.fields.stage}</legend>
