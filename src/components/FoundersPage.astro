@@ -193,7 +193,8 @@ const copy = {
   consent: "Folosesc datele doar ca sa iti raspund despre aceasta idee.",
   submit: "Trimite ideea",
   sending: "Se trimite...",
-  success: "Multumesc! Iti raspund in scris in cel mult o zi lucratoare.",
+  doneTitle: "Am primit ideea ta",
+  success: "Multumesc! Iti raspund in scris in cel mult o zi lucratoare. Daca vrei sa adaugi ceva, scrie-mi la contact@mirkea.com.",
   error: "Nu s-a putut trimite. Scrie-mi direct la contact@mirkea.com.",
   mailSubject: "Idee de aplicatie",
   footerRights: "Toate drepturile rezervate.",
@@ -541,6 +542,11 @@ const optionClass =
           </div>
           <p id="founder-status" role="status" class="text-base font-medium text-zinc-900 sm:col-span-2 dark:text-zinc-100"></p>
         </form>
+        <div id="founder-done" hidden tabindex="-1" class="rounded-xl border border-zinc-200 bg-zinc-50 p-6 text-center outline-none sm:p-10 dark:border-zinc-700 dark:bg-zinc-900/60">
+          <span class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"><Check size={24} /></span>
+          <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.doneTitle}</p>
+          <p class="mx-auto max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.success}</p>
+        </div>
 
         <div class="mt-8 flex flex-col gap-3 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-700">
           <p class="font-medium text-zinc-900 dark:text-zinc-100">{copy.orCall}</p>
@@ -713,7 +719,15 @@ const optionClass =
         });
         if (!response.ok) throw new Error(String(response.status));
         form.reset();
-        if (status) status.textContent = form.dataset.success || "";
+        if (status) status.textContent = "";
+        // Swap the form for a clear confirmation, so the founder sees it worked.
+        const done = document.getElementById("founder-done");
+        if (done) {
+          form.hidden = true;
+          done.hidden = false;
+          done.scrollIntoView({ behavior: "smooth", block: "center" });
+          done.focus({ preventScroll: true });
+        }
         // Founder leads are counted apart from the /servicii ones.
         (window as any).umami?.track?.("founder-lead", { stage: data.stage, reply_by: data.reply_by });
         (window as any).fbq?.("track", "Lead", { content_category: "founder" });
