@@ -82,6 +82,43 @@ const base = import.meta.env.BASE_URL;
     </div>
     {landing ? <slot name="footer" /> : <Footer />}
 
+    {
+      landing && (
+        <script is:inline>
+          // Landing pages only: scroll depth (25/50/75/100) and first view of [data-track-view] blocks, once each per visit.
+          (function () {
+            var track = function (name, data) {
+              if (window.umami && window.umami.track) window.umami.track(name, data);
+            };
+            var page = location.pathname;
+            var depths = [25, 50, 75, 100];
+            var onScroll = function () {
+              var max = document.documentElement.scrollHeight - innerHeight;
+              var pct = max > 0 ? (scrollY / max) * 100 : 100;
+              while (depths.length && pct >= depths[0] - 1) track("scroll", { depth: depths.shift(), page: page });
+              if (!depths.length) removeEventListener("scroll", onScroll);
+            };
+            addEventListener("scroll", onScroll, { passive: true });
+            document.addEventListener("DOMContentLoaded", function () {
+              if (!("IntersectionObserver" in window)) return;
+              var seen = new IntersectionObserver(
+                function (entries) {
+                  entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    track("view", { block: entry.target.getAttribute("data-track-view"), page: page });
+                    seen.unobserve(entry.target);
+                  });
+                },
+                { threshold: 0.15 },
+              );
+              document.querySelectorAll("[data-track-view]").forEach(function (el) {
+                seen.observe(el);
+              });
+            });
+          })();
+        </script>
+      )
+    }
     <script>
       // Enhanced SPA transition system with history API
       document.addEventListener("DOMContentLoaded", () => {

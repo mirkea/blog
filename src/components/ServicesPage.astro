@@ -373,8 +373,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 <Layout title={copy.title} description={copy.description} lang={lang} landing>
   <div class="services-page">
     <!-- Hero: copy, then the three example apps. Each ad links with ?exemplu=<key> to open its app first -->
-    <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
-      <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <section class="bleed relative -mt-12 overflow-hidden bg-zinc-50 pt-10 pb-14 sm:pt-14 sm:pb-20 dark:bg-zinc-800/50">
       <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div class="mb-8 flex flex-wrap items-center gap-x-5 gap-y-4 sm:mb-10">
           <a href={base} rel="external" class="flex shrink-0 items-center" aria-label="Mircea Braescu">
@@ -441,6 +440,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </div>
           <a
             href="#savings"
+            data-umami-event="hero-calc"
             class="mt-3 inline-flex min-h-[44px] items-center text-sm font-medium text-zinc-900 underline underline-offset-4 sm:no-underline sm:hover:underline dark:text-zinc-100"
           >
             {copy.calcTitle}
@@ -474,6 +474,8 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
                     aria-controls={`panel-${example.key}`}
                     aria-selected={index === 0 ? "true" : "false"}
                     data-example={example.key}
+                    data-umami-event="example-tab"
+                    data-umami-event-tab={example.key}
                     class="example-tab min-h-[44px] cursor-pointer rounded-full border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-300 dark:hover:border-zinc-100"
                   >
                     {example.tab}
@@ -504,6 +506,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               <button
                 type="button"
                 data-example-play
+                data-umami-event="example-play"
                 hidden
                 class="absolute bottom-4 left-1/2 z-10 inline-flex min-h-[44px] -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full bg-zinc-900/90 px-5 text-sm font-semibold text-white shadow-lg backdrop-blur hover:bg-zinc-900"
               >
@@ -607,7 +610,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           ))
         }
       </div>
-      <div class="mt-8">
+      <div class="mt-8" data-track-view="prices">
         <p class="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.priceTitle}</p>
         <dl class="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
           {
@@ -634,7 +637,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     </section>
 
     <!-- Savings calculator: same math as the internal pricer (hours x hourly cost x 48 weeks) -->
-    <section id="savings" class="reveal scroll-mt-24 pb-14 sm:pb-20">
+    <section id="savings" data-track-view="calculator" class="reveal scroll-mt-24 pb-14 sm:pb-20">
       <div
         id="savings-calc"
         class="relative overflow-hidden rounded-2xl bg-zinc-900 p-7 text-zinc-100 sm:p-10 dark:bg-zinc-100 dark:text-zinc-900"
@@ -682,6 +685,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
               <a
                 href="#call"
                 id="calc-cta"
+                data-umami-event="calc-cta"
                 class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-100 px-6 py-3 text-base font-semibold text-zinc-900 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-700"
               >
                 {copy.calcCta}
@@ -775,7 +779,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     </section>
 
     <!-- Form -->
-    <section id="call" class="reveal scroll-mt-24 pb-6">
+    <section id="call" data-track-view="contact" class="reveal scroll-mt-24 pb-6">
       <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl shadow-zinc-900/5 sm:p-10 dark:border-zinc-700 dark:bg-zinc-800/60">
         <h2 class="mb-2 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
           {copy.formTitle}
@@ -936,17 +940,6 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     margin-left: calc(50% - 50vw);
   }
 
-  .hero-glow {
-    background:
-      radial-gradient(40rem 24rem at 80% 30%, rgb(228 228 231 / 0.7), transparent 70%),
-      radial-gradient(30rem 20rem at 10% 90%, rgb(244 244 245 / 0.9), transparent 70%);
-  }
-
-  :global(.dark) .hero-glow {
-    background:
-      radial-gradient(40rem 24rem at 80% 30%, rgb(63 63 70 / 0.5), transparent 70%),
-      radial-gradient(30rem 20rem at 10% 90%, rgb(39 39 42 / 0.6), transparent 70%);
-  }
 
   .calc-grid {
     background-image:
@@ -1243,6 +1236,14 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       };
       hoursInput.addEventListener("input", update);
       rateInput.addEventListener("input", update);
+      // One event per visit, sent when a value is set (slider released or field left), not on every step.
+      const trackUse = () => {
+        if (calc.dataset.tracked) return;
+        calc.dataset.tracked = "true";
+        (window as any).umami?.track?.("calc-use", { hours: hoursInput.value, rate: rateInput.value });
+      };
+      hoursInput.addEventListener("change", trackUse);
+      rateInput.addEventListener("change", trackUse);
       update();
     }
 
