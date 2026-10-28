@@ -400,9 +400,8 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             <span class="block" data-h1a>{copy.h1a}</span>
             <span class="mt-2 block">
               <span data-h1b>{copy.h1b}</span>{" "}
-              <span class="relative inline-block whitespace-nowrap">
-                <span data-h1u>{copy.h1u}</span>
-                <span class="hero-underline absolute -bottom-1 left-0 h-1.5 w-full origin-left bg-zinc-900 dark:bg-zinc-100"></span>
+              <span class="inline-block max-w-full">
+                <span data-h1u class="hero-phrase">{copy.h1u}</span>
               </span>
             </span>
           </h1>
@@ -1023,13 +1022,20 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
     }
   }
 
-  .hero-underline {
-    transform: scaleX(0);
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+  /* Bar sits under the words themselves, so a long ad headline can wrap instead of being clipped. */
+  .hero-phrase {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 6px;
+    padding-bottom: 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
-  .is-visible .hero-underline {
-    transform: scaleX(1);
+  .is-visible .hero-phrase {
+    background-size: 100% 6px;
+    transition: background-size 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
   }
 
   .pulse-dot {
@@ -1074,9 +1080,10 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
   @media (prefers-reduced-motion: reduce) {
     .reveal,
-    .hero-underline {
+    .hero-phrase {
       opacity: 1;
       transform: none;
+      background-size: 100% 6px;
       transition: none;
     }
 
