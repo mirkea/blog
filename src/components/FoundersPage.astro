@@ -28,15 +28,18 @@ const copy = {
     "Cel mult 3 fondatori in acelasi timp",
     "Raspund in scris in cel mult o zi lucratoare",
   ],
+  ruleLabel: "O singura conditie",
+  ruleTitle: "Cel putin un om, altul decat tine, care are problema.",
+  ruleText: "Cu el vorbesc inainte sa construiesc, si lui ii aratam prima versiune cand e gata. Daca ai doar ideea, e prea devreme pentru mine.",
   fitTitle: "E pentru tine daca",
   fit: [
-    "Ai vorbit deja cu oameni care au problema, sau o ai chiar tu: clienti, o lista de asteptare, piloti.",
+    "Ai cel putin un om, altul decat tine, care are problema: un client, cineva de pe o lista de asteptare, un pilot.",
     "Cunosti domeniul din interior, de ani de zile.",
     "Cauti un partener care ramane in produs, nu un furnizor.",
   ],
   notFitTitle: "Nu e pentru tine daca",
   notFit: [
-    "Ai o idee, dar n-ai vorbit inca cu nimeni care are problema.",
+    "Ai doar ideea si nimeni altcineva nu are problema, sau n-ai vorbit inca cu nimeni despre ea.",
     "Ai deja un produs matur si o echipa tehnica.",
     "Vrei o platforma uriasa cu zeci de module din prima zi.",
   ],
@@ -111,7 +114,7 @@ const copy = {
       icon: Handshake,
       name: "Exploram problema",
       time: "1-2 saptamani",
-      text: "Imi dai contextul si vorbesc cu cel putin un om care are problema, poti fi si tu. Apoi alegem ce intra in prima versiune si scriem termenii.",
+      text: "Imi dai contextul si vorbesc cu cel putin un om, altul decat tine, care are problema. Apoi alegem ce intra in prima versiune si scriem termenii.",
     },
     {
       icon: Hammer,
@@ -148,8 +151,8 @@ const copy = {
       a: "Mai putin decat o constructie platita integral, care la mine porneste de la 3.000 EUR pentru web si 5.000 EUR pentru mobil. Cat de mult mai putin depinde de partea din firma. Facturez prin MIRKEA INTERACTIVE S.R.L.",
     },
     {
-      q: "De ce vrei sa vorbesti cu cei care au problema?",
-      a: "Pentru ca am facut si eu greseala asta: am construit pornind doar de la o idee. Inainte de prima linie de cod vreau sa aud problema de la cineva care o are, ca sa construim ce trebuie, nu ce pare bine pe hartie.",
+      q: "De ce trebuie sa mai aiba cineva problema, in afara de mine?",
+      a: "Pentru ca am facut si eu greseala asta: am construit pornind doar de la o idee. Inainte de prima linie de cod vreau sa aud problema de la cineva care o are. Si cand prima versiune e gata, trebuie sa stim clar cui o aratam. Daca problema o ai doar tu, e prea devreme sa construim.",
     },
     {
       q: "Cu cati fondatori lucrezi in acelasi timp?",
@@ -168,7 +171,7 @@ const copy = {
     phone: "Telefon (optional)",
     idea: "Ideea, intr-o propozitie sau doua",
     ideaPlaceholder: "De exemplu: o aplicatie in care casele de expeditii verifica un transportator inainte sa ii dea marfa",
-    asking: "Cine are problema asta? Cu cine ai vorbit despre ea?",
+    asking: "Cine, in afara de tine, are problema asta? Cui aratam prima versiune?",
     askingPlaceholder: "De exemplu: 6 clienti ai consultantei mele, doi vor sa o testeze",
     stage: "Ce exista azi",
     stageOptions: ["Nimic inca", "Schite sau ecrane", "Un prototip"],
@@ -256,8 +259,13 @@ const optionClass =
       </div>
     </section>
 
-    <!-- Who it is for, and who it is not for -->
+    <!-- Who it is for, and who it is not for. The rule is a hard requirement (his call): someone besides the founder has the problem -->
     <section class="reveal grid grid-cols-1 gap-5 pb-14 sm:grid-cols-2 sm:pb-20">
+      <div class="rounded-xl border-2 border-zinc-900 p-7 sm:col-span-2 dark:border-zinc-100">
+        <p class="text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.ruleLabel}</p>
+        <p class="mt-2 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100">{copy.ruleTitle}</p>
+        <p class="mt-3 text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.ruleText}</p>
+      </div>
       <div class="rounded-xl border border-zinc-900 bg-zinc-900 p-7 text-zinc-100 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">
         <h2 class="mb-4 text-xl font-semibold">{copy.fitTitle}</h2>
         <ul class="flex flex-col gap-3">
