@@ -101,7 +101,10 @@ const copy = {
       { name: "Aplicatie mobila in App Store si Google Play", value: "de la 5.000 EUR" },
       { name: "Audit pentru o aplicatie facuta cu AI, scazut din pretul lucrarii", value: "de la 500 EUR" },
     ],
-    priceExample: "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
+    priceExample: [
+      "Exemplu: o aplicatie de ofertare pentru o firma de servicii. Echipa alege produsele si manopera, pretul se calculeaza automat, iar ofertele raman salvate si se trimit clientului dintr-un buton, pe email sau WhatsApp. In jur de 3.000 EUR.",
+      "Exemplu: o platforma de programari si abonamente pentru un studio costa de obicei 4.000-7.000 EUR.",
+    ],
     priceFoot: [
       "Pretul exact, fix, il stiti inainte de orice linie de cod.",
       "Platiti pe etape: primul pas e analiza, cu pret fix, iar daca nu va convine ce propun, va opriti acolo.",
@@ -150,7 +153,7 @@ const copy = {
     ],
     aboutTitle: "Cine sunt",
     about:
-      "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o aplicatie care dura luni cu o echipa intreaga o pot livra singur in cateva saptamani.",
+      "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Lucrez zilnic cu AI, asa ca o prima versiune bine delimitata, testata cu voi inainte de lansare, o livrez in cateva saptamani.",
     projectsLead: "In echipe am livrat mult mai multe. Pe cont propriu am construit:",
     projects: [
       { name: "Carvuu", url: "https://carvuu.com", text: "aplicatie mobila de social media pentru masina ta, de la idee la productie in 2 luni" },
@@ -271,7 +274,10 @@ const copy = {
       { name: "Mobile app in the App Store and Google Play", value: "from €5,000" },
       { name: "Audit of an app built with AI, deducted from the fix", value: "from €500" },
     ],
-    priceExample: "Example: a booking and membership platform for a studio usually costs €4,000-7,000.",
+    priceExample: [
+      "Example: a quoting app for a service company. Your team picks products and labour, the price is calculated automatically, and quotes are saved and sent to the client with one click, by email or WhatsApp. Around €3,000.",
+      "Example: a booking and membership platform for a studio usually costs €4,000-7,000.",
+    ],
     priceFoot: [
       "You know the exact, fixed price before any code is written.",
       "You pay in stages: the first step is the assessment, at a fixed price, and if you don't like what I propose, you stop there.",
@@ -320,7 +326,7 @@ const copy = {
     ],
     aboutTitle: "Who I am",
     about:
-      "I'm Mircea Braescu. 20 years in software and 10 in product management: delivery PM on verified.eu, a B2B platform acquired for 31M EUR, then CPO at a product studio. I work with AI every day, so an app that used to take a team months I can deliver on my own in a few weeks.",
+      "I'm Mircea Braescu. 20 years in software and 10 in product management: delivery PM on verified.eu, a B2B platform acquired for 31M EUR, then CPO at a product studio. I work with AI every day, so a well-scoped first version, tested with you before launch, ships in a few weeks.",
     projectsLead: "With teams I've shipped many more. On my own I built:",
     projects: [
       { name: "Carvuu", url: "https://carvuu.com", text: "a social media app for your car, from idea to production in 2 months" },
@@ -613,7 +619,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             ))
           }
         </dl>
-        <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">{copy.priceExample}</p>
+        {copy.priceExample.map((line, i) => <p class={`${i ? "mt-2" : "mt-4"} text-sm text-zinc-600 dark:text-zinc-400`}>{line}</p>)}
         <ul class="mt-4 flex flex-col gap-2 text-sm text-zinc-900 dark:text-zinc-100">
           {
             copy.priceFoot.map((line) => (
