@@ -188,6 +188,7 @@ const copy = {
     doneTitle: "Am primit cererea",
     success: "Multumesc! Va sun in cel mult o zi lucratoare. Daca vreti sa adaugati ceva, scrieti-mi la contact@mirkea.com.",
     error: "Nu s-a putut trimite. Scrieti-mi direct la contact@mirkea.com.",
+    emailError: "Verificati adresa de email, de exemplu nume@firma.ro.",
     mailSubject: "Apel gratuit",
     footerRights: "Toate drepturile rezervate.",
   },
@@ -362,6 +363,7 @@ const copy = {
     doneTitle: "Request received",
     success: "Thank you! I'll call you within one working day. If you want to add anything, write to contact@mirkea.com.",
     error: "It couldn't be sent. Write to me directly at contact@mirkea.com.",
+    emailError: "Check the email address, for example name@company.com.",
     mailSubject: "Free call",
     footerRights: "All rights reserved.",
   },
@@ -841,6 +843,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           data-sending={copy.sending}
           data-success={copy.success}
           data-error={copy.error}
+          data-email-error={copy.emailError}
           data-mail-subject={copy.mailSubject}
           novalidate
         >
@@ -1274,6 +1277,13 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
+      // The browser accepts "a@b"; Resend doesn't, so ask for a dot in the domain before sending.
+      const email = form.querySelector("input[type=email]") as HTMLInputElement | null;
+      if (email) {
+        const value = email.value.trim();
+        email.setCustomValidity(value && !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(value) ? form.dataset.emailError || "" : "");
+        email.addEventListener("input", () => email.setCustomValidity(""), { once: true });
+      }
       if (!form.reportValidity()) return;
 
       const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;

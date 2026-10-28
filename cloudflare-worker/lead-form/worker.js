@@ -75,6 +75,11 @@ export default {
     }
     // Founders write first and may leave no phone; the free-call form needs one.
     const founder = lead.offer === "founder";
+    // Resend refuses a reply-to like "a@b", which would lose the lead: only pass a plausible address.
+    const validEmail = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(String(lead.email || "").trim());
+    if (founder && lead.email && !validEmail) {
+      return new Response("Invalid email", { status: 400, headers });
+    }
     if (!lead.name || !(founder ? lead.email : lead.phone)) {
       return new Response(founder ? "Name and email are required" : "Name and phone are required", { status: 400, headers });
     }
@@ -95,7 +100,7 @@ export default {
       body: JSON.stringify({
         from: env.FROM_EMAIL,
         to: env.NOTIFY_EMAIL,
-        reply_to: lead.email || undefined,
+        reply_to: validEmail ? String(lead.email).trim() : undefined,
         subject: `${founder ? "New founder idea" : "New free-call request"}: ${String(lead.name).slice(0, 80)}${lead.company ? ` (${String(lead.company).slice(0, 80)})` : ""}`,
         html: `<p>${founder ? "Reply in writing within one working day." : "Call back within one working day."}</p><table>${rows}</table>`,
       }),
