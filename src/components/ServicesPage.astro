@@ -185,7 +185,8 @@ const copy = {
     consent: "Folosesc datele doar ca sa va contactez despre aceasta cerere.",
     submit: "Trimite",
     sending: "Se trimite...",
-    success: "Multumesc! Va sun in cel mult o zi lucratoare.",
+    doneTitle: "Am primit cererea",
+    success: "Multumesc! Va sun in cel mult o zi lucratoare. Daca vreti sa adaugati ceva, scrieti-mi la contact@mirkea.com.",
     error: "Nu s-a putut trimite. Scrieti-mi direct la contact@mirkea.com.",
     mailSubject: "Apel gratuit",
     footerRights: "Toate drepturile rezervate.",
@@ -358,7 +359,8 @@ const copy = {
     consent: "I use your details only to contact you about this request.",
     submit: "Send",
     sending: "Sending...",
-    success: "Thank you! I'll call you within one working day.",
+    doneTitle: "Request received",
+    success: "Thank you! I'll call you within one working day. If you want to add anything, write to contact@mirkea.com.",
     error: "It couldn't be sent. Write to me directly at contact@mirkea.com.",
     mailSubject: "Free call",
     footerRights: "All rights reserved.",
@@ -915,6 +917,11 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           </div>
           <p id="lead-status" role="status" class="text-base font-medium text-zinc-900 sm:col-span-2 dark:text-zinc-100"></p>
         </form>
+        <div id="lead-done" hidden tabindex="-1" class="rounded-xl border border-zinc-200 bg-zinc-50 p-6 text-center outline-none sm:p-10 dark:border-zinc-700 dark:bg-zinc-900/60">
+          <span class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"><Check size={24} /></span>
+          <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.doneTitle}</p>
+          <p class="mx-auto max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.success}</p>
+        </div>
       </div>
     </section>
   </div>
@@ -1241,8 +1248,12 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         (document.getElementById("lead-rate") as HTMLInputElement).value = `${rate} ${currency}`;
         (document.getElementById("lead-savings") as HTMLInputElement).value = `${formatter.format(yearly)} ${currency}`;
       };
-      hoursInput.addEventListener("input", update);
-      rateInput.addEventListener("input", update);
+      const touch = () => {
+        calc.dataset.touched = "true";
+        update();
+      };
+      hoursInput.addEventListener("input", touch);
+      rateInput.addEventListener("input", touch);
       // One event per visit, sent when a value is set (slider released or field left), not on every step.
       const trackUse = () => {
         if (calc.dataset.tracked) return;
@@ -1268,6 +1279,10 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
       data.lang = form.dataset.lang || "";
       data.page = window.location.pathname + window.location.search;
+      // Untouched calculator: say so instead of sending its sample numbers as if they were the visitor's.
+      if (!document.getElementById("savings-calc")?.dataset.touched) {
+        data.hours_per_week = data.hourly_cost = data.yearly_savings = "default";
+      }
 
       const endpoint = form.dataset.endpoint;
       if (!endpoint) {
@@ -1290,7 +1305,15 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         });
         if (!response.ok) throw new Error(String(response.status));
         form.reset();
-        if (status) status.textContent = form.dataset.success || "";
+        if (status) status.textContent = "";
+        // Swap the form for a clear confirmation, so the visitor sees it worked.
+        const done = document.getElementById("lead-done");
+        if (done) {
+          form.hidden = true;
+          done.hidden = false;
+          done.scrollIntoView({ behavior: "smooth", block: "center" });
+          done.focus({ preventScroll: true });
+        }
         // Conversion events for analytics and, once added, the Meta pixel.
         (window as any).umami?.track?.("lead", { lang: data.lang, interest: data.interest });
         (window as any).fbq?.("track", "Lead");
