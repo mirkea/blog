@@ -1303,7 +1303,10 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-        if (!response.ok) throw new Error(String(response.status));
+        if (!response.ok) {
+          const reason = (await response.text().catch(() => "")).slice(0, 80);
+          throw new Error(`${response.status} ${reason}`.trim());
+        }
         form.reset();
         if (status) status.textContent = "";
         // Swap the form for a clear confirmation, so the visitor sees it worked.
@@ -1317,8 +1320,10 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         // Conversion events for analytics and, once added, the Meta pixel.
         (window as any).umami?.track?.("lead", { lang: data.lang, interest: data.interest });
         (window as any).fbq?.("track", "Lead");
-      } catch {
+      } catch (error) {
         if (status) status.textContent = form.dataset.error || "";
+        // Failed sends are counted too, with the HTTP status or the network error, so they can't hide.
+        (window as any).umami?.track?.("lead-error", { reason: String((error as Error)?.message || error).slice(0, 100) });
       } finally {
         button.disabled = false;
       }
