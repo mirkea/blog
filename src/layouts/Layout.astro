@@ -124,6 +124,8 @@ const base = import.meta.env.BASE_URL;
       document.addEventListener("DOMContentLoaded", () => {
         const pageTransition = document.getElementById("page-transition");
         const mainContent = document.querySelector("main");
+        // Path of the page currently in <main>, so hash-only history changes are ignored.
+        let shownPath = window.location.pathname;
 
         // Function to load content via fetch
         async function loadContent(url) {
@@ -389,6 +391,7 @@ const base = import.meta.env.BASE_URL;
 
               // Update browser history
               window.history.pushState({ path: targetHref }, "", targetHref);
+              shownPath = new URL(targetHref).pathname;
 
               // Load the new content
               loadContent(targetHref);
@@ -400,12 +403,12 @@ const base = import.meta.env.BASE_URL;
         attachLinkListeners();
 
         // Handle browser back/forward navigation
+        // Same-page anchors (#call) also fire popstate: only reload when the page itself changed.
         window.addEventListener("popstate", (e) => {
-          if (e.state && e.state.path) {
-            loadContent(e.state.path);
-          } else {
-            loadContent(window.location.href);
-          }
+          const target = new URL(e.state && e.state.path ? e.state.path : window.location.href, window.location.href);
+          if (target.pathname === shownPath) return;
+          shownPath = target.pathname;
+          loadContent(target.href);
         });
       });
 
