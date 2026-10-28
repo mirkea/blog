@@ -1,0 +1,675 @@
+---
+import Layout from "../layouts/Layout.astro";
+import logoRaw from "../../public/logo.svg?raw";
+import { ArrowRight, ArrowUpRight, Check, X, PenLine, ListChecks, Hammer, Handshake, CalendarDays } from "lucide-react";
+
+const base = import.meta.env.BASE_URL;
+const leadsWorkerUrl = import.meta.env.PUBLIC_LEADS_WORKER_URL || "";
+const calUrl = "https://cal.com/braescu-mircea/15min";
+const linkedin = "https://www.linkedin.com/in/mircea-braescu/";
+
+// Romanian only, "tu" register: founders, not the firms /servicii talks to. No diacritics on purpose.
+// Plain words for the equity terms: the founders this page is for are local, not YC regulars.
+const copy = {
+  title: "Prima versiune a aplicatiei tale, pentru fondatori cu clienti | Mircea Braescu",
+  description:
+    "Ai clientii si ideea, iti lipseste cine sa construiasca aplicatia. Construiesc prima versiune in cateva saptamani, cu pret fix. Codul, datele si ideea raman ale firmei tale.",
+  eyebrow: "Pentru fondatori cu clienti",
+  h1a: "Ai clientii.",
+  h1b: "Iti lipseste cine sa construiasca",
+  h1u: "aplicatia.",
+  lead: "Construiesc prima versiune in cateva saptamani, cu pret fix, ca primii tai clienti sa o foloseasca. Codul, datele si ideea raman ale firmei tale.",
+  cta: "Spune-mi ideea",
+  ctaSecondary: "Programeaza un apel",
+  trust: [
+    "20 de ani in software",
+    "Fost PM pe verified.eu, vanduta pentru 31 mil. EUR",
+    "Cel mult 3 fondatori in acelasi timp",
+    "Raspund in scris in cel mult o zi lucratoare",
+  ],
+  fitTitle: "E pentru tine daca",
+  fit: [
+    "Ai deja oameni care o cer sau ar plati pentru ea: clienti, o lista de asteptare, piloti.",
+    "Cunosti domeniul din interior, de ani de zile.",
+    "Nu ai un cofondator tehnic si nu vrei o agentie.",
+  ],
+  notFitTitle: "Nu e pentru tine daca",
+  notFit: [
+    "Cauti inca o idee.",
+    "Ai deja un produs matur si o echipa tehnica.",
+    "Vrei o platforma uriasa cu zeci de module din prima zi.",
+  ],
+  waysTitle: "Doua feluri de a lucra impreuna",
+  waysLead: "Incepem mereu cu prima varianta. A doua o discutam doar daca pilotii merg.",
+  ways: [
+    {
+      tag: "Acum",
+      name: "Platesti prima versiune",
+      points: [
+        "Pret fix pe etape, stiut inainte de orice linie de cod.",
+        "De la 3.000 EUR pentru o aplicatie web, de la 5.000 EUR pentru una mobila.",
+        "Codul, datele si conturile sunt pe numele firmei tale.",
+      ],
+    },
+    {
+      tag: "Daca pilotii merg",
+      name: "Pot deveni cofondatorul tehnic",
+      points: [
+        "Continui sa construiesc pentru o parte din firma, in loc de plata pe etape.",
+        "Partea mea se castiga treptat, in cativa ani. Daca plec mai devreme, raman doar cu cat am castigat pana atunci.",
+        "Totul scris intr-un contract, pe care il verifica si avocatul tau. Fara procente in primul apel.",
+      ],
+    },
+  ],
+  aboutTitle: "Cine sunt",
+  about:
+    "Sunt Mircea Braescu. Am 20 de ani in software si 10 in product management: am fost delivery PM pe verified.eu, o platforma B2B vanduta pentru 31 mil. EUR, apoi CPO intr-un studio de produs. Nu construiesc doar ce scrie in lista: intreb de ce, tai ce nu trebuie construit inca si iti spun sincer ce nu merita facut.",
+  proofTitle: "Ce am construit pe cont propriu",
+  proof: [
+    {
+      name: "Carvuu",
+      url: "https://carvuu.com",
+      what: "Aplicatie mobila de social media pentru masina ta.",
+      timeline: "De la idee la productie in 2 luni.",
+    },
+    {
+      name: "AcoMag",
+      url: "https://acomag.ro",
+      what: "Magazin online de suruburi si accesorii pentru acoperis.",
+      timeline: "Prima versiune lansata in mai putin de o luna, merge de peste doi ani.",
+    },
+  ],
+  linkedinLabel: "Profilul meu pe LinkedIn",
+  stepsTitle: "Cum decurge",
+  steps: [
+    {
+      icon: PenLine,
+      name: "Imi spui ideea",
+      time: "o zi",
+      text: "In scris sau intr-un apel scurt. Iti raspund in cel mult o zi lucratoare, cu ce cred si ce intrebari am.",
+    },
+    {
+      icon: ListChecks,
+      name: "Ce intra in prima versiune",
+      time: "2-5 zile",
+      text: "Alegem ce trebuie sa faca prima versiune ca pilotii sa o foloseasca, si nimic in plus. Primesti pretul fix.",
+    },
+    {
+      icon: Hammer,
+      name: "Construim pe etape",
+      time: "2-4 saptamani pe etapa",
+      text: "Vezi fiecare etapa si o dai pilotilor. Timpul tau: un apel pe saptamana si ce spun pilotii.",
+    },
+    {
+      icon: Handshake,
+      name: "Decidem impreuna",
+      time: "dupa piloti",
+      text: "Continuam platit pe etape, devin cofondatorul tehnic sau ne oprim. Oricum, ramai cu tot ce am construit.",
+    },
+  ],
+  ownTitle: "Ce ramane al tau, orice ar fi",
+  own: [
+    "Codul, in contul firmei tale, de la prima linie.",
+    "Conturile de gazduire si datele, pe numele firmei tale.",
+    "Ideea si drepturile asupra ei, si in varianta de cofondator, pana semnam altceva.",
+    "Daca ne oprim dupa prima versiune, pastrezi tot si poti continua cu oricine.",
+    "Semnez un acord de confidentialitate inainte de primul apel, daca vrei.",
+  ],
+  faqTitle: "Intrebari frecvente",
+  faq: [
+    {
+      q: "Cum ar functiona partea mea din firma ta?",
+      a: "Doar daca pilotii merg si vrem amandoi. Procentul il stabilim dupa piloti, cand stim cat valoreaza munca. Partea mea se castiga treptat, in cativa ani, ca sa fie corect daca unul dintre noi se retrage. Totul e scris intr-un contract.",
+    },
+    {
+      q: "Ce se intampla daca ne oprim dupa prima versiune?",
+      a: "Ai platit-o, deci e a ta: codul, datele, conturile. Poti continua cu alt programator sau cu o echipa, au tot ce le trebuie.",
+    },
+    {
+      q: "Cu cati fondatori lucrezi in acelasi timp?",
+      a: "Cu cel mult 3, ca fiecare sa aiba timpul meu si raspunsuri repede.",
+    },
+    {
+      q: "Trebuie sa am deja o firma?",
+      a: "Nu ca sa incepem. Codul si conturile trec pe firma ta cand o infiintezi.",
+    },
+    {
+      q: "Cat costa, de fapt?",
+      a: "Depinde ce intra in prima versiune. Pornim de la 3.000 EUR pentru web si 5.000 EUR pentru mobil, platit pe etape, cu pretul fix stiut inainte de cod. Facturez prin MIRKEA INTERACTIVE S.R.L.",
+    },
+  ],
+  formTitle: "Spune-mi ideea",
+  formLead: "Cateva randuri sunt de ajuns. Iti raspund in scris in cel mult o zi lucratoare.",
+  fields: {
+    name: "Nume",
+    email: "Email",
+    phone: "Telefon (optional)",
+    idea: "Ideea, intr-o propozitie sau doua",
+    ideaPlaceholder: "De exemplu: o aplicatie in care casele de expeditii verifica un transportator inainte sa ii dea marfa",
+    asking: "Cine o cere azi?",
+    askingPlaceholder: "De exemplu: 6 clienti ai consultantei mele, doi vor sa o testeze",
+    stage: "Ce exista azi",
+    stageOptions: ["Nimic inca", "Schite sau ecrane", "Un prototip"],
+    link: "Un link, daca ai (optional)",
+    reply: "Cum preferi sa continuam",
+    replyOptions: ["Raspuns in scris", "Un apel"],
+  },
+  orCall: "Preferi sa vorbim direct?",
+  safety:
+    "Lucrez din Bucuresti, in UE, conform GDPR. Ce imi scrii ramane intre noi. Facturez prin MIRKEA INTERACTIVE S.R.L., CUI 50876040.",
+  consent: "Folosesc datele doar ca sa iti raspund despre aceasta idee.",
+  submit: "Trimite ideea",
+  sending: "Se trimite...",
+  success: "Multumesc! Iti raspund in scris in cel mult o zi lucratoare.",
+  error: "Nu s-a putut trimite. Scrie-mi direct la contact@mirkea.com.",
+  mailSubject: "Idee de aplicatie",
+  footerRights: "Toate drepturile rezervate.",
+};
+
+const inputClass =
+  "w-full rounded-md border border-zinc-200 bg-white px-3 py-2.5 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-100 dark:focus:ring-zinc-100";
+const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300";
+const optionClass =
+  "choice flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-4 text-zinc-700 transition-colors duration-200 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-300";
+---
+
+<Layout title={copy.title} description={copy.description} lang="ro" landing>
+  <div class="founders-page">
+    <!-- Hero -->
+    <section class="bleed relative -mt-12 overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24">
+      <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-3xl px-4 sm:px-6">
+        <div class="mb-8 flex flex-wrap items-center gap-x-5 gap-y-4 sm:mb-10">
+          <a href={base} rel="external" class="flex shrink-0 items-center" aria-label="Mircea Braescu">
+            <span class="inline-block size-8 [&>svg]:h-full [&>svg]:w-full" set:html={logoRaw} />
+          </a>
+          <span class="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-600 backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
+            <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-zinc-900 dark:bg-zinc-100"></span>
+            {copy.eyebrow}
+          </span>
+        </div>
+        <div class="reveal">
+          <h1 class="text-[2rem] leading-[1.05] font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100">
+            <span class="block">{copy.h1a}</span>
+            <span class="mt-2 block">
+              {copy.h1b}{" "}
+              <span class="relative inline-block whitespace-nowrap">
+                {copy.h1u}
+                <span class="hero-underline absolute -bottom-1 left-0 h-1.5 w-full origin-left bg-zinc-900 dark:bg-zinc-100"></span>
+              </span>
+            </span>
+          </h1>
+          <p class="mt-4 max-w-xl text-base leading-relaxed text-zinc-600 sm:mt-6 sm:text-xl dark:text-zinc-400">{copy.lead}</p>
+          <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
+            <a
+              href="#idee"
+              data-umami-event="founder-hero-form"
+              class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-900 px-7 py-3 text-base font-semibold text-zinc-100 shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            >
+              {copy.cta}
+              <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
+            </a>
+            <a
+              href={calUrl}
+              target="_blank"
+              rel="noopener"
+              data-umami-event="founder-hero-call"
+              class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-7 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
+            >
+              <CalendarDays size={18} />
+              {copy.ctaSecondary}
+            </a>
+          </div>
+          <ul class="mt-10 grid grid-cols-1 gap-2 text-sm text-zinc-600 sm:grid-cols-2 sm:gap-x-6 dark:text-zinc-400">
+            {
+              copy.trust.map((item) => (
+                <li class="flex items-center gap-2">
+                  <span class="flex shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
+                  {item}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who it is for, and who it is not for -->
+    <section class="reveal grid grid-cols-1 gap-5 pb-14 sm:grid-cols-2 sm:pb-20">
+      <div class="rounded-xl border border-zinc-900 bg-zinc-900 p-7 text-zinc-100 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">
+        <h2 class="mb-4 text-xl font-semibold">{copy.fitTitle}</h2>
+        <ul class="flex flex-col gap-3">
+          {
+            copy.fit.map((item) => (
+              <li class="flex items-start gap-3 leading-relaxed">
+                <span class="mt-1 shrink-0"><Check size={16} /></span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="rounded-xl border border-zinc-200 p-7 dark:border-zinc-700">
+        <h2 class="mb-4 text-xl font-semibold text-zinc-900 dark:text-zinc-100">{copy.notFitTitle}</h2>
+        <ul class="flex flex-col gap-3 text-zinc-600 dark:text-zinc-400">
+          {
+            copy.notFit.map((item) => (
+              <li class="flex items-start gap-3 leading-relaxed">
+                <span class="mt-1 shrink-0 text-zinc-400"><X size={16} /></span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- Two ways: paid first, partner only after the pilots -->
+    <section class="reveal pb-14 sm:pb-20">
+      <h2 class="mb-3 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.waysTitle}</h2>
+      <p class="mb-10 text-lg text-zinc-600 dark:text-zinc-400">{copy.waysLead}</p>
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        {
+          copy.ways.map((way) => (
+            <div class="lift relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-7 dark:border-zinc-700 dark:bg-zinc-800/60">
+              <div class="relative">
+                <p class="text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{way.tag}</p>
+                <h3 class="mt-2 mb-5 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{way.name}</h3>
+                <ul class="flex flex-col gap-3 text-zinc-600 dark:text-zinc-400">
+                  {way.points.map((point) => (
+                    <li class="flex items-start gap-3 leading-relaxed">
+                      <span class="mt-1 shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- About and proof: she checks the person before she writes -->
+    <section id="despre" class="reveal scroll-mt-24 border-t border-zinc-100 py-14 sm:py-20 dark:border-zinc-800">
+      <div class="flex flex-col items-start gap-6 sm:flex-row sm:gap-10">
+        <img
+          src={`${base}profile.webp`}
+          alt="Mircea Braescu"
+          width="144"
+          height="144"
+          class="h-28 w-28 shrink-0 rounded-full object-cover ring-4 ring-zinc-100 sm:h-36 sm:w-36 dark:ring-zinc-800"
+          loading="lazy"
+        />
+        <div class="min-w-0">
+          <h2 class="mb-3 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.aboutTitle}</h2>
+          <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.about}</p>
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener"
+            class="mt-3 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
+          >
+            {copy.linkedinLabel}
+            <ArrowUpRight size={16} />
+          </a>
+        </div>
+      </div>
+      <p class="mt-10 mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.proofTitle}</p>
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        {
+          copy.proof.map((project) => (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener"
+              class="lift group block rounded-xl border border-zinc-200 bg-white p-6 dark:border-zinc-700 dark:bg-zinc-800/60"
+            >
+              <span class="flex items-center justify-between gap-3">
+                <span class="text-xl font-semibold text-zinc-900 dark:text-zinc-100">{project.name}</span>
+                <ArrowUpRight size={18} class="text-zinc-400 transition-colors group-hover:text-zinc-900 dark:group-hover:text-zinc-100" />
+              </span>
+              <span class="mt-2 block leading-relaxed text-zinc-600 dark:text-zinc-400">{project.what}</span>
+              <span class="mt-3 inline-flex rounded-lg bg-zinc-100 px-3 py-1 text-sm font-medium text-zinc-900 dark:bg-zinc-700 dark:text-zinc-100">{project.timeline}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="reveal py-14 sm:py-20">
+      <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.stepsTitle}</h2>
+      <ol class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10">
+        {
+          copy.steps.map((step, index) => (
+            <li class="relative flex gap-4">
+              {index < copy.steps.length - 1 && <span class="absolute top-12 -bottom-6 left-5 w-px bg-zinc-200 sm:hidden dark:bg-zinc-700" aria-hidden="true"></span>}
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
+                <step.icon size={20} />
+              </div>
+              <div class="min-w-0 flex-1">
+                <p class="mb-1 font-mono text-xs text-zinc-400">0{index + 1}</p>
+                <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <h3 class="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{step.name}</h3>
+                  <p class="inline-flex rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-semibold text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">{step.time}</p>
+                </div>
+                <p class="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{step.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- Ownership -->
+    <section class="reveal pb-14 sm:pb-20">
+      <div class="rounded-2xl bg-zinc-900 p-7 text-zinc-100 sm:p-10 dark:bg-zinc-100 dark:text-zinc-900">
+        <h2 class="mb-6 text-3xl font-bold tracking-tight sm:text-4xl">{copy.ownTitle}</h2>
+        <ul class="flex flex-col gap-3">
+          {
+            copy.own.map((item) => (
+              <li class="flex items-start gap-3 text-base leading-relaxed sm:text-lg">
+                <span class="mt-1.5 shrink-0"><Check size={18} /></span>
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="reveal pb-14 sm:pb-20">
+      <h2 class="mb-6 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.faqTitle}</h2>
+      <div class="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
+        {
+          copy.faq.map((item, index) => (
+            <details class="details group" data-umami-event="founder-faq" data-umami-event-q={String(index + 1)}>
+              <summary class="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-4 py-3 text-lg font-medium text-zinc-900 dark:text-zinc-100">
+                {item.q}
+                <span class="details-plus inline-block w-4 shrink-0 text-center font-mono text-zinc-500">+</span>
+              </summary>
+              <p class="pb-5 leading-relaxed text-zinc-600 dark:text-zinc-400">{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Form: in writing first, a call if she prefers -->
+    <section id="idee" class="reveal scroll-mt-24 pb-6">
+      <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl shadow-zinc-900/5 sm:p-10 dark:border-zinc-700 dark:bg-zinc-800/60">
+        <h2 class="mb-2 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">{copy.formTitle}</h2>
+        <p class="mb-8 text-zinc-600 dark:text-zinc-400">{copy.formLead}</p>
+
+        <form
+          id="founder-form"
+          class="grid grid-cols-1 gap-5 sm:grid-cols-2"
+          data-endpoint={leadsWorkerUrl}
+          data-sending={copy.sending}
+          data-success={copy.success}
+          data-error={copy.error}
+          data-mail-subject={copy.mailSubject}
+          novalidate
+        >
+          <div>
+            <label for="founder-name" class={labelClass}>{copy.fields.name}</label>
+            <input id="founder-name" name="name" type="text" autocomplete="name" required class={inputClass} />
+          </div>
+          <div>
+            <label for="founder-email" class={labelClass}>{copy.fields.email}</label>
+            <input id="founder-email" name="email" type="email" autocomplete="email" required class={inputClass} />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="founder-idea" class={labelClass}>{copy.fields.idea}</label>
+            <textarea id="founder-idea" name="idea" rows="3" required placeholder={copy.fields.ideaPlaceholder} class={inputClass}></textarea>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="founder-asking" class={labelClass}>{copy.fields.asking}</label>
+            <textarea id="founder-asking" name="asking" rows="2" placeholder={copy.fields.askingPlaceholder} class={inputClass}></textarea>
+          </div>
+          <fieldset class="sm:col-span-2">
+            <legend class={labelClass}>{copy.fields.stage}</legend>
+            <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
+              {
+                copy.fields.stageOptions.map((option, index) => (
+                  <label class={optionClass}>
+                    <input type="radio" name="stage" value={option} checked={index === 0} class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100" />
+                    {option}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <div>
+            <label for="founder-link" class={labelClass}>{copy.fields.link}</label>
+            <input id="founder-link" name="link" type="url" inputmode="url" class={inputClass} />
+          </div>
+          <div>
+            <label for="founder-phone" class={labelClass}>{copy.fields.phone}</label>
+            <input id="founder-phone" name="phone" type="tel" autocomplete="tel" class={inputClass} />
+          </div>
+          <fieldset class="sm:col-span-2">
+            <legend class={labelClass}>{copy.fields.reply}</legend>
+            <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
+              {
+                copy.fields.replyOptions.map((option, index) => (
+                  <label class={optionClass}>
+                    <input type="radio" name="reply_by" value={option} checked={index === 0} class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100" />
+                    {option}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+          <input type="hidden" name="offer" value="founder" />
+          <!-- Honeypot: real people never see or fill this -->
+          <div class="hidden" aria-hidden="true">
+            <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="mb-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{copy.safety}</p>
+              <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.consent}</p>
+            </div>
+            <button
+              type="submit"
+              class="inline-flex min-h-[52px] shrink-0 cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-8 py-3 text-base font-semibold text-zinc-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            >
+              {copy.submit}
+            </button>
+          </div>
+          <p id="founder-status" role="status" class="text-base font-medium text-zinc-900 sm:col-span-2 dark:text-zinc-100"></p>
+        </form>
+
+        <div class="mt-8 flex flex-col gap-3 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-700">
+          <p class="font-medium text-zinc-900 dark:text-zinc-100">{copy.orCall}</p>
+          <a
+            href={calUrl}
+            target="_blank"
+            rel="noopener"
+            data-umami-event="founder-form-call"
+            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-6 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
+          >
+            <CalendarDays size={18} />
+            {copy.ctaSecondary}
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer slot="footer" class="border-t border-zinc-100 dark:border-zinc-800">
+    <div class="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-8 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 dark:text-zinc-400">
+      <p>&copy; {new Date().getFullYear()} MIRKEA INTERACTIVE S.R.L., CUI 50876040. {copy.footerRights}</p>
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a href="mailto:contact@mirkea.com" class="hover:text-zinc-900 dark:hover:text-zinc-100">contact@mirkea.com</a>
+        <a href={linkedin} target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<style>
+  /* Same look as /servicii */
+  .bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .hero-glow {
+    background:
+      radial-gradient(40rem 24rem at 80% 30%, rgb(228 228 231 / 0.7), transparent 70%),
+      radial-gradient(30rem 20rem at 10% 90%, rgb(244 244 245 / 0.9), transparent 70%);
+  }
+
+  :global(.dark) .hero-glow {
+    background:
+      radial-gradient(40rem 24rem at 80% 30%, rgb(63 63 70 / 0.5), transparent 70%),
+      radial-gradient(30rem 20rem at 10% 90%, rgb(39 39 42 / 0.6), transparent 70%);
+  }
+
+  .details[open] .details-plus {
+    transform: rotate(45deg);
+  }
+
+  .details-plus {
+    transition: transform 0.2s ease;
+  }
+
+  .choice:has(input:checked) {
+    border-color: currentColor;
+  }
+
+  .lift {
+    transition:
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease;
+  }
+
+  .lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgb(24 24 27 / 0.25);
+  }
+
+  .hero-underline {
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+  }
+
+  .is-visible .hero-underline {
+    transform: scaleX(1);
+  }
+
+  .pulse-dot {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .hero-underline {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .pulse-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function setupFoundersPage() {
+    const sections = document.querySelectorAll(".founders-page .reveal");
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      sections.forEach((section) => observer.observe(section));
+    } else {
+      sections.forEach((section) => section.classList.add("is-visible"));
+    }
+
+    const form = document.getElementById("founder-form") as HTMLFormElement | null;
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = "true";
+
+    const status = document.getElementById("founder-status");
+    const button = form.querySelector("button[type=submit]") as HTMLButtonElement;
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+      data.lang = "ro";
+      data.page = window.location.pathname + window.location.search;
+
+      const endpoint = form.dataset.endpoint;
+      if (!endpoint) {
+        // No worker configured yet: hand the idea to the visitor's mail app instead.
+        const body = Object.entries(data)
+          .filter(([key, value]) => value && key !== "website")
+          .map(([key, value]) => `${key}: ${value}`)
+          .join("\n");
+        window.location.href = `mailto:contact@mirkea.com?subject=${encodeURIComponent(form.dataset.mailSubject || "")}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      button.disabled = true;
+      if (status) status.textContent = form.dataset.sending || "";
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) throw new Error(String(response.status));
+        form.reset();
+        if (status) status.textContent = form.dataset.success || "";
+        // Founder leads are counted apart from the /servicii ones.
+        (window as any).umami?.track?.("founder-lead", { stage: data.stage, reply_by: data.reply_by });
+        (window as any).fbq?.("track", "Lead", { content_category: "founder" });
+      } catch {
+        if (status) status.textContent = form.dataset.error || "";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupFoundersPage);
+  document.addEventListener("astro:page-load", setupFoundersPage);
+</script>
