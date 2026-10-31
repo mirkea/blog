@@ -247,6 +247,7 @@ const optionClass =
               href={calUrl}
               target="_blank"
               rel="noopener"
+              data-cal-source="fondatori"
               data-umami-event="founder-hero-call"
               class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-7 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
             >
@@ -556,6 +557,7 @@ const optionClass =
             href={calUrl}
             target="_blank"
             rel="noopener"
+            data-cal-source="fondatori"
             data-umami-event="founder-form-call"
             class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-6 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
           >
@@ -666,7 +668,24 @@ const optionClass =
 </style>
 
 <script>
+  // Tag Cal.com bookings with the page and ad they came from (booking metadata + UTM tracking).
+  function tagCalLinks() {
+    const params = new URLSearchParams(window.location.search);
+    document.querySelectorAll<HTMLAnchorElement>("a[data-cal-source]").forEach((link) => {
+      const url = new URL(link.href);
+      url.searchParams.set("metadata[page]", link.dataset.calSource || "");
+      const ad = params.get("utm_content");
+      if (ad) url.searchParams.set("metadata[ad]", ad);
+      for (const key of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+        const value = params.get(key);
+        if (value) url.searchParams.set(key, value);
+      }
+      link.href = url.toString();
+    });
+  }
+
   function setupFoundersPage() {
+    tagCalLinks();
     const sections = document.querySelectorAll(".founders-page .reveal");
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(

@@ -1378,6 +1378,25 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         p(cal, ar);
       };
   })(window, "https://app.cal.com/embed/embed.js", "init");
+  // Tag Cal.com bookings with the page and ad they came from (booking metadata + UTM tracking).
+  (function () {
+    var link = document.getElementById("cal-button");
+    if (!link) return;
+    var params = new URLSearchParams(window.location.search);
+    var extra = { "metadata[page]": "servicii" };
+    if (params.get("utm_content")) extra["metadata[ad]"] = params.get("utm_content");
+    ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(function (key) {
+      if (params.get(key)) extra[key] = params.get(key);
+    });
+    var url = new URL(link.href);
+    var config = JSON.parse(link.getAttribute("data-cal-config") || "{}");
+    Object.keys(extra).forEach(function (key) {
+      url.searchParams.set(key, extra[key]);
+      config[key] = extra[key];
+    });
+    link.href = url.toString();
+    link.setAttribute("data-cal-config", JSON.stringify(config));
+  })();
   Cal("init", "15min", { origin: "https://cal.com" });
   var calScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
   if (calScript)
