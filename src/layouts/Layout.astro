@@ -86,7 +86,8 @@ const base = import.meta.env.BASE_URL;
     {
       landing && (
         <script is:inline>
-          // Landing pages only: scroll depth (25/50/75/100) and first view of [data-track-view] blocks, once each per visit.
+          // Landing pages only: scroll depth (scroll-25 ... scroll-100) and first view of [data-track-view] blocks (view-<block>), once each per visit.
+          // One event name per step, so Umami funnels can use them.
           (function () {
             var track = function (name, data) {
               if (window.umami && window.umami.track) window.umami.track(name, data);
@@ -96,7 +97,10 @@ const base = import.meta.env.BASE_URL;
             var onScroll = function () {
               var max = document.documentElement.scrollHeight - innerHeight;
               var pct = max > 0 ? (scrollY / max) * 100 : 100;
-              while (depths.length && pct >= depths[0] - 1) track("scroll", { depth: depths.shift(), page: page });
+              while (depths.length && pct >= depths[0] - 1) {
+                var d = depths.shift();
+                track("scroll-" + d, { depth: d, page: page });
+              }
               if (!depths.length) removeEventListener("scroll", onScroll);
             };
             addEventListener("scroll", onScroll, { passive: true });
@@ -106,7 +110,8 @@ const base = import.meta.env.BASE_URL;
                 function (entries) {
                   entries.forEach(function (entry) {
                     if (!entry.isIntersecting) return;
-                    track("view", { block: entry.target.getAttribute("data-track-view"), page: page });
+                    var block = entry.target.getAttribute("data-track-view");
+                    track("view-" + block, { block: block, page: page });
                     seen.unobserve(entry.target);
                   });
                 },
