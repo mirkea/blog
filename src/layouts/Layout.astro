@@ -192,6 +192,25 @@ const base = import.meta.env.BASE_URL;
               var channel = href.indexOf("tel:") === 0 ? "phone" : href.indexOf("wa.me") > -1 ? "whatsapp" : "calendar";
               window.fbq("track", "Contact", { content_category: channel });
             });
+            // Cal.com bookings carry where they came from (page + ad), so each booking shows its source.
+            var query = new URLSearchParams(location.search);
+            var source = { "metadata[page]": location.pathname.replace(/\//g, "") || "home" };
+            ["utm_source", "utm_medium", "utm_campaign", "utm_content"].forEach(function (key) {
+              if (query.get(key)) source[key] = query.get(key);
+            });
+            if (query.get("utm_content")) source["metadata[ad]"] = query.get("utm_content");
+            document.querySelectorAll('a[href*="cal.com/"]').forEach(function (link) {
+              var url = new URL(link.href);
+              Object.keys(source).forEach(function (key) {
+                url.searchParams.set(key, source[key]);
+              });
+              link.href = url.toString();
+              if (link.dataset.calConfig) {
+                try {
+                  link.dataset.calConfig = JSON.stringify(Object.assign(JSON.parse(link.dataset.calConfig), source));
+                } catch (e) {}
+              }
+            });
           })();
         </script>
       )
