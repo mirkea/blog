@@ -5,7 +5,7 @@ import { ArrowRight, ArrowUpRight, Check, X, PenLine, ListChecks, Hammer, Handsh
 
 const base = import.meta.env.BASE_URL;
 const leadsWorkerUrl = import.meta.env.PUBLIC_LEADS_WORKER_URL || "";
-const calUrl = "https://cal.com/braescu-mircea/30min";
+// No public calendar link: the worker triages each idea and sends the booking link only to a fit.
 const linkedin = "https://www.linkedin.com/in/mircea-braescu/";
 
 // Romanian only, "tu" register: founders, not the firms /servicii talks to. No diacritics on purpose.
@@ -21,7 +21,6 @@ const copy = {
   h1u: "produsul.",
   lead: "Intru alaturi de tine ca cofondator tehnic si pornim impreuna o firma noua pentru produs. Nu construiesc si plec: raman pe termen lung si raspund eu de produs, ca tu sa te ocupi de clienti si de vanzari.",
   cta: "Spune-mi ideea",
-  ctaSecondary: "Programeaza un apel",
   trust: [
     "20 de ani in software",
     "Fost PM pe verified.eu, vanduta pentru 31 mil. EUR",
@@ -110,8 +109,8 @@ const copy = {
     {
       icon: PenLine,
       name: "Imi spui ideea",
-      time: "30 de minute",
-      text: "Intr-un apel sau in scris. Daca imi scrii, iti raspund in cel mult o zi lucratoare, cu ce cred si ce intrebari am.",
+      time: "Cateva randuri, apoi 30 de minute",
+      text: "Imi scrii ideea in formular si iti raspund in cel mult o zi lucratoare, cu ce cred si ce intrebari am. Daca se potriveste, vorbim 30 de minute.",
     },
     {
       icon: Handshake,
@@ -171,7 +170,7 @@ const copy = {
     },
   ],
   formTitle: "Spune-mi ideea",
-  formLead: "Cateva randuri sunt de ajuns. Iti raspund in scris in cel mult o zi lucratoare.",
+  formLead: "Cateva randuri sunt de ajuns. Iti raspund in scris in cel mult o zi lucratoare, iar daca ideea se potriveste, poti alege direct un interval pentru un apel.",
   formNote: "De un singur lucru am nevoie de la inceput: cel putin un om, in afara de tine, care are problema. Cu el vorbesc inainte sa construiesc, si lui ii aratam prima versiune.",
   fields: {
     name: "Nume",
@@ -187,14 +186,25 @@ const copy = {
     reply: "Cum preferi sa continuam",
     replyOptions: ["Raspuns in scris", "Un apel"],
   },
-  orCall: "Preferi sa vorbim direct?",
   safety:
     "Lucrez din Bucuresti, in UE, conform GDPR. Ce imi scrii ramane intre noi. Facturez prin MIRKEA INTERACTIVE S.R.L., CUI 50876040.",
   consent: "Folosesc datele doar ca sa iti raspund despre aceasta idee.",
   submit: "Trimite ideea",
-  sending: "Se trimite...",
+  sending: "Se trimite, dureaza cateva secunde...",
   doneTitle: "Am primit ideea ta",
   success: "Multumesc! Iti raspund in scris in cel mult o zi lucratoare. Daca vrei sa adaugi ceva, scrie-mi la contact@mirkea.com.",
+  // What the page says after the worker's triage. The AI never writes to the founder: these lines are fixed.
+  matchTitle: "Ideea ta se potriveste cu ce caut",
+  matchText: "Multumesc! Iti scriu in cel mult o zi lucratoare cu ce cred si ce intrebari am. Daca vrei sa vorbim mai repede, alege un interval de 30 de minute.",
+  matchCta: "Alege un interval",
+  notYetText: "Multumesc! Inainte de un apel am nevoie de cateva raspunsuri, ca sa nu pierdem timpul niciunul dintre noi:",
+  notYetQuestions: {
+    others: "Cine, in afara de tine, are problema asta? Ai vorbit cu ei si ce ti-au spus?",
+    product: "Ce face concret produsul, si pentru cine?",
+    small_start: "Care e cea mai mica prima versiune cu care putem incepe, in cateva saptamani?",
+    revenue: "Cine plateste pentru el, si cat?",
+  },
+  notYetFoot: "Iti scriu in cel mult o zi lucratoare cu aceste intrebari. Daca ai deja raspunsurile, trimite-le la contact@mirkea.com. Dupa ce le citesc, iti spun sincer daca merita sa construim impreuna.",
   error: "Nu s-a putut trimite. Scrie-mi direct la contact@mirkea.com.",
   emailError: "Verifica adresa de email, de exemplu nume@firma.ro.",
   mailSubject: "Idee de aplicatie",
@@ -242,16 +252,6 @@ const optionClass =
             >
               {copy.cta}
               <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
-            </a>
-            <a
-              href={calUrl}
-              target="_blank"
-              rel="noopener"
-              data-umami-event="founder-hero-call"
-              class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-7 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
-            >
-              <CalendarDays size={18} />
-              {copy.ctaSecondary}
             </a>
           </div>
           <ul class="mt-10 grid grid-cols-1 gap-2 text-sm text-zinc-600 sm:grid-cols-[auto_1fr] sm:gap-x-10 dark:text-zinc-400">
@@ -546,22 +546,40 @@ const optionClass =
         </form>
         <div id="founder-done" hidden tabindex="-1" class="rounded-xl border border-zinc-200 bg-zinc-50 p-6 text-center outline-none sm:p-10 dark:border-zinc-700 dark:bg-zinc-900/60">
           <span class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"><Check size={24} /></span>
-          <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.doneTitle}</p>
-          <p class="mx-auto max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.success}</p>
-        </div>
-
-        <div class="mt-8 flex flex-col gap-3 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-700">
-          <p class="font-medium text-zinc-900 dark:text-zinc-100">{copy.orCall}</p>
-          <a
-            href={calUrl}
-            target="_blank"
-            rel="noopener"
-            data-umami-event="founder-form-call"
-            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-6 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
-          >
-            <CalendarDays size={18} />
-            {copy.ctaSecondary}
-          </a>
+          <!-- Fit: the only place the calendar shows up -->
+          <div data-verdict="fit" hidden>
+            <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.matchTitle}</p>
+            <p class="mx-auto mb-6 max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.matchText}</p>
+            <a
+              id="founder-book"
+              href="#idee"
+              target="_blank"
+              rel="noopener"
+              data-umami-event="founder-fit-call"
+              class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-900 px-7 py-3 text-base font-semibold text-zinc-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+            >
+              <CalendarDays size={18} />
+              {copy.matchCta}
+            </a>
+          </div>
+          <!-- Not yet: the qualifying questions, no calendar -->
+          <div data-verdict="not_yet" hidden>
+            <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.doneTitle}</p>
+            <p class="mx-auto mb-4 max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.notYetText}</p>
+            <ol class="mx-auto mb-4 max-w-md list-decimal space-y-2 pl-5 text-left leading-relaxed text-zinc-900 dark:text-zinc-100">
+              {
+                Object.entries(copy.notYetQuestions).map(([key, question]) => (
+                  <li data-question={key}>{question}</li>
+                ))
+              }
+            </ol>
+            <p class="mx-auto max-w-md text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.notYetFoot}</p>
+          </div>
+          <!-- Triage off or failed: the plain confirmation -->
+          <div data-verdict="unknown">
+            <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.doneTitle}</p>
+            <p class="mx-auto max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.success}</p>
+          </div>
         </div>
       </div>
     </section>
@@ -730,18 +748,48 @@ const optionClass =
           const reason = (await response.text().catch(() => "")).slice(0, 80);
           throw new Error(`${response.status} ${reason}`.trim());
         }
+        // The worker answers founders with the triage verdict; anything unreadable counts as "unknown".
+        const result = await response.json().catch(() => ({}));
+        const verdict = ["fit", "not_yet"].includes(result.verdict) ? result.verdict : "unknown";
+        const missing: string[] = Array.isArray(result.missing) ? result.missing : [];
         form.reset();
         if (status) status.textContent = "";
         // Swap the form for a clear confirmation, so the founder sees it worked.
         const done = document.getElementById("founder-done");
         if (done) {
+          const book = document.getElementById("founder-book") as HTMLAnchorElement | null;
+          const showFit = verdict === "fit" && !!result.booking_url && !!book;
+          const shown = showFit ? "fit" : verdict === "fit" ? "unknown" : verdict;
+          done.querySelectorAll<HTMLElement>("[data-verdict]").forEach((panel) => {
+            panel.hidden = panel.dataset.verdict !== shown;
+          });
+          if (showFit && book) {
+            // Prefill the booking and keep the source tags the other Cal.com links carry.
+            const url = new URL(result.booking_url);
+            const query = new URLSearchParams(window.location.search);
+            url.searchParams.set("name", data.name || "");
+            url.searchParams.set("email", data.email || "");
+            url.searchParams.set("metadata[page]", "fondatori");
+            ["utm_source", "utm_medium", "utm_campaign", "utm_content"].forEach((key) => {
+              const value = query.get(key);
+              if (value) url.searchParams.set(key, value);
+            });
+            if (query.get("utm_content")) url.searchParams.set("metadata[ad]", query.get("utm_content") || "");
+            book.href = url.toString();
+          }
+          // Ask only what is missing; with nothing named, ask all of it.
+          if (shown === "not_yet" && missing.length) {
+            done.querySelectorAll<HTMLElement>("[data-question]").forEach((item) => {
+              item.hidden = !missing.includes(item.dataset.question || "");
+            });
+          }
           form.hidden = true;
           done.hidden = false;
           done.scrollIntoView({ behavior: "smooth", block: "center" });
           done.focus({ preventScroll: true });
         }
         // Founder leads are counted apart from the /servicii ones.
-        (window as any).umami?.track?.("founder-lead", { stage: data.stage, reply_by: data.reply_by });
+        (window as any).umami?.track?.("founder-lead", { stage: data.stage, reply_by: data.reply_by, verdict });
         (window as any).fbq?.("track", "Lead", { content_category: "founder" });
       } catch (error) {
         if (status) status.textContent = form.dataset.error || "";

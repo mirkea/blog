@@ -4,3 +4,8 @@ compatibility_date = "2024-01-01"
 
 [observability]
 enabled = false
+
+[vars]
+# Unlisted Cal.com event shown only to founders the triage marks as a fit. Replace with the new event's link.
+FOUNDER_CAL_URL = "https://cal.com/braescu-mircea/30min"
+TRIAGE_MODEL = "claude-haiku-5-5"
