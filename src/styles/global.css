@@ -47,11 +47,11 @@
     --color-code-border: var(--color-gray-600);
 
     /* ─── Inline code colours ────────────────────────────────────── */
-    --color-inline-code: var(--color-red-500);
+    --color-inline-code: var(--ink);
 
     /* ─── Blockquote / prose accents ─────────────────────────────── */
-    --color-blockquote-border: var(--color-blue-500);
-    --color-strong: var(--color-teal-500);
+    --color-blockquote-border: var(--ink);
+    --color-strong: var(--ink);
 
     /* ─── Syntax token colours ───────────────────────────────────── */
     --color-token-comment: var(--color-gray-500);
@@ -102,11 +102,6 @@
     --color-primary-fg: 24 24 27;
     /* zinc-900 */
 
-    /* ─── Blockquote border (dark) ───────────────────────────────── */
-    --color-blockquote-border: var(--color-blue-400);
-
-    /* ─── Inline code (dark) ─────────────────────────────────────── */
-    --color-inline-code: var(--color-red-400);
 
     /* ─── Mark (dark) ────────────────────────────────────────────── */
     --color-mark-text: var(--color-amber-400);

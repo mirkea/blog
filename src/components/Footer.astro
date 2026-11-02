@@ -16,7 +16,7 @@ const navLinks = [
 const socialLinks = SOCIAL_LINKS.filter((s) => s.name !== "Facebook");
 ---
 
-<footer class="section section-surface !pb-10">
+<footer class="section section-tight border-t border-line !pb-10">
   <div class="wrap">
     <div class="grid gap-12 md:grid-cols-12">
       <div class="md:col-span-4">
@@ -32,7 +32,7 @@ const socialLinks = SOCIAL_LINKS.filter((s) => s.name !== "Facebook");
                 href={social.profileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="grid size-11 place-items-center rounded-full bg-canvas text-ink-2 transition-colors hover:text-ink"
+                class="grid size-11 place-items-center rounded-full bg-surface text-ink-2 transition-colors hover:text-ink"
                 aria-label={social.name}
               >
                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -56,9 +56,9 @@ const socialLinks = SOCIAL_LINKS.filter((s) => s.name !== "Facebook");
           <span id="now-playing-dot" class="pulse-dot inline-block h-2 w-2 animate-pulse rounded-full bg-[#1DB954]"></span>
           Now playing
         </p>
-        <div id="spotify-now-playing" class="card card-white mt-4 !p-5">
+        <div id="spotify-now-playing" class="card mt-4 !p-5">
           <div class="flex items-center">
-            <div class="mr-4 h-16 w-16 flex-shrink-0 overflow-hidden rounded-tile bg-surface" id="track-artwork">
+            <div class="mr-4 h-16 w-16 flex-shrink-0 overflow-hidden rounded-tile bg-surface-2" id="track-artwork">
               <img src="/track-placeholder.png" alt="Album artwork" class="h-full w-full object-cover" id="track-image" />
             </div>
             <div class="min-w-0 flex-1">
