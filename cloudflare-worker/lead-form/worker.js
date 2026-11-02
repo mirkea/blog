@@ -11,7 +11,16 @@
  *
  * Then set PUBLIC_LEADS_WORKER_URL=https://<your-worker>.workers.dev/ as a repo secret
  * and pass it to the build step in .github/workflows/deploy.yml.
+ *
+ * Founder triage (/fondatori): each idea is checked by Claude before the page answers.
+ * Run `npm install` here once, then add three more secrets:
+ *   npx wrangler secret put ANTHROPIC_API_KEY
+ *   npx wrangler secret put TRIAGE_PROMPT     (the screening prompt, kept outside this repo)
+ *   npx wrangler secret put FOUNDER_CAL_URL   (the booking link shown to a fit)
+ * Without them, founders just get "received, I'll reply by email" and no calendar link.
  */
+
+import Anthropic from "@anthropic-ai/sdk";
 
 const ALLOWED_ORIGINS = ["https://mirkea.com", "http://localhost:4321"];
 
@@ -35,11 +44,59 @@ const FIELDS = [
 ];
 
 function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+  return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+const TRIAGE_SCHEMA = {
+  type: "object",
+  properties: {
+    verdict: { type: "string", enum: ["fit", "not_yet"] },
+    missing: {
+      type: "array",
+      items: {
+        type: "string",
+        enum: ["others", "product", "small_start", "revenue"],
+      },
+    },
+    reason: { type: "string" },
+  },
+  required: ["verdict", "missing", "reason"],
+  additionalProperties: false,
+};
+
+// Returns { verdict, missing, reason } or null when triage is off or fails: the lead is never lost over it.
+async function triageFounder(lead, env) {
+  if (!env.ANTHROPIC_API_KEY || !env.TRIAGE_PROMPT) return null;
+  const client = new Anthropic({
+    apiKey: env.ANTHROPIC_API_KEY,
+    timeout: 15000,
+    maxRetries: 1,
+  });
+  const field = (key) => String(lead[key] || "").slice(0, 2000);
+  try {
+    const response = await client.messages.create({
+      model: env.TRIAGE_MODEL || "claude-haiku-5-5",
+      max_tokens: 2000,
+      system: env.TRIAGE_PROMPT,
+      output_config: {
+        effort: "low",
+        format: { type: "json_schema", schema: TRIAGE_SCHEMA },
+      },
+      messages: [
+        {
+          role: "user",
+          content: `<idea>${field("idea")}</idea>\n<who_else_has_the_problem>${field("asking")}</who_else_has_the_problem>\n<what_exists>${field("stage")}</what_exists>\n<link>${field("link")}</link>`,
+        },
+      ],
+    });
+    if (response.stop_reason !== "end_turn") return null;
+    const text = response.content.find((block) => block.type === "text")?.text;
+    const result = JSON.parse(text || "");
+    return result.verdict === "fit" || result.verdict === "not_yet" ? result : null;
+  } catch (error) {
+    console.error("Triage failed:", error?.status || "", error?.message || error);
+    return null;
+  }
 }
 
 function corsHeaders(origin) {
@@ -84,6 +141,14 @@ export default {
       return new Response(founder ? "Name and email are required" : "Name and phone are required", { status: 400, headers });
     }
 
+    const triage = founder ? await triageFounder(lead, env) : null;
+    const verdictLabel = !founder ? "" : !triage ? "Not triaged" : triage.verdict === "fit" ? "Fit" : "Not yet";
+    const triageHtml = !founder
+      ? ""
+      : triage
+        ? `<p><strong>Triage: ${verdictLabel}.</strong> ${escapeHtml(triage.reason)}${triage.missing.length ? ` Missing or unclear: ${triage.missing.join(", ")}.` : ""} ${triage.verdict === "fit" ? "The page showed the calendar link." : "The page asked the qualifying questions, no calendar link."}</p>`
+        : "<p><strong>Triage: not run</strong> (no API key or the call failed). The page said you'll reply by email, no calendar link.</p>";
+
     const rows = FIELDS.filter(([key]) => lead[key])
       .map(
         ([key, label]) =>
@@ -101,8 +166,8 @@ export default {
         from: env.FROM_EMAIL,
         to: env.NOTIFY_EMAIL,
         reply_to: validEmail ? String(lead.email).trim() : undefined,
-        subject: `${founder ? "New founder idea" : "New free-call request"}: ${String(lead.name).slice(0, 80)}${lead.company ? ` (${String(lead.company).slice(0, 80)})` : ""}`,
-        html: `<p>${founder ? "Reply in writing within one working day." : "Call back within one working day."}</p><table>${rows}</table>`,
+        subject: `${founder ? `[${verdictLabel}] New founder idea` : "New free-call request"}: ${String(lead.name).slice(0, 80)}${lead.company ? ` (${String(lead.company).slice(0, 80)})` : ""}`,
+        html: `${triageHtml}<p>${founder ? "Reply in writing within one working day." : "Call back within one working day."}</p><table>${rows}</table>`,
       }),
     });
 
@@ -111,6 +176,16 @@ export default {
       return new Response("Failed to send email", { status: 500, headers });
     }
 
+    if (founder) {
+      // The page shows the calendar only to a fit; the link lives here, not in the page source.
+      const verdict = triage?.verdict || "unknown";
+      const body = { verdict, missing: triage?.missing || [] };
+      if (verdict === "fit" && env.FOUNDER_CAL_URL) body.booking_url = env.FOUNDER_CAL_URL;
+      return new Response(JSON.stringify(body), {
+        status: 200,
+        headers: { ...headers, "Content-Type": "application/json" },
+      });
+    }
     return new Response("OK", { status: 200, headers });
   },
 };
