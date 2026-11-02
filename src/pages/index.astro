@@ -73,8 +73,8 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
                 {offer.points.map((point) => <li><Icon name="check" /><span>{point}</span></li>)}
               </ul>
             </div>
-            <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 self-end">
-              <a href={offer.cta.href} data-umami-event="home-offer" data-umami-event-offer={offer.key} class:list={["btn btn-lg", index === 0 ? "btn-invert" : "btn-primary"]}>{offer.cta.text}<Icon name="arrow-right" /></a>
+            <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 self-end max-sm:w-full">
+              <a href={offer.cta.href} data-umami-event="home-offer" data-umami-event-offer={offer.key} class:list={["btn btn-lg max-sm:w-full", index === 0 ? "btn-invert" : "btn-primary"]}>{offer.cta.text}<Icon name="arrow-right" /></a>
             </div>
           </div>
         ))
@@ -83,9 +83,9 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
   </Section>
 
   <Section>
-    <div class="rise flex flex-wrap items-end justify-between gap-4">
+    <div class="rise flex flex-wrap items-baseline justify-between gap-4">
       <h2 class="title">Recent posts.</h2>
-      <a href={`${base}blog`} class="link-more pb-2">View all posts <Icon name="chevron-right" /></a>
+      <a href={`${base}blog`} class="link-more">View all posts <Icon name="chevron-right" /></a>
     </div>
     <div class="rise mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
@@ -108,9 +108,9 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
   {
     allTags.length > 0 && (
       <Section tone="surface">
-        <div class="rise flex flex-wrap items-end justify-between gap-4">
+        <div class="rise flex flex-wrap items-baseline justify-between gap-4">
           <h2 class="title">Explore topics.</h2>
-          <a href={`${base}tags`} class="link-more pb-2">View all topics <Icon name="chevron-right" /></a>
+          <a href={`${base}tags`} class="link-more">View all topics <Icon name="chevron-right" /></a>
         </div>
         <div class="rise mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {allTags.map((tag) => {
