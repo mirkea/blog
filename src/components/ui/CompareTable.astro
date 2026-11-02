@@ -1,0 +1,34 @@
+---
+import Icon from "./Icon.astro";
+// Rows compared across columns. A cell value of true renders the ink check.
+interface Props {
+  columns: string[]; // headers after the first (row label) column
+  rows: { label: string; cells: (string | boolean)[] }[];
+  class?: string;
+}
+const { columns, rows, class: className } = Astro.props;
+---
+
+<div class:list={["overflow-x-auto", className]}>
+  <table class="compare">
+    <thead>
+      <tr><th><span class="sr-only">Item</span></th>{columns.map((c) => <th>{c}</th>)}</tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            <td>{row.label}</td>
+            {row.cells.map((cell) =>
+              cell === true ? (
+                <td><span class="check-dot"><Icon name="check" label="Yes" /></span></td>
+              ) : (
+                <td>{cell === false ? "–" : cell}</td>
+              ),
+            )}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>

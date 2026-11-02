@@ -12,35 +12,32 @@ const navItems = [
   { text: "RSS", href: `${base}rss.xml` },
 ];
 
+export interface Props {
+  // Optional pill call-to-action on the right of the header
+  cta?: { text: string; href: string };
+}
+const { cta } = Astro.props;
+
 // Get current path for active link highlighting
 const pathname = new URL(Astro.request.url).pathname;
 ---
 
-<header
-  class="fixed top-0 right-0 left-0 z-40 border-b border-zinc-100 bg-white py-4 dark:border-zinc-800 dark:bg-zinc-900"
->
-  <div class="mx-auto flex max-w-3xl items-center justify-between px-4">
-    <!-- Logo -->
-    <a href={base} class="flex items-center text-xl font-bold text-zinc-900 dark:text-white">
-      <span
-        class="inline-block size-8 [&>svg]:h-full [&>svg]:w-full"
-        aria-label="Logo"
-        set:html={logoRaw}
-      />
+<header class="fixed top-0 right-0 left-0 z-40 border-b border-line bg-canvas/85 backdrop-blur-xl">
+  <div class="wrap flex h-16 items-center justify-between gap-6">
+    <a href={base} class="flex items-center text-ink" aria-label="Home">
+      <span class="inline-block size-8 [&>svg]:h-full [&>svg]:w-full" set:html={logoRaw} />
     </a>
 
-    <!-- Desktop Navigation -->
-    <nav class="hidden items-center space-x-6 sm:flex">
+    <nav class="hidden items-center gap-1 sm:flex" aria-label="Main">
       {
         navItems.map((item) => {
           const isActive = pathname === item.href || pathname === item.href + "/";
           return (
             <a
               href={item.href}
-              class={`text-sm font-medium ${
-                isActive
-                  ? "text-zinc-900 dark:text-white"
-                  : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+              aria-current={isActive ? "page" : undefined}
+              class={`rounded-full px-4 py-2 text-[0.95rem] transition-colors ${
+                isActive ? "bg-surface text-ink" : "text-ink-2 hover:text-ink"
               }`}
             >
               {item.text}
@@ -48,23 +45,16 @@ const pathname = new URL(Astro.request.url).pathname;
           );
         })
       }
-      <ThemeToggle />
     </nav>
 
-    <!-- Mobile Menu Button -->
-    <button id="mobile-menu-button" class="flex items-center sm:hidden" aria-label="Menu">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="h-6 w-6 text-zinc-900 dark:text-white"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+    <div class="hidden items-center gap-2 sm:flex">
+      <ThemeToggle />
+      {cta && <a href={cta.href} class="btn btn-primary btn-sm">{cta.text}</a>}
+    </div>
+
+    <button id="mobile-menu-button" class="flex items-center text-ink sm:hidden" aria-label="Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5M3.75 15h16.5"></path>
       </svg>
     </button>
   </div>
@@ -73,10 +63,10 @@ const pathname = new URL(Astro.request.url).pathname;
 <!-- Mobile Menu Overlay -->
 <div
   id="mobile-menu"
-  class="pointer-events-none fixed inset-0 z-50 flex flex-col bg-white opacity-0 transition-all duration-300 ease-in-out dark:bg-zinc-900"
+  class="pointer-events-none fixed inset-0 z-50 flex flex-col bg-canvas opacity-0 transition-all duration-300 ease-in-out"
 >
-  <div class="flex items-center justify-between border-b border-zinc-100 p-4 dark:border-zinc-800">
-    <a href={base} class="flex items-center text-xl font-bold text-zinc-900 dark:text-white">
+  <div class="flex items-center justify-between border-b border-line p-4">
+    <a href={base} class="flex items-center text-ink">
       <span
         class="inline-block size-8 [&>svg]:h-full [&>svg]:w-full"
         aria-label="Logo"
@@ -85,7 +75,7 @@ const pathname = new URL(Astro.request.url).pathname;
     </a>
     <button
       id="close-menu-button"
-      class="flex items-center text-zinc-900 transition-colors dark:text-white"
+      class="flex items-center text-ink"
       aria-label="Close menu"
     >
       <svg
@@ -108,10 +98,8 @@ const pathname = new URL(Astro.request.url).pathname;
         return (
           <a
             href={item.href}
-            class={`mobile-nav-item translate-y-4 text-lg font-medium opacity-0 ${
-              isActive
-                ? "text-zinc-900 dark:text-white"
-                : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
+            class={`mobile-nav-item translate-y-4 font-display text-3xl font-semibold tracking-tight opacity-0 ${
+              isActive ? "text-ink" : "text-ink-2 hover:text-ink"
             }`}
             style={`transition-delay: ${index * 0.05}s;`}
           >
@@ -120,8 +108,9 @@ const pathname = new URL(Astro.request.url).pathname;
         );
       })
     }
-    <div class="mobile-nav-item translate-y-4 pt-4 opacity-0" style="transition-delay: 0.25s;">
+    <div class="mobile-nav-item flex translate-y-4 items-center gap-3 pt-4 opacity-0" style="transition-delay: 0.25s;">
       <ThemeToggle />
+      {cta && <a href={cta.href} class="btn btn-primary">{cta.text}</a>}
     </div>
   </nav>
 </div>

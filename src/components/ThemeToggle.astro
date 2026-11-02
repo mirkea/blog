@@ -5,14 +5,14 @@
 <button
   id="theme-toggle"
   data-theme-toggle
-  class="group relative touch-manipulation overflow-hidden rounded-full p-1.5 transition-all duration-300 hover:bg-zinc-100 focus:ring-2 focus:ring-zinc-300 focus:outline-none sm:p-2 dark:hover:bg-zinc-800 dark:focus:ring-zinc-700"
+  class="group relative grid size-10 touch-manipulation place-items-center overflow-hidden rounded-full text-ink transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
   aria-label="Toggle dark mode"
 >
   <div class="relative z-10 flex h-5 w-5 items-center justify-center">
     <!-- Sun icon -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="icon-light absolute h-5 w-5 scale-100 rotate-0 text-zinc-800 transition-all duration-500 dark:scale-0 dark:-rotate-90 dark:text-zinc-200"
+      class="icon-light absolute h-5 w-5 scale-100 rotate-0 transition-all duration-500 dark:scale-0 dark:-rotate-90"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -29,7 +29,7 @@
     <!-- Moon icon -->
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="icon-dark absolute h-5 w-5 scale-0 rotate-90 text-zinc-800 transition-all duration-500 dark:scale-100 dark:rotate-0 dark:text-zinc-200"
+      class="icon-dark absolute h-5 w-5 scale-0 rotate-90 transition-all duration-500 dark:scale-100 dark:rotate-0"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -43,7 +43,7 @@
 
   <!-- Ripple effect -->
   <span
-    class="absolute inset-0 h-full w-full bg-zinc-200 opacity-0 transition-opacity duration-300 group-active:opacity-20 dark:bg-zinc-700"
+    class="absolute inset-0 h-full w-full bg-surface-2 opacity-0 transition-opacity duration-300 group-active:opacity-40"
   ></span>
 </button>
 

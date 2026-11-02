@@ -1,0 +1,18 @@
+---
+// Small rounded label. "float" is the white chip that sits on photos.
+interface Props {
+  variant?: "default" | "quiet" | "ink" | "float";
+  dot?: boolean;
+  href?: string;
+  class?: string;
+}
+const { variant = "default", dot = false, href, class: className } = Astro.props;
+const Tag = href ? "a" : "span";
+---
+
+<Tag
+  href={href}
+  class:list={["pill", variant !== "default" && `pill-${variant}`, dot && "pill-dot", className]}
+>
+  <slot />
+</Tag>

@@ -1,0 +1,37 @@
+---
+// Eyebrow, a two-tone headline (ink line, then grey line) and a lead paragraph.
+interface Props {
+  eyebrow?: string;
+  title: string;
+  title2?: string; // second line, shown in grey
+  lead?: string;
+  align?: "center" | "left";
+  size?: "display" | "title" | "title-sm";
+  as?: "h1" | "h2" | "h3";
+  class?: string;
+}
+const {
+  eyebrow,
+  title,
+  title2,
+  lead,
+  align = "center",
+  size = "title",
+  as: Tag = "h2",
+  class: className,
+} = Astro.props;
+---
+
+<header class:list={["rise", align === "center" ? "mx-auto text-center" : "text-left", className]}>
+  {eyebrow && <p class="eyebrow mb-4">{eyebrow}</p>}
+  <Tag class={size}>
+    <span class="block">{title}</span>
+    {title2 && <span class="tone-2 block">{title2}</span>}
+  </Tag>
+  {
+    lead && (
+      <p class:list={["lead mt-6 max-w-3xl", align === "center" && "mx-auto"]}>{lead}</p>
+    )
+  }
+  <slot />
+</header>

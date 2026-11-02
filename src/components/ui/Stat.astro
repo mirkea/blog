@@ -1,0 +1,18 @@
+---
+// Number tile: big value, what it counts, and an optional change line.
+interface Props {
+  value: string;
+  label: string;
+  delta?: string;
+  down?: boolean;
+  tone?: "surface" | "white";
+  class?: string;
+}
+const { value, label, delta, down = false, tone = "surface", class: className } = Astro.props;
+---
+
+<div class:list={["stat", tone === "white" && "bg-canvas", className]}>
+  <p class="stat-value">{value}</p>
+  <p class="stat-label">{label}</p>
+  {delta && <p class:list={["stat-delta", down && "is-down"]}>{delta}</p>}
+</div>

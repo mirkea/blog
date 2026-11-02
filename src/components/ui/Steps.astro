@@ -1,0 +1,22 @@
+---
+// Numbered rows split by hairlines. Works on white and inside an ink card.
+interface Props {
+  items: { title: string; text?: string }[];
+  class?: string;
+}
+const { items, class: className } = Astro.props;
+---
+
+<ol class:list={["steps", className]}>
+  {
+    items.map((item, i) => (
+      <li class="step">
+        <span class="step-n">{i + 1}</span>
+        <div>
+          <p class="step-title">{item.title}</p>
+          {item.text && <p class="step-text">{item.text}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>

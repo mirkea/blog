@@ -1,0 +1,373 @@
+---
+// The UI kit: every element the site is allowed to use, on one page.
+// Pages compose these; if something new is needed, add it here first.
+export const prerender = true;
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/ui/Section.astro";
+import SectionHeading from "../components/ui/SectionHeading.astro";
+import Button from "../components/ui/Button.astro";
+import Pill from "../components/ui/Pill.astro";
+import Segmented from "../components/ui/Segmented.astro";
+import Card from "../components/ui/Card.astro";
+import MediaCard from "../components/ui/MediaCard.astro";
+import Stat from "../components/ui/Stat.astro";
+import CheckList from "../components/ui/CheckList.astro";
+import Steps from "../components/ui/Steps.astro";
+import Meter from "../components/ui/Meter.astro";
+import CompareTable from "../components/ui/CompareTable.astro";
+import Field from "../components/ui/Field.astro";
+import Person from "../components/ui/Person.astro";
+import PostCard from "../components/PostCard.astro";
+
+const base = import.meta.env.BASE_URL;
+const ex = `${base}services/examples`;
+
+const toc = [
+  ["foundations", "Foundations"],
+  ["buttons", "Buttons"],
+  ["pills", "Pills and tabs"],
+  ["headings", "Headings"],
+  ["cards", "Cards"],
+  ["media", "Media cards"],
+  ["numbers", "Numbers"],
+  ["compare", "Table"],
+  ["cta", "Call to action"],
+  ["forms", "Forms"],
+  ["posts", "Posts"],
+];
+
+const colours = [
+  ["ink", "Primary: text, buttons, dark cards"],
+  ["ink-2", "Second headline line, body copy"],
+  ["ink-3", "Captions, meta"],
+  ["canvas", "Page"],
+  ["surface", "Grey band, cards on white"],
+  ["surface-2", "Hover, meter track"],
+  ["line", "Hairlines"],
+  ["positive", "Up, done"],
+  ["negative", "Errors"],
+];
+---
+
+<Layout title="UI kit | Mirkea" description="Every UI element of the site on one page." wide noindex>
+  <!-- Intro -->
+  <Section tight>
+    <SectionHeading
+      eyebrow="Design system"
+      title="Ink UI."
+      title2="Every piece, on one page."
+      lead="The tokens and components this site is built from. Pages only compose what is here; anything new gets added to this page first."
+      size="display"
+      as="h1"
+    />
+    <nav class="mt-12 flex justify-center" aria-label="Sections">
+      <div class="seg max-w-full">
+        {toc.map(([id, label]) => <a href={`#${id}`} class="seg-item">{label}</a>)}
+      </div>
+    </nav>
+  </Section>
+
+  <!-- Foundations -->
+  <Section id="foundations" tone="surface">
+    <SectionHeading title="Foundations." title2="Tokens first." align="left" />
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        colours.map(([token, use]) => (
+          <div class="card card-white flex items-center gap-4 !p-4">
+            <span class="size-14 shrink-0 rounded-full" style={`background:var(--${token});box-shadow:inset 0 0 0 1px var(--line)`} />
+            <div>
+              <p class="font-medium">--{token}</p>
+              <p class="caption">{use}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-4 grid gap-4 lg:grid-cols-[2fr_1fr]">
+      <div class="card card-white space-y-6">
+        <p class="caption">Type scale · Plus Jakarta Sans for headlines, Inter for text</p>
+        <p class="display !text-[clamp(2.4rem,6vw,4.5rem)]">Display <span class="tone-2">two-tone.</span></p>
+        <p class="title">Title for a section.</p>
+        <p class="title-sm">Small title inside a block.</p>
+        <p class="heading">Heading for a card</p>
+        <p class="lead">Lead paragraph: one or two sentences under a title.</p>
+        <p class="body">Body copy for longer text inside cards and sections, in the secondary ink.</p>
+        <p class="caption">Caption, dates and meta lines.</p>
+      </div>
+      <div class="card card-white">
+        <p class="caption">Radius</p>
+        <div class="mt-6 grid gap-4">
+          <div class="flex items-center gap-4"><span class="h-14 w-20 rounded-card bg-surface" /><span>card · 28px</span></div>
+          <div class="flex items-center gap-4"><span class="h-14 w-20 rounded-tile bg-surface" /><span>tile · 20px</span></div>
+          <div class="flex items-center gap-4"><span class="h-14 w-20 rounded-field bg-surface" /><span>field · 14px</span></div>
+          <div class="flex items-center gap-4"><span class="h-14 w-20 rounded-full bg-surface" /><span>pill · round</span></div>
+        </div>
+        <p class="caption mt-8">Spacing</p>
+        <p class="mt-2 text-ink-2">Sections breathe with <code>--section-y</code>; content sits in <code>.wrap</code> (1216px) or <code>.wrap-narrow</code> (736px) for reading.</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Buttons -->
+  <Section id="buttons">
+    <SectionHeading title="Buttons." title2="Always pills." align="left" />
+    <div class="mt-12 grid gap-4 lg:grid-cols-2">
+      <div class="card space-y-8">
+        <div class="flex flex-wrap items-center gap-3">
+          <Button>Book a free call</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="link" icon="chevron-right">Or send a message</Button>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <Button size="lg">Large</Button>
+          <Button>Medium</Button>
+          <Button size="sm">Small</Button>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <Button icon="arrow-right">With arrow</Button>
+          <Button variant="secondary" icon="phone" iconStart>Call me</Button>
+          <Button variant="secondary" icon="message" iconStart>WhatsApp</Button>
+          <Button disabled>Disabled</Button>
+        </div>
+        <div class="flex flex-wrap items-center gap-6">
+          <a href="#buttons" class="link-more">More about me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6" /></svg></a>
+          <a href="#buttons" class="link-underline">Underlined link</a>
+        </div>
+      </div>
+      <div class="card card-ink space-y-8">
+        <p class="text-on-ink-2">On ink</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <Button variant="invert" size="lg">Book a free call</Button>
+          <a href="#buttons" class="link-underline">Message me instead</a>
+        </div>
+        <p class="body">One primary action per block. The second action is a link or a secondary pill, never a second black button.</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Pills -->
+  <Section id="pills" tone="surface">
+    <SectionHeading title="Pills, tags and tabs." title2="Small labels, one shape." align="left" />
+    <div class="mt-12 grid gap-4 lg:grid-cols-2">
+      <div class="card card-white space-y-6">
+        <div class="flex flex-wrap gap-2">
+          <Pill>Default</Pill>
+          <Pill variant="quiet">Quiet</Pill>
+          <Pill variant="ink">Ink</Pill>
+          <Pill dot>With status dot</Pill>
+          <Pill variant="quiet" dot>AI and apps for small firms</Pill>
+        </div>
+        <div class="rounded-tile bg-surface p-6"><Pill variant="float">On a photo</Pill></div>
+        <div class="flex flex-wrap gap-x-4 gap-y-1">
+          <a href="#pills" class="tag">#product</a>
+          <a href="#pills" class="tag">#ai</a>
+          <a href="#pills" class="tag">#building-in-public</a>
+        </div>
+      </div>
+      <div class="card card-white space-y-6 text-center">
+        <Segmented
+          name="demo"
+          items={[
+            { value: "service", label: "Service" },
+            { value: "studio", label: "Studio" },
+            { value: "rentals", label: "Rentals" },
+          ]}
+        />
+        <p data-seg-panel="demo:service" class="text-ink-2">Pick a business. The panel below follows the tab.</p>
+        <p data-seg-panel="demo:studio" class="text-ink-2" hidden>Studio panel: classes, bookings, members.</p>
+        <p data-seg-panel="demo:rentals" class="text-ink-2" hidden>Rentals panel: fleet, contracts, returns.</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Headings -->
+  <Section id="headings">
+    <SectionHeading
+      eyebrow="Eyebrow line"
+      title="Two lines, one idea."
+      title2="The second one in grey."
+      lead="Centered for section openers, left-aligned inside dense layouts. Always a full stop at the end of each line."
+    />
+    <div class="mt-20 grid gap-12 lg:grid-cols-2">
+      <SectionHeading title="Left-aligned title." lead="For blocks that sit next to other content." align="left" />
+      <SectionHeading eyebrow="Smaller" title="A small title for a block." size="title-sm" align="left" />
+    </div>
+  </Section>
+
+  <!-- Cards -->
+  <Section id="cards" tone="surface">
+    <SectionHeading title="Cards." title2="Grey on white, white on grey." />
+    <div class="mt-14 grid gap-4 md:grid-cols-2">
+      <Card tone="white" align="center">
+        <p class="eyebrow !text-ink !text-base">No product team</p>
+        <h3 class="title-sm mt-2">I am your product team.</h3>
+        <p class="body mx-auto mt-3 max-w-md">One plan, one chat for approvals, one demo a week. Decisions take minutes, not meetings.</p>
+        <CheckList class="mx-auto mt-6 text-left" items={["I plan, design, build and ship", "You approve in one tap", "You see what every week cost"]} />
+      </Card>
+      <Card tone="white" align="center">
+        <p class="eyebrow !text-ink !text-base">You have a product lead</p>
+        <h3 class="title-sm mt-2">I am their extra hands.</h3>
+        <p class="body mx-auto mt-3 max-w-md">Your lead keeps the roadmap and the final say. I take the volume off their desk.</p>
+        <CheckList class="mx-auto mt-6 text-left" items={["Features built to their spec", "They approve, edit or reject", "A weekly note they can forward"]} />
+      </Card>
+    </div>
+
+    <div class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <Card tone="ink" icon="chart" title="Featured card" text="The ink card is the one to notice. Use one per group, at most." meta="Works with you or your team" class="lg:col-span-2" />
+      <Card tone="white" icon="trending-up" title="White card" text="On grey bands, cards are white." meta="Meta line" />
+      <Card tone="white" icon="pin" title="With a link" text="Lifts a little on hover." meta="Hover me" href="#cards" />
+      <Card tone="white" icon="message" title="Icon on top" text="A stroke icon, then the title." meta="Lucide icons" />
+      <Card tone="white" icon="pen" title="Short text" text="Two lines at most." meta="Meta line" />
+      <Card tone="white" icon="search" title="Spans two" text="Wide cards fill the row when the count is odd." meta="Meta line" class="lg:col-span-2" />
+    </div>
+  </Section>
+
+  <Section>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Card icon="chart" title="Grey card" sub="Sub line, small and dark" text="On white sections, cards are grey surface." />
+      <Card icon="trending-up" title="Grey card" sub="Sub line" text="Same height in a row: the grid stretches them." />
+      <Card icon="pen" title="Grey card" sub="Sub line" text="Short body copy." />
+      <Card tone="ink" icon="shield" title="Ink card" sub="The one that matters" text="Same shape, inverted." />
+    </div>
+    <p class="caption mt-6 text-center">A caption under a group of cards.</p>
+  </Section>
+
+  <!-- Media -->
+  <Section id="media" tone="surface">
+    <SectionHeading title="Media cards." title2="Photo, label, one number." />
+    <div class="mt-12 flex justify-center">
+      <Segmented name="media" items={[{ value: "a", label: "Service" }, { value: "b", label: "Studio" }, { value: "c", label: "Rentals" }]} />
+    </div>
+    <p class="caption mt-4 text-center">Pick your business. The whole page becomes your sample.</p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <MediaCard image={`${ex}/nordterm.webp`} alt="Quote app example" label="Service" value="4" caption="quotes waiting · sample" href="#media" />
+      <MediaCard image={`${ex}/forma.webp`} alt="Studio booking app example" label="Studio" value="38" caption="classes booked this week · sample" href="#media" />
+      <MediaCard image={`${ex}/rampa.webp`} alt="Rental app example" label="Rentals" value="12" caption="rentals out today · sample" href="#media" />
+    </div>
+  </Section>
+
+  <!-- Numbers -->
+  <Section id="numbers">
+    <SectionHeading eyebrow="The weekly report" title="One page." title2="The number that matters." lead="Stat tiles for numbers, bars for a breakdown, checks for what was done, rings for what comes next." />
+    <div class="card card-outline mt-14">
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p class="heading">Example project · week 6</p>
+          <p class="caption mt-1">Weekly report · sample numbers</p>
+        </div>
+        <Pill variant="quiet">Sample</Pill>
+      </div>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Stat value="312" label="sign-ups this week" delta="+26% vs last week" />
+        <Stat value="€6.40" label="cost per sign-up" delta="€1.10 lower" />
+        <Stat value="62%" label="finished onboarding" delta="+5 points" />
+        <Stat value="4.7" label="app store rating" delta="-0.1" down />
+      </div>
+      <div class="mt-10 grid gap-10 md:grid-cols-3">
+        <div>
+          <p class="mb-4 font-medium">By source</p>
+          <div class="grid gap-5">
+            <Meter label="Search" value={118} max={118} />
+            <Meter label="Social" value={96} max={118} />
+            <Meter label="Ads" value={71} max={118} />
+          </div>
+        </div>
+        <div>
+          <p class="mb-4 font-medium">What I did</p>
+          <CheckList tone="positive" items={["Shipped the booking flow", "Answered 64 support tickets", "Cut the sign-up form to three fields"]} />
+        </div>
+        <div>
+          <p class="mb-4 font-medium">Next week</p>
+          <CheckList icon="dot" items={["Payments in the app", "Push reminders", "A referral offer"]} />
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Compare -->
+  <Section id="compare" tone="surface">
+    <SectionHeading title="Comparison table." title2="Hairlines, no boxes." />
+    <div class="card card-white mt-12">
+      <CompareTable
+        columns={["Agency", "Freelancer", "Me"]}
+        rows={[
+          { label: "One person from idea to launch", cells: ["Rarely", "Sometimes", true] },
+          { label: "Fixed price per stage", cells: ["Up to you", "Rarely", true] },
+          { label: "Code and accounts in your name", cells: ["Rarely", "Not claimed", true] },
+        ]}
+      />
+      <p class="caption mt-6 text-center">A note under the table, centered, in caption grey.</p>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section id="cta">
+    <div class="card card-ink grid gap-12 !p-[clamp(1.75rem,5vw,5rem)] lg:grid-cols-2">
+      <div>
+        <h2 class="title"><span class="block">Start small.</span><span class="block">See it working first.</span></h2>
+        <p class="lead mt-6">No long sales process and nothing to sign on the call.</p>
+        <div class="mt-10 flex flex-wrap items-center gap-6">
+          <Button variant="invert" size="lg">Book a free call</Button>
+          <a href="#cta" class="link-underline">Message me instead</a>
+        </div>
+        <hr class="divider my-10" />
+        <Person size="lg" image={`${base}profile.webp`} name="Mircea Braescu" text="Product manager and developer. You talk to me on the call, and I build it." />
+      </div>
+      <div class="self-center">
+        <Steps items={[
+          { title: "A 30-minute call", text: "What you need, and where time slips away today." },
+          { title: "A written plan and a fixed price", text: "Sent after the call. Stop after any stage." },
+          { title: "Start with one flow", text: "Shipped and tested, then grow from there." },
+        ]} />
+      </div>
+    </div>
+  </Section>
+
+  <!-- Forms -->
+  <Section id="forms" tone="surface">
+    <SectionHeading title="Forms." title2="Grey fields, ink focus." align="left" />
+    <div class="mt-12 grid gap-4 lg:grid-cols-[3fr_2fr]">
+      <form class="card card-white grid gap-5 sm:grid-cols-2" onsubmit="return false">
+        <Field label="Name" name="ui-name" placeholder="Your name" required />
+        <Field label="Email" name="ui-email" type="email" placeholder="you@firm.com" hint="I reply within one working day." />
+        <Field label="Firm size" name="ui-size" type="select" options={["1-5 people", "5-50 people", "50+ people"]} class="sm:col-span-2" />
+        <Field label="What should it do?" name="ui-what" type="textarea" placeholder="The repetitive task, and how you handle it now" class="sm:col-span-2" />
+        <Field label="Phone" name="ui-phone" type="tel" value="07" error="Add the full number, 10 digits." class="sm:col-span-2" />
+        <div class="grid gap-3 sm:col-span-2">
+          <label class="choice"><input type="checkbox" checked /> Someone besides me has this problem</label>
+          <label class="choice"><input type="radio" name="ui-r" checked /> Web app</label>
+          <label class="choice"><input type="radio" name="ui-r" /> Mobile app</label>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 sm:col-span-2">
+          <Button type="submit" icon="arrow-right">Send</Button>
+          <span class="caption">No spam, no newsletter.</span>
+        </div>
+      </form>
+      <div class="grid content-start gap-4">
+        <div class="card card-white">
+          <p class="heading">Sent state</p>
+          <p class="body mt-2">Thanks. I'll write back within one working day.</p>
+          <CheckList tone="positive" class="mt-5" items={["Message received"]} />
+        </div>
+        <div class="card card-white">
+          <p class="heading">Inline field</p>
+          <div class="mt-4 flex gap-2">
+            <input class="input" placeholder="Email for updates" aria-label="Email" />
+            <Button>Join</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Posts -->
+  <Section id="posts">
+    <SectionHeading title="Posts." title2="The blog card." align="left" />
+    <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <PostCard title="A post title that runs over two lines" description="The description, three lines at most, in the secondary ink." pubDate={new Date("2026-10-27")} slug="ui#posts" readingTime="3 min read" tags={["ai", "product"]} />
+      <PostCard title="Short title" description="Cards in a row stretch to the same height." pubDate={new Date("2026-09-03")} slug="ui#posts" readingTime="10 min read" tags={["building-in-public"]} />
+      <PostCard title="With a cover image" pubDate={new Date("2026-09-01")} slug="ui#posts" readingTime="1 min read" tags={["ux"]} heroImage={`${ex}/forma.webp`} />
+    </div>
+  </Section>
+</Layout>

@@ -1,0 +1,35 @@
+---
+// Label + control + hint/error. type "textarea" and "select" render those controls.
+interface Props {
+  label: string;
+  name: string;
+  type?: "text" | "email" | "tel" | "number" | "textarea" | "select";
+  placeholder?: string;
+  hint?: string;
+  error?: string;
+  required?: boolean;
+  options?: string[];
+  value?: string;
+  class?: string;
+}
+const { label, name, type = "text", placeholder, hint, error, required, options = [], value, class: className } =
+  Astro.props;
+const id = `f-${name}`;
+const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
+---
+
+<div class:list={["field", className]}>
+  <label class="label" for={id}>{label}{required && <span class="text-ink-3"> *</span>}</label>
+  {
+    type === "textarea" ? (
+      <textarea id={id} name={name} class="textarea" placeholder={placeholder} required={required} aria-invalid={error ? "true" : undefined} aria-describedby={describedBy}>{value}</textarea>
+    ) : type === "select" ? (
+      <select id={id} name={name} class="select" required={required} aria-describedby={describedBy}>
+        {options.map((o) => <option selected={o === value}>{o}</option>)}
+      </select>
+    ) : (
+      <input id={id} name={name} type={type} class="input" placeholder={placeholder} required={required} value={value} aria-invalid={error ? "true" : undefined} aria-describedby={describedBy} />
+    )
+  }
+  {error ? <p id={`${id}-error`} class="error">{error}</p> : hint && <p id={`${id}-hint`} class="hint">{hint}</p>}
+</div>
