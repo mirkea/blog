@@ -103,6 +103,10 @@ const colours = [
           <div class="flex items-center gap-4"><span class="h-14 w-20 rounded-field bg-surface" /><span>field · 14px</span></div>
           <div class="flex items-center gap-4"><span class="h-14 w-20 rounded-full bg-surface" /><span>pill · round</span></div>
         </div>
+        <p class="caption mt-8">Control heights</p>
+        <p class="mt-2 text-ink-2">Every button, field and tab track is <code>--control-sm</code> (36px), <code>--control-h</code> (48px) or <code>--control-lg</code> (56px). Side by side, they line up.</p>
+        <p class="caption mt-8">Alignment</p>
+        <p class="mt-2 text-ink-2">Columns in a row start on one line, and a divider closes both columns, never one.</p>
         <p class="caption mt-8">Spacing</p>
         <p class="mt-2 text-ink-2">Sections breathe with <code>--section-y</code>; content sits in <code>.wrap</code> (1216px) or <code>.wrap-narrow</code> (736px) for reading.</p>
       </div>
@@ -303,7 +307,7 @@ const colours = [
 
   <!-- CTA -->
   <Section id="cta">
-    <div class="card card-ink grid gap-12 !p-[clamp(1.75rem,5vw,5rem)] lg:grid-cols-2">
+    <div class="card card-ink grid gap-x-16 gap-y-10 !p-[clamp(1.75rem,5vw,5rem)] lg:grid-cols-2">
       <div>
         <h2 class="title"><span class="block">Start small.</span><span class="block">See it working first.</span></h2>
         <p class="lead mt-6">No long sales process and nothing to sign on the call.</p>
@@ -311,16 +315,14 @@ const colours = [
           <Button variant="invert" size="lg">Book a free call</Button>
           <a href="#cta" class="link-underline">Message me instead</a>
         </div>
-        <hr class="divider my-10" />
-        <Person size="lg" image={`${base}profile.webp`} name="Mircea Braescu" text="Product manager and developer. You talk to me on the call, and I build it." />
       </div>
-      <div class="self-center">
-        <Steps items={[
-          { title: "A 30-minute call", text: "What you need, and where time slips away today." },
-          { title: "A written plan and a fixed price", text: "Sent after the call. Stop after any stage." },
-          { title: "Start with one flow", text: "Shipped and tested, then grow from there." },
-        ]} />
-      </div>
+      <Steps class="steps-flush" items={[
+        { title: "A 30-minute call", text: "What you need, and where time slips away today." },
+        { title: "A written plan and a fixed price", text: "Sent after the call. Stop after any stage." },
+        { title: "Start with one flow", text: "Shipped and tested, then grow from there." },
+      ]} />
+      <hr class="divider lg:col-span-2" />
+      <Person class="lg:col-span-2" size="lg" image={`${base}profile.webp`} name="Mircea Braescu" text="Product manager and developer. You talk to me on the call, and I build it." />
     </div>
   </Section>
 

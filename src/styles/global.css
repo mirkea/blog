@@ -238,9 +238,9 @@
     scroll-padding-top: 4rem;
   }
 
-  /* Better touch targets on mobile */
-  button,
-  a {
+  /* Better touch targets on mobile. Kit controls carry their own height tokens */
+  button:not(.btn, .seg-item, .pill, .tag),
+  a:not(.btn, .seg-item, .pill, .tag) {
     @apply min-h-[44px];
   }
 }

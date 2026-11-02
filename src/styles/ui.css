@@ -115,7 +115,7 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    min-height: 2.75rem;
+    min-height: var(--control-h);
     padding: 0.625rem 1.375rem;
     border-radius: var(--radius-pill);
     font-weight: 500;
@@ -167,12 +167,12 @@
     color: var(--ink-2);
   }
   .btn-lg {
-    min-height: 3.5rem;
+    min-height: var(--control-lg);
     padding: 0.875rem 2rem;
     font-size: 1.15rem;
   }
   .btn-sm {
-    min-height: 2.25rem;
+    min-height: var(--control-sm);
     padding: 0.4rem 1rem;
     font-size: 0.9rem;
   }
@@ -265,7 +265,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.25rem;
-    padding: 0.3rem;
+    padding: 0.25rem;
     border-radius: var(--radius-pill);
     background: var(--surface);
   }
@@ -276,7 +276,7 @@
     background: var(--surface);
   }
   .seg-item {
-    min-height: 2.5rem;
+    min-height: calc(var(--control-h) - 0.5rem);
     padding: 0.5rem 1.15rem;
     border-radius: var(--radius-pill);
     font-weight: 500;
@@ -385,8 +385,9 @@
     inset: auto 1rem 1rem 1rem;
     padding: 1.25rem 1.5rem;
     border-radius: var(--radius-tile);
-    background: color-mix(in srgb, var(--canvas) 88%, transparent);
-    backdrop-filter: blur(14px);
+    /* Solid, so the tile reads the same on a light or a dark photo */
+    background: var(--canvas);
+    box-shadow: var(--shadow-float);
   }
 
   /* ── Stat tiles ─────────────────────────────────────────── */
@@ -450,6 +451,18 @@
   .card-ink .steps,
   .card-ink .step {
     border-color: color-mix(in srgb, var(--on-ink) 14%, transparent);
+  }
+  /* Flush: no outer hairlines or outer padding, so the first number lines up with a
+     heading beside it and a shared divider below can close both columns */
+  .steps-flush {
+    border-top: 0;
+  }
+  .steps-flush > .step:first-child {
+    padding-top: 0;
+  }
+  .steps-flush > .step:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
   }
   .step {
     display: grid;
@@ -554,8 +567,11 @@
   }
 
   /* ── Forms ──────────────────────────────────────────────── */
+  /* Fields stack from the top, so labels and controls share a line across a row
+     even when one field has a hint or error below it */
   .field {
     display: grid;
+    align-content: start;
     gap: 0.4rem;
   }
   .label {
@@ -575,8 +591,8 @@
   .textarea,
   .select {
     width: 100%;
-    min-height: 3rem;
-    padding: 0.75rem 1rem;
+    height: var(--control-h);
+    padding: 0 1rem;
     border-radius: var(--radius-field);
     border: 1px solid transparent;
     background: var(--surface);
@@ -624,6 +640,8 @@
     border-color: var(--negative);
   }
   .textarea {
+    height: auto;
+    padding-block: 0.75rem;
     min-height: 8rem;
     resize: vertical;
   }

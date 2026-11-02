@@ -31,6 +31,11 @@
   --radius-field: 0.875rem;
   --radius-pill: 999px;
 
+  /* Control heights: every button, field and tab track uses one of these */
+  --control-sm: 2.25rem;
+  --control-h: 3rem;
+  --control-lg: 3.5rem;
+
   /* Layout */
   --container: 76rem;
   --container-narrow: 46rem;
