@@ -1,0 +1,32 @@
+---
+import Icon, { type IconName } from "./Icon.astro";
+// Pill button. With href it renders a link, otherwise a <button>.
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "invert" | "link";
+  size?: "sm" | "md" | "lg";
+  icon?: IconName;
+  iconStart?: boolean;
+  type?: "button" | "submit";
+  class?: string;
+  [key: string]: unknown;
+}
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  icon,
+  iconStart = false,
+  type = "button",
+  class: className,
+  ...rest
+} = Astro.props;
+const classes = ["btn", `btn-${variant}`, size !== "md" && `btn-${size}`, className];
+const Tag = href ? "a" : "button";
+---
+
+<Tag href={href} type={href ? undefined : type} class:list={classes} {...rest}>
+  {icon && iconStart && <Icon name={icon} />}
+  <slot />
+  {icon && !iconStart && <Icon name={icon} />}
+</Tag>

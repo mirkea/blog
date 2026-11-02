@@ -1,0 +1,70 @@
+/*
+ * Ink design tokens. The single source for colour, type, radius and spacing.
+ * Every page and component reads these; change the look here, not in pages.
+ * Light values on :root, dark values on .dark (toggled by ThemeToggle).
+ */
+
+:root {
+  /* Colour */
+  --ink: #1d1d1f; /* primary: text, buttons, dark cards */
+  --ink-2: #6e6e73; /* second headline line, secondary text */
+  --ink-3: #8e8e93; /* captions, meta */
+  --canvas: #ffffff; /* page background */
+  --surface: #f4f4f6; /* grey band, cards on white */
+  --surface-2: #e9e9ed; /* hover on surface, meter track */
+  --line: #e5e5ea; /* hairlines, table rows */
+  --on-ink: #f5f5f7; /* text on ink */
+  --on-ink-2: #a1a1a6; /* secondary text on ink */
+  --positive: #2e7d32; /* deltas up, done checks */
+  --negative: #c62828; /* errors */
+  --focus: #1d1d1f;
+
+  /* Type */
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --tracking-display: -0.045em;
+  --tracking-title: -0.03em;
+
+  /* Shape */
+  --radius-card: 1.75rem;
+  --radius-tile: 1.25rem;
+  --radius-field: 0.875rem;
+  --radius-pill: 999px;
+
+  /* Control heights: every button, field and tab track uses one of these */
+  --control-sm: 2.25rem;
+  --control-h: 3rem;
+  --control-lg: 3.5rem;
+
+  /* Layout */
+  --container: 76rem;
+  --container-narrow: 46rem;
+  --gutter: 1.25rem;
+  --section-y: clamp(4rem, 9vw, 7.5rem);
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 30px rgb(0 0 0 / 0.06);
+}
+
+:root.dark {
+  --ink: #f5f5f7;
+  --ink-2: #98989d;
+  --ink-3: #7c7c80;
+  --canvas: #0f0f10;
+  --surface: #1c1c1e;
+  --surface-2: #2c2c2e;
+  --line: #2c2c2e;
+  --on-ink: #1d1d1f;
+  --on-ink-2: #5a5a5f;
+  --positive: #66bb6a;
+  --negative: #ef5350;
+  --focus: #f5f5f7;
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 30px rgb(0 0 0 / 0.4);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 2rem;
+  }
+}

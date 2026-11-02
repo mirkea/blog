@@ -1,0 +1,35 @@
+---
+import Icon from "./Icon.astro";
+// Photo card: a floating label on top, a frosted tile with a number at the bottom.
+interface Props {
+  image: string;
+  alt: string;
+  label?: string;
+  value?: string;
+  caption?: string;
+  href?: string;
+  class?: string;
+}
+const { image, alt, label, value, caption, href, class: className } = Astro.props;
+const Tag = href ? "a" : "div";
+---
+
+<Tag href={href} class:list={["card card-media card-link block", className]}>
+  <img src={image} alt={alt} loading="lazy" />
+  {
+    label && (
+      <span class="pill pill-float">
+        {label}
+        {href && <Icon name="chevron-right" class="size-4" />}
+      </span>
+    )
+  }
+  {
+    (value || caption) && (
+      <div class="card-overlay">
+        {value && <p class="stat-value">{value}</p>}
+        {caption && <p class="mt-2 text-[0.95rem] leading-snug text-ink-2">{caption}</p>}
+      </div>
+    )
+  }
+</Tag>

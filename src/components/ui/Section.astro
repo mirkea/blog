@@ -1,0 +1,22 @@
+---
+// A full-width band. tone "surface" gives the grey band; width "narrow" for reading columns.
+interface Props {
+  tone?: "canvas" | "surface";
+  width?: "wide" | "narrow";
+  tight?: boolean;
+  id?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+const { tone = "canvas", width = "wide", tight = false, id, class: className, ...rest } = Astro.props;
+---
+
+<section
+  id={id}
+  class:list={["section", tone === "surface" && "section-surface", tight && "section-tight"]}
+  {...rest}
+>
+  <div class:list={[width === "narrow" ? "wrap-narrow" : "wrap", className]}>
+    <slot />
+  </div>
+</section>

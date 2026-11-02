@@ -1,304 +1,133 @@
 ---
 export const prerender = true;
-import BaseLayout from "../layouts/BaseLayout.astro";
-import {
-  Search,
-  Code2,
-  ListChecks,
-  Users,
-  PenTool,
-  FileCode,
-  Braces,
-  Atom,
-  Bot,
-} from "lucide-react";
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/ui/Section.astro";
+import Button from "../components/ui/Button.astro";
+import Meter from "../components/ui/Meter.astro";
+import Icon from "../components/ui/Icon.astro";
 
 const skills = [
   {
     name: "Product Discovery",
     level: 95,
-    icon: Search,
+    icon: "magnifier",
   },
   {
     name: "Rapid Prototyping",
     level: 95,
-    icon: Code2,
+    icon: "code-square",
   },
   {
     name: "Production Management",
     level: 95,
-    icon: ListChecks,
+    icon: "checklist-minimalistic",
   },
   {
     name: "Stakeholder Alignment",
     level: 90,
-    icon: Users,
+    icon: "users-group-rounded",
   },
   {
     name: "UX / Wireframing",
     level: 90,
-    icon: PenTool,
+    icon: "pen-new-square",
   },
   {
     name: "HTML / CSS",
     level: 95,
-    icon: FileCode,
+    icon: "file-code",
   },
   {
     name: "JavaScript",
     level: 75,
-    icon: Braces,
+    icon: "programming",
   },
   {
     name: "React",
     level: 80,
-    icon: Atom,
+    icon: "atom",
   },
   {
     name: "AI Workflows",
     level: 80,
-    icon: Bot,
+    icon: "cpu",
   },
 ];
 ---
 
-<BaseLayout title="About Me" description="Learn more about my background, skills, and experience">
-  <div
-    class="theme-transition-element mx-auto max-w-6xl overflow-hidden px-4 py-8 sm:px-6 sm:py-12 md:py-16"
-  >
-    <!-- Hero Section - Improved mobile layout -->
-    <div class="relative mb-12 sm:mb-16 md:mb-20">
-      <div class="relative grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-12">
-        <div class="order-2 text-center md:order-1 md:text-left">
-          <h1
-            class="theme-transition-color mb-4 text-3xl font-bold tracking-tight text-zinc-900 sm:mb-6 sm:text-4xl md:text-5xl dark:text-zinc-100"
-          >
-            Hello, I'm <span class="theme-transition-color text-zinc-900 dark:text-zinc-100"
-              >Braescu Mircea Cristian</span
-            >
-          </h1>
-
-          <p
-            class="theme-transition-color mb-6 text-lg leading-relaxed text-zinc-600 sm:mb-8 sm:text-xl dark:text-zinc-400"
-          >
-            A product manager with 10 years of PM experience and 20 years of technical depth -
-            bridging discovery, design, and engineering.
-          </p>
-
-          <div
-            class="social-links-container theme-transition-children flex flex-wrap justify-center gap-4 md:justify-start"
-          >
-            <!-- Social links remain the same -->
-          </div>
-        </div>
-
-        <div class="relative order-1 md:order-2">
-          <div
-            class="theme-transition-element mx-auto aspect-square w-full max-w-[280px] overflow-hidden border-6 border-slate-100/60 sm:max-w-[320px] sm:border-8 md:max-w-md dark:border-zinc-800"
-          >
-            <img
-              src="/profile.webp"
-              alt="Profile photo"
-              class="h-full w-full object-cover"
-              loading="eager"
-            />
-          </div>
+<Layout title="About Me" description="Learn more about my background, skills, and experience" wide>
+  <Section tight>
+    <div class="grid items-center gap-12 md:grid-cols-[3fr_2fr]">
+      <div class="order-2 text-center md:order-1 md:text-left">
+        <h1 class="display !text-[clamp(2.6rem,6.5vw,5.25rem)]">
+          <span class="block">Hello, I'm</span>
+          <span class="tone-2 block">Braescu Mircea Cristian</span>
+        </h1>
+        <p class="lead mt-6 max-w-xl md:mx-0 mx-auto">
+          A product manager with 10 years of PM experience and 20 years of technical depth -
+          bridging discovery, design, and engineering.
+        </p>
+      </div>
+      <div class="order-1 md:order-2">
+        <div class="mx-auto aspect-square w-full max-w-[280px] overflow-hidden rounded-card bg-surface sm:max-w-[340px] md:max-w-none">
+          <img src="/profile.webp" alt="Profile photo" class="h-full w-full object-cover" loading="eager" />
         </div>
       </div>
     </div>
+  </Section>
 
-    <!-- About Section - Improved spacing for mobile -->
-    <div class="theme-transition-element mb-16 sm:mb-20 md:mb-24">
-      <div class="mx-auto max-w-3xl">
-        <h2
-          class="theme-transition-color mb-6 flex items-center justify-center text-2xl font-bold text-zinc-900 sm:mb-8 sm:text-3xl md:justify-start dark:text-zinc-100"
-        >
-          <span
-            class="theme-transition-bg mr-4 hidden h-1 w-8 bg-zinc-300 sm:inline-block sm:w-12 dark:bg-zinc-700"
-          ></span>
-          About Me
-          <span
-            class="theme-transition-bg ml-4 hidden h-1 w-8 bg-zinc-300 sm:inline-block sm:w-12 dark:bg-zinc-700"
-          ></span>
-        </h2>
-
-        <div
-          class="prose markdown-content prose-zinc dark:prose-invert theme-transition-element max-w-none"
-        >
-          <p class="theme-transition-color mb-4 text-base leading-relaxed sm:mb-6 sm:text-lg">
-            I'm a Product Manager who grew from Flash developer → UI designer → front-end developer
-            → PM through hands-on progression. I spent 5+ years as delivery PM on <a
-              href="https://www.verified.eu/"
-              target="_blank">verified.eu</a
-            > a B2B RegTech platform that was acquired for €31M, then led product discovery across multiple
-            AI-native and SaaS products as CPO at a product studio.
-          </p>
-
-          <p class="theme-transition-color mb-4 text-base leading-relaxed sm:mb-6 sm:text-lg">
-            I work at the intersection of product, design, and engineering: fluent in API docs, DB
-            schemas, and front-end code. I build AI-assisted discovery workflows and use rapid
-            prototyping as my primary alignment tool. I think in systems - user flows, data
-            structures, operational models - not just features.
-          </p>
-        </div>
-      </div>
+  <Section tone="surface" width="narrow">
+    <h2 class="title rise">About me.</h2>
+    <div class="prose markdown-content prose-zinc dark:prose-invert rise mt-8 max-w-none text-lg">
+      <p>
+        I'm a Product Manager who grew from Flash developer → UI designer → front-end developer
+        → PM through hands-on progression. I spent 5+ years as delivery PM on <a
+          href="https://www.verified.eu/"
+          target="_blank">verified.eu</a
+        > a B2B RegTech platform that was acquired for €31M, then led product discovery across multiple
+        AI-native and SaaS products as CPO at a product studio.
+      </p>
+      <p>
+        I work at the intersection of product, design, and engineering: fluent in API docs, DB
+        schemas, and front-end code. I build AI-assisted discovery workflows and use rapid
+        prototyping as my primary alignment tool. I think in systems - user flows, data
+        structures, operational models - not just features.
+      </p>
     </div>
+  </Section>
 
-    <!-- Skills Section - Improved for mobile -->
-    <div class="theme-transition-element mb-16 sm:mb-20 md:mb-24">
-      <h2
-        class="theme-transition-color mb-8 text-center text-2xl font-bold text-zinc-900 sm:mb-12 sm:text-3xl dark:text-zinc-100"
-      >
-        Tech Stack
-      </h2>
-
-      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {
-          skills.map((skill) => (
-            <div class="skill-card theme-transition-element transform rounded-md border border-zinc-200 bg-white transition-all duration-300 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-800/50 dark:hover:border-zinc-600">
-              <div class="flex items-center gap-4 p-5">
-                <div class="theme-transition-bg theme-transition-color flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                  <skill.icon size={18} />
-                </div>
-                <div class="min-w-0 flex-1">
-                  <div class="mb-2 flex items-center justify-between gap-2">
-                    <h3 class="theme-transition-color truncate text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                      {skill.name}
-                    </h3>
-                    <span class="theme-transition-color shrink-0 font-mono text-xs text-zinc-500 dark:text-zinc-400">
-                      {skill.level}%
-                    </span>
-                  </div>
-                  <div class="theme-transition-bg relative h-1.5 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-700">
-                    <div
-                      class="progress-bar-animate theme-transition-bg absolute top-0 left-0 h-full rounded-full bg-zinc-900 dark:bg-zinc-100"
-                      style={`width: ${skill.level}%`}
-                    />
-                  </div>
-                </div>
-              </div>
+  <Section>
+    <h2 class="title rise text-center">Tech stack.</h2>
+    <div class="rise mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        skills.map((skill) => (
+          <div class="card flex items-center gap-5 !py-6">
+            <span class="grid size-11 shrink-0 place-items-center rounded-full bg-canvas text-ink">
+              <Icon name={skill.icon} class="size-5" />
+            </span>
+            <div class="min-w-0 flex-1">
+              <Meter label={skill.name} value={skill.level} max={100} display={`${skill.level}%`} />
             </div>
-          ))
-        }
-      </div>
+          </div>
+        ))
+      }
     </div>
+  </Section>
 
-    <!-- Contact Section - Improved for mobile -->
-    <div class="theme-transition-element mx-auto max-w-3xl text-center">
-      <h2
-        class="theme-transition-color mb-4 text-2xl font-bold text-zinc-900 sm:mb-6 sm:text-3xl dark:text-zinc-100"
-      >
-        Get in Touch
-      </h2>
-      <p
-        class="theme-transition-color mb-6 text-base text-zinc-600 sm:mb-8 sm:text-lg dark:text-zinc-400"
-      >
+  <Section>
+    <div class="card card-ink rise text-center !py-[clamp(3rem,7vw,5.5rem)]">
+      <h2 class="title">Get in touch.</h2>
+      <p class="lead mx-auto mt-5 max-w-2xl">
         I'm always open to new opportunities and collaborations. If you'd like to work together or
         just say hello, feel free to reach out.
       </p>
-
-      <div class="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-        <a
-          href="mailto:contact@mirkea.com"
-          class="theme-transition-element inline-flex items-center justify-center rounded-lg bg-zinc-900 px-6 py-3 text-base font-medium text-zinc-100 transition-colors hover:bg-zinc-700 sm:px-8 sm:py-4 sm:text-lg dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="mr-2 h-4 w-4 sm:h-5 sm:w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-            ></path>
-          </svg>
-          Say Hello
-        </a>
-        <a
-          href="/resume.pdf"
-          download="Braescu-Mircea-Cristian-Resume.pdf"
-          class="theme-transition-element inline-flex items-center justify-center rounded-lg border-2 border-zinc-900 bg-transparent px-6 py-3 text-base font-medium text-zinc-900 transition-colors hover:bg-zinc-100 sm:px-8 sm:py-4 sm:text-lg dark:border-zinc-100 dark:text-zinc-100 dark:hover:bg-zinc-800"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="mr-2 h-4 w-4 sm:h-5 sm:w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            ></path>
-          </svg>
-          Download Resume
-        </a>
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <Button href="mailto:contact@mirkea.com" variant="invert" size="lg" icon="mail" iconStart>Say Hello</Button>
+        <a href="/resume.pdf" download="Braescu-Mircea-Cristian-Resume.pdf" class="link-underline">Download Resume</a>
       </div>
     </div>
-  </div>
-</BaseLayout>
-
-<style>
-  .skill-card {
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .skill-card:hover {
-    z-index: 10;
-  }
-
-  /* Reduce animation complexity on mobile for better performance */
-  @media (max-width: 640px) {
-    .skill-card {
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-
-    .skill-card:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
-    }
-  }
-
-  /* Improved touch targets for mobile */
-  @media (max-width: 640px) {
-    a,
-    button {
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-    }
-
-    .social-link {
-      min-width: 44px;
-      min-height: 44px;
-    }
-  }
-
-  /* Theme transition effect */
-  :global(.theme-switching) .theme-transition-element {
-    animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  /* Smooth card transition during theme switch */
-  .skill-card.theme-transition-element {
-    transition:
-      background-color var(--theme-transition),
-      border-color var(--theme-transition),
-      color var(--theme-transition),
-      box-shadow var(--theme-transition),
-      transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-</style>
+  </Section>
+</Layout>
 
 <script>
   // Handle SPA transitions for about page

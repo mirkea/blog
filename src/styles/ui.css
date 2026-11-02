@@ -1,0 +1,944 @@
+/*
+ * Ink UI: the component classes every page uses. See them all on /ui.
+ * Built only from tokens.css. Pages compose these; they never restyle them.
+ */
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-on-ink: var(--on-ink);
+  --color-on-ink-2: var(--on-ink-2);
+  --color-positive: var(--positive);
+  --color-negative: var(--negative);
+  --font-display: var(--font-display);
+  --radius-card: var(--radius-card);
+  --radius-tile: var(--radius-tile);
+  --radius-field: var(--radius-field);
+}
+
+@layer components {
+  /* ── Layout ─────────────────────────────────────────────── */
+  .wrap {
+    width: 100%;
+    max-width: calc(var(--container) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .wrap-narrow {
+    width: 100%;
+    max-width: calc(var(--container-narrow) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .section {
+    padding-block: var(--section-y);
+    background: var(--canvas);
+  }
+  .section-surface {
+    background: var(--surface);
+  }
+  .section-tight {
+    padding-block: calc(var(--section-y) * 0.55);
+  }
+
+  /* ── Type ───────────────────────────────────────────────── */
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    letter-spacing: -0.01em;
+  }
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 8vw, 6.25rem);
+    line-height: 0.98;
+    letter-spacing: var(--tracking-display);
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(2.1rem, 5.4vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: var(--tracking-display);
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .title-sm {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    line-height: 1.08;
+    letter-spacing: var(--tracking-title);
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .heading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: var(--tracking-title);
+    color: var(--ink);
+  }
+  .tone-2 {
+    color: var(--ink-2);
+  }
+  .lead {
+    font-size: clamp(1.1rem, 1.7vw, 1.4rem);
+    line-height: 1.5;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .body {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+  .caption {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  /* ── Buttons ────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: var(--control-h);
+    padding: 0.625rem 1.375rem;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    max-width: 100%;
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease),
+      color 0.2s var(--ease),
+      transform 0.2s var(--ease),
+      opacity 0.2s var(--ease);
+  }
+  /* Phones: a long label wraps inside the pill instead of pushing the page wider */
+  @media (max-width: 639px) {
+    .btn {
+      white-space: normal;
+      text-align: center;
+    }
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn:focus-visible,
+  .seg-item:focus-visible,
+  .pill:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .btn-primary:hover {
+    opacity: 0.86;
+  }
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .btn-secondary:hover {
+    background: var(--surface-2);
+  }
+  /* Same rule as fields: on a grey band the secondary button turns white */
+  .section-surface .btn-secondary,
+  .card:not(.card-white):not(.card-outline):not(.card-ink) .btn-secondary {
+    background: var(--canvas);
+  }
+  .section-surface .btn-secondary:hover {
+    background: var(--surface-2);
+  }
+  .btn-invert {
+    background: var(--on-ink);
+    color: var(--ink);
+  }
+  .btn-invert:hover {
+    opacity: 0.9;
+  }
+  .btn-link {
+    padding-inline: 0.25rem;
+    color: var(--ink);
+  }
+  .btn-link:hover {
+    color: var(--ink-2);
+  }
+  .btn-lg {
+    min-height: var(--control-lg);
+    padding: 0.875rem 2rem;
+    font-size: 1.15rem;
+  }
+  .btn-sm {
+    min-height: var(--control-sm);
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+  .btn[disabled],
+  .btn[aria-disabled="true"] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .btn svg {
+    width: 1.1em;
+    height: 1.1em;
+    flex-shrink: 0;
+  }
+
+  /* Text link with a chevron that nudges on hover */
+  .link-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .link-more svg {
+    width: 1em;
+    height: 1em;
+    transition: transform 0.2s var(--ease);
+  }
+  .link-more:hover svg {
+    transform: translateX(3px);
+  }
+  .link-underline {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
+
+  /* ── Pills, tags, segmented control ─────────────────────── */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+  .pill-quiet {
+    background: transparent;
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--ink-2);
+  }
+  .card-ink .pill-quiet {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--on-ink) 22%, transparent);
+    color: var(--on-ink-2);
+  }
+  .pill-ink {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .pill-float {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.5rem 1.1rem;
+    box-shadow: var(--shadow-float);
+  }
+  .pill-dot::before {
+    content: "";
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .tag {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+  .tag:hover {
+    color: var(--ink);
+  }
+  a.pill:hover {
+    background: var(--surface-2);
+  }
+
+  .seg {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+  }
+  .section-surface .seg {
+    background: var(--surface-2);
+  }
+  .section-surface .card-white .seg {
+    background: var(--surface);
+  }
+  .seg-item {
+    min-height: calc(var(--control-h) - 0.5rem);
+    padding: 0.5rem 1.15rem;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease),
+      color 0.2s var(--ease),
+      box-shadow 0.2s var(--ease);
+  }
+  .seg-item:hover {
+    background: var(--surface-2);
+  }
+  .seg-item[aria-selected="true"],
+  .seg-item[aria-current="page"],
+  .seg-item.is-active {
+    background: var(--canvas);
+    box-shadow: var(--shadow-float);
+  }
+
+  /* ── Cards ──────────────────────────────────────────────── */
+  .card {
+    position: relative;
+    border-radius: var(--radius-card);
+    background: var(--surface);
+    color: var(--ink);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+  .card-white {
+    background: var(--canvas);
+  }
+  .card-outline {
+    background: var(--canvas);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--shadow-float);
+  }
+  .card-ink {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .card-ink .heading,
+  .card-ink .title,
+  .card-ink .title-sm,
+  .card-ink .link-underline,
+  .card-ink .person .heading {
+    color: var(--on-ink);
+  }
+  .card-ink .body,
+  .card-ink .lead,
+  .card-ink .caption,
+  .card-ink .person,
+  .card-ink .card-meta,
+  .card-ink .tone-2 {
+    color: var(--on-ink-2);
+  }
+  .card-link {
+    transition: transform 0.25s var(--ease), background-color 0.2s var(--ease);
+  }
+  .card-link:hover {
+    transform: translateY(-2px);
+  }
+  .card-link.card:not(.card-ink):not(.card-white):hover {
+    background: var(--surface-2);
+  }
+  .card-icon {
+    width: 2rem;
+    height: 2rem;
+    stroke-width: 1.5;
+    margin-bottom: 1.25rem;
+  }
+  .card-sub {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 0.4rem;
+  }
+  .card-meta {
+    font-size: 0.875rem;
+    color: var(--ink-3);
+  }
+  .card-media {
+    overflow: hidden;
+    padding: 0;
+    aspect-ratio: 4 / 5;
+    isolation: isolate;
+  }
+  .card-media > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    transition: transform 0.6s var(--ease);
+  }
+  .card-media:hover > img {
+    transform: scale(1.03);
+  }
+  .card-media .pill-float {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+  }
+  .card-media .card-overlay {
+    position: absolute;
+    inset: auto 1rem 1rem 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-tile);
+    /* Solid, so the tile reads the same on a light or a dark photo */
+    background: var(--canvas);
+    box-shadow: var(--shadow-float);
+  }
+
+  /* ── Stat tiles ─────────────────────────────────────────── */
+  .stat {
+    border-radius: var(--radius-tile);
+    background: var(--surface);
+    padding: 1.5rem 1.75rem;
+  }
+  .stat-value {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 4vw, 3rem);
+    line-height: 1;
+    letter-spacing: var(--tracking-title);
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-label {
+    margin-top: 0.6rem;
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .stat-delta {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--positive);
+  }
+  .stat-delta.is-down {
+    color: var(--negative);
+  }
+
+  /* ── Lists ──────────────────────────────────────────────── */
+  .checklist {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .checklist > li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    line-height: 1.45;
+  }
+  .checklist > li > svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    stroke-width: 2;
+  }
+  .checklist-positive > li > svg {
+    color: var(--positive);
+  }
+  .checklist-muted > li {
+    color: var(--ink-2);
+  }
+  .card-ink .checklist-muted > li {
+    color: var(--on-ink-2);
+  }
+  .checklist-lg {
+    gap: 1rem;
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  }
+  .checklist-lg > li > svg {
+    margin-top: 0.2rem;
+  }
+
+  .steps {
+    border-top: 1px solid var(--line);
+  }
+  .card-ink .steps,
+  .card-ink .step {
+    border-color: color-mix(in srgb, var(--on-ink) 14%, transparent);
+  }
+  /* Flush: no outer hairlines or outer padding, so the first number lines up with a
+     heading beside it and a shared divider below can close both columns */
+  .steps-flush {
+    border-top: 0;
+  }
+  .steps-flush > .step:first-child {
+    padding-top: 0;
+  }
+  .steps-flush > .step:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .step-n {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--ink-2);
+  }
+  .card-ink .step-n {
+    color: var(--on-ink-2);
+  }
+  .step-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-title);
+  }
+  .step-text {
+    margin-top: 0.25rem;
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+  .card-ink .step-text {
+    color: var(--on-ink-2);
+  }
+
+  /* ── Meter (bar in a breakdown) ─────────────────────────── */
+  .meter {
+    display: grid;
+    gap: 0.5rem;
+  }
+  .meter-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .meter-head b {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .meter-track {
+    height: 0.375rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface-2);
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--ink);
+  }
+
+  /* ── Comparison table ───────────────────────────────────── */
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .compare th {
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    text-align: center;
+  }
+  .compare th:first-child,
+  .compare td:first-child {
+    text-align: left;
+  }
+  .compare td {
+    padding: 1.4rem 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--ink-2);
+    text-align: center;
+  }
+  .compare td:first-child {
+    color: var(--ink);
+    font-size: 1.05rem;
+  }
+  .compare tr:last-child td {
+    border-bottom: 1px solid var(--line);
+  }
+  .check-dot {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .check-dot svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    stroke-width: 2.5;
+  }
+
+  /* ── Forms ──────────────────────────────────────────────── */
+  /* Fields stack from the top, so labels and controls share a line across a row
+     even when one field has a hint or error below it */
+  .field {
+    display: grid;
+    align-content: start;
+    gap: 0.4rem;
+  }
+  .label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .hint {
+    font-size: 0.85rem;
+    color: var(--ink-3);
+  }
+  .error {
+    font-size: 0.85rem;
+    color: var(--negative);
+  }
+  .input,
+  .textarea,
+  .select {
+    width: 100%;
+    height: var(--control-h);
+    padding: 0 1rem;
+    border-radius: var(--radius-field);
+    border: 1px solid transparent;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 1rem;
+    transition:
+      background-color 0.2s var(--ease),
+      border-color 0.2s var(--ease);
+  }
+  /* Fields sit on the opposite tone: canvas inside grey blocks, surface inside white cards */
+  .section-surface .input,
+  .section-surface .textarea,
+  .section-surface .select,
+  .card .input,
+  .card .textarea,
+  .card .select {
+    background: var(--canvas);
+  }
+  .card.card-white .input,
+  .card.card-white .textarea,
+  .card.card-white .select,
+  .card.card-outline .input,
+  .card.card-outline .textarea,
+  .card.card-outline .select {
+    background: var(--surface);
+  }
+  .input::placeholder,
+  .textarea::placeholder {
+    color: var(--ink-3);
+  }
+  .input:hover,
+  .textarea:hover,
+  .select:hover {
+    border-color: var(--line);
+  }
+  .input:focus,
+  .textarea:focus,
+  .select:focus {
+    outline: none;
+    border-color: var(--ink);
+    background: var(--canvas);
+  }
+  .input[aria-invalid="true"],
+  .textarea[aria-invalid="true"] {
+    border-color: var(--negative);
+  }
+  .textarea {
+    height: auto;
+    padding-block: 0.75rem;
+    min-height: 8rem;
+    resize: vertical;
+  }
+  .select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='%236e6e73' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M19 9L12 15L5 9'/%3E%3C/svg%3E") /* Solar alt-arrow-down */;
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 1.1rem;
+    padding-right: 2.75rem;
+  }
+  .choice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    cursor: pointer;
+    line-height: 1.45;
+  }
+  .choice input {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.15rem;
+    accent-color: var(--ink);
+    flex-shrink: 0;
+  }
+
+  /* ── Avatar line (who you talk to) ──────────────────────── */
+  .avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .avatar-lg {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  .person {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--ink-2);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--line);
+    border: 0;
+  }
+  .card-ink .divider {
+    background: color-mix(in srgb, var(--on-ink) 14%, transparent);
+  }
+
+  /* ── Option pills (radio or checkbox as a pill) ─────────── */
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: var(--control-h);
+    padding: 0 1.15rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+    background: var(--canvas);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+  }
+  .option:hover {
+    border-color: var(--ink-3);
+  }
+  .option:has(input:checked) {
+    border-color: var(--ink);
+  }
+  .option input {
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: var(--ink);
+  }
+  .card.card-white .option,
+  .card.card-outline .option {
+    background: var(--canvas);
+  }
+
+  /* ── Rows: label and value split by hairlines (prices, specs) ── */
+  .rows > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--line);
+  }
+  .rows > div:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .rows dt {
+    color: var(--ink-2);
+  }
+  .rows dd {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-title);
+    color: var(--ink);
+  }
+  @media (min-width: 640px) {
+    .rows > div {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .rows dd {
+      flex-shrink: 0;
+    }
+  }
+
+  /* ── Disclosure (FAQ, "add details") ─────────────────────── */
+  .disclosure {
+    border-top: 1px solid var(--line);
+  }
+  .disclosure:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+    padding-block: 1rem;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: var(--tracking-title);
+    color: var(--ink);
+  }
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclosure > summary .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    color: var(--ink-2);
+    transition: transform 0.25s var(--ease);
+  }
+  .disclosure[open] > summary .icon {
+    transform: rotate(45deg);
+  }
+  .disclosure > :not(summary) {
+    padding-bottom: 1.4rem;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+  /* Inline variant: a quiet "+ add details" toggle inside a form */
+  .disclosure-inline,
+  .disclosure-inline:last-child {
+    border: 0;
+  }
+  .disclosure-inline > summary {
+    justify-content: flex-start;
+    min-height: var(--control-h);
+    padding: 0;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .disclosure-inline > :not(summary) {
+    padding-bottom: 0;
+    color: inherit;
+  }
+
+  /* ── Highlight (a phrase marked inside a sentence) ──────── */
+  .highlight {
+    line-height: 1.4;
+  }
+  .highlight mark {
+    background: var(--surface-2);
+    color: var(--ink);
+    padding: 0 0.15em;
+    border-radius: 0.25em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* ── Range slider ───────────────────────────────────────── */
+  .range {
+    width: 100%;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* ── Fields and options on an ink card ──────────────────── */
+  .card-ink .label {
+    color: var(--on-ink);
+  }
+  .card-ink .input,
+  .card-ink .textarea,
+  .card-ink .select {
+    background: color-mix(in srgb, var(--on-ink) 10%, transparent);
+    color: var(--on-ink);
+  }
+  .card-ink .input:hover,
+  .card-ink .input:focus {
+    border-color: var(--on-ink-2);
+    background: color-mix(in srgb, var(--on-ink) 14%, transparent);
+  }
+  .card-ink .btn-secondary {
+    background: color-mix(in srgb, var(--on-ink) 12%, transparent);
+    color: var(--on-ink);
+  }
+  .card-ink .btn-secondary:hover {
+    background: color-mix(in srgb, var(--on-ink) 20%, transparent);
+  }
+  .card-ink .range {
+    accent-color: var(--on-ink);
+  }
+
+  /* ── Icon tile (an icon in a round chip) ────────────────── */
+  .icon-tile {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--canvas);
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+  .icon-tile .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+  .card-white .icon-tile,
+  .section-surface .card-white .icon-tile {
+    background: var(--surface);
+  }
+  .card-ink .icon-tile {
+    background: color-mix(in srgb, var(--on-ink) 12%, transparent);
+    color: var(--on-ink);
+  }
+
+  /* ── Rise on scroll (subtle motion) ───────────────────── */
+  .rise {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.7s var(--ease),
+      transform 0.7s var(--ease);
+  }
+  .rise.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rise {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

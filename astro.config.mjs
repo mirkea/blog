@@ -26,7 +26,7 @@ const getSiteURL = () => {
 export default defineConfig({
 	site: getSiteURL(),
 	base: "/",
-	integrations: [react(), mdx(), sitemap()],
+	integrations: [react(), mdx(), sitemap({ filter: (page) => !page.endsWith("/ui/") && !page.endsWith("/ui") })],
 	vite: {
 		plugins: [tailwindcss()],
 	},
