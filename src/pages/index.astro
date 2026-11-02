@@ -129,26 +129,26 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
       </Section>
     )
   }
-</Layout>
 
-<script is:inline>
-  // Umami: one "view-home-offers" event per visit when the offers section is first seen.
-  (function () {
-    var el = document.querySelector('[data-track-view="home-offers"]');
-    if (!el || !("IntersectionObserver" in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      if (!entries[0].isIntersecting) return;
-      io.disconnect();
-      try {
-        if (sessionStorage.getItem("view-home-offers")) return;
-        sessionStorage.setItem("view-home-offers", "1");
-      } catch (e) {}
-      var send = function (tries) {
-        if (window.umami && window.umami.track) window.umami.track("view-home-offers");
-        else if (tries < 20) setTimeout(function () { send(tries + 1); }, 500);
-      };
-      send(0);
-    }, { threshold: 0.3 });
-    io.observe(el);
-  })();
-</script>
+  <script is:inline>
+    // Umami: one "view-home-offers" event per visit when the offers section is first seen.
+    (function () {
+      var el = document.querySelector('[data-track-view="home-offers"]');
+      if (!el || !("IntersectionObserver" in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        try {
+          if (sessionStorage.getItem("view-home-offers")) return;
+          sessionStorage.setItem("view-home-offers", "1");
+        } catch (e) {}
+        var send = function (tries) {
+          if (window.umami && window.umami.track) window.umami.track("view-home-offers");
+          else if (tries < 20) setTimeout(function () { send(tries + 1); }, 500);
+        };
+        send(0);
+      }, { threshold: 0.3 });
+      io.observe(el);
+    })();
+  </script>
+</Layout>

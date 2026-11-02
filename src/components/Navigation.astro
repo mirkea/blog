@@ -36,6 +36,7 @@ const pathname = new URL(Astro.request.url).pathname;
           return (
             <a
               href={item.href}
+              data-nav-desktop
               aria-current={isActive ? "page" : undefined}
               class={`rounded-full px-4 py-2 text-[0.95rem] transition-colors ${
                 isActive ? "bg-surface text-ink" : "text-ink-2 hover:text-ink"
@@ -88,6 +89,7 @@ const pathname = new URL(Astro.request.url).pathname;
         return (
           <a
             href={item.href}
+            data-nav-mobile
             class={`mobile-nav-item translate-y-4 font-display text-3xl font-semibold tracking-tight opacity-0 ${
               isActive ? "text-ink" : "text-ink-2 hover:text-ink"
             }`}
@@ -232,3 +234,30 @@ const pathname = new URL(Astro.request.url).pathname;
     backdrop-filter: blur(4px);
   }
 </style>
+
+<script is:inline>
+  // The in-page router swaps only <main>, so the header keeps the first page's active item.
+  // Re-mark the current item after every in-page navigation.
+  document.addEventListener("spa-content-loaded", function () {
+    var path = location.pathname.replace(/\/$/, "") || "/";
+    var match = function (a) {
+      var href = (a.getAttribute("href") || "").replace(/\/$/, "") || "/";
+      return href === path;
+    };
+    document.querySelectorAll("[data-nav-desktop]").forEach(function (a) {
+      var on = match(a);
+      if (on) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+      a.classList.toggle("bg-surface", on);
+      a.classList.toggle("text-ink", on);
+      a.classList.toggle("text-ink-2", !on);
+      a.classList.toggle("hover:text-ink", !on);
+    });
+    document.querySelectorAll("[data-nav-mobile]").forEach(function (a) {
+      var on = match(a);
+      a.classList.toggle("text-ink", on);
+      a.classList.toggle("text-ink-2", !on);
+      a.classList.toggle("hover:text-ink", !on);
+    });
+  });
+</script>
