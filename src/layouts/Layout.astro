@@ -74,6 +74,7 @@ const base = import.meta.env.BASE_URL;
   <body
     class="flex min-h-screen flex-col bg-canvas text-ink"
     data-landing={landing ? "" : undefined}
+    data-shell={wide ? "wide" : "narrow"}
   >
     <!-- Page transition overlay - for smooth transitions between pages -->
     <div
@@ -121,6 +122,8 @@ const base = import.meta.env.BASE_URL;
         };
         if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
         else run();
+        // Content swapped in by the in-page router needs the same treatment
+        document.addEventListener("spa-content-loaded", run);
       })();
     </script>
     {landing ? <slot name="footer" /> : <Footer />}
@@ -298,6 +301,16 @@ const base = import.meta.env.BASE_URL;
             // Extract the main content
             const newContent = doc.querySelector("main");
             if (!newContent) throw new Error("Could not find main content in the fetched page");
+
+            // Only <main> is swapped. Landing pages (own header, footer, consent, pixel, page scripts)
+            // and pages built on the other shell (wide vs narrow column) need a full page load.
+            if (
+              doc.body.hasAttribute("data-landing") ||
+              doc.body.getAttribute("data-shell") !== document.body.getAttribute("data-shell")
+            ) {
+              window.location.href = url;
+              return;
+            }
 
             // Extract the title
             const newTitle = doc.querySelector("title");
