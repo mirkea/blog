@@ -27,7 +27,6 @@ const offers = [
     text: "I join you as technical co-founder and we start a new company for the product. I stay for the long run and own the product, so you can focus on customers and sales.",
     points: ["I build at my cost, or you pay part for a smaller stake", "Someone besides you already has the problem", "At most 3 founders at a time"],
     cta: { text: "See the founder offer", href: `${base}fondatori` },
-    note: "Page in Romanian",
   },
   {
     key: "services",
@@ -36,7 +35,6 @@ const offers = [
     text: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new.",
     points: ["Web apps from €3,000, mobile apps from €5,000", "A fixed price before any code is written", "The first call, 15 minutes, is free"],
     cta: { text: "See services", href: `${base}en/services` },
-    alt: { text: "In Romanian", href: `${base}servicii` },
   },
 ];
 
@@ -77,8 +75,6 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
             </div>
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 self-end">
               <a href={offer.cta.href} data-umami-event="home-offer" data-umami-event-offer={offer.key} class:list={["btn btn-lg", index === 0 ? "btn-invert" : "btn-primary"]}>{offer.cta.text}<Icon name="arrow-right" /></a>
-              {offer.alt && <a href={offer.alt.href} hreflang="ro" data-umami-event="home-offer" data-umami-event-offer={`${offer.key}-ro`} class="link-underline">{offer.alt.text}</a>}
-              {offer.note && <span class="caption">{offer.note}</span>}
             </div>
           </div>
         ))
