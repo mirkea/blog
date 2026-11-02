@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./tokens.css";
+@import "./ui.css";
 @source "../**/*.astro";
 
 /* Replaces darkMode: 'class' from tailwind.config.cjs */
@@ -45,11 +47,11 @@
     --color-code-border: var(--color-gray-600);
 
     /* ─── Inline code colours ────────────────────────────────────── */
-    --color-inline-code: var(--color-red-500);
+    --color-inline-code: var(--ink);
 
     /* ─── Blockquote / prose accents ─────────────────────────────── */
-    --color-blockquote-border: var(--color-blue-500);
-    --color-strong: var(--color-teal-500);
+    --color-blockquote-border: var(--ink);
+    --color-strong: var(--ink);
 
     /* ─── Syntax token colours ───────────────────────────────────── */
     --color-token-comment: var(--color-gray-500);
@@ -100,11 +102,6 @@
     --color-primary-fg: 24 24 27;
     /* zinc-900 */
 
-    /* ─── Blockquote border (dark) ───────────────────────────────── */
-    --color-blockquote-border: var(--color-blue-400);
-
-    /* ─── Inline code (dark) ─────────────────────────────────────── */
-    --color-inline-code: var(--color-red-400);
 
     /* ─── Mark (dark) ────────────────────────────────────────────── */
     --color-mark-text: var(--color-amber-400);
@@ -121,7 +118,10 @@
   }
 
   body {
-    @apply min-h-screen bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100;
+    @apply min-h-screen;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-body);
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -238,9 +238,9 @@
     scroll-padding-top: 4rem;
   }
 
-  /* Better touch targets on mobile */
-  button,
-  a {
+  /* Better touch targets on mobile. Kit controls carry their own height tokens */
+  button:not(.btn, .seg-item, .pill, .tag),
+  a:not(.btn, .seg-item, .pill, .tag) {
     @apply min-h-[44px];
   }
 }

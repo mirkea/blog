@@ -1,0 +1,36 @@
+---
+import Icon, { type IconName } from "./Icon.astro";
+// Rounded card. surface (grey) on white sections, white on grey sections, ink for the one to notice.
+interface Props {
+  tone?: "surface" | "white" | "outline" | "ink";
+  href?: string;
+  icon?: IconName;
+  title?: string;
+  sub?: string;
+  text?: string;
+  meta?: string;
+  align?: "left" | "center";
+  class?: string;
+}
+const { tone = "surface", href, icon, title, sub, text, meta, align = "left", class: className } =
+  Astro.props;
+const Tag = href ? "a" : "div";
+---
+
+<Tag
+  href={href}
+  class:list={[
+    "card flex flex-col",
+    tone !== "surface" && `card-${tone}`,
+    href && "card-link",
+    align === "center" && "items-center text-center",
+    className,
+  ]}
+>
+  {icon && <Icon name={icon} class="card-icon" />}
+  {title && <h3 class="heading">{title}</h3>}
+  {sub && <p class="card-sub">{sub}</p>}
+  {text && <p class="body mt-3">{text}</p>}
+  <slot />
+  {meta && <p class="card-meta mt-auto pt-6">{meta}</p>}
+</Tag>

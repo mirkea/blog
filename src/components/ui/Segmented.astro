@@ -1,0 +1,50 @@
+---
+// Pill tabs on a grey track. Fires "seg-change" on the group with { value } when a tab is picked.
+// Panels: give elements data-seg-panel="<group>:<value>" and they show only for the picked tab.
+interface Props {
+  name: string;
+  items: { value: string; label: string }[];
+  selected?: string;
+  class?: string;
+}
+const { name, items, selected = items[0]?.value, class: className } = Astro.props;
+---
+
+<div class:list={["seg", className]} role="tablist" data-seg={name}>
+  {
+    items.map((item) => (
+      <button
+        type="button"
+        role="tab"
+        class="seg-item"
+        data-value={item.value}
+        aria-selected={item.value === selected ? "true" : "false"}
+      >
+        {item.label}
+      </button>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-seg]").forEach((group) => {
+    if (group.dataset.segReady) return;
+    group.dataset.segReady = "1";
+    const name = group.dataset.seg;
+    const show = (value: string) => {
+      group.querySelectorAll<HTMLElement>(".seg-item").forEach((b) => {
+        b.setAttribute("aria-selected", b.dataset.value === value ? "true" : "false");
+      });
+      document.querySelectorAll<HTMLElement>(`[data-seg-panel^="${name}:"]`).forEach((p) => {
+        p.hidden = p.dataset.segPanel !== `${name}:${value}`;
+      });
+      group.dispatchEvent(new CustomEvent("seg-change", { detail: { value }, bubbles: true }));
+    };
+    group.addEventListener("click", (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLElement>(".seg-item");
+      if (b?.dataset.value) show(b.dataset.value);
+    });
+    const current = group.querySelector<HTMLElement>('[aria-selected="true"]')?.dataset.value;
+    if (current) show(current);
+  });
+</script>

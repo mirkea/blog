@@ -1,0 +1,16 @@
+---
+// One row of a breakdown: label, number and a bar relative to max.
+interface Props {
+  label: string;
+  value: number;
+  max: number;
+  display?: string;
+}
+const { label, value, max, display } = Astro.props;
+const pct = Math.max(0, Math.min(100, (value / max) * 100));
+---
+
+<div class="meter">
+  <div class="meter-head"><span>{label}</span><b>{display ?? value}</b></div>
+  <div class="meter-track" role="presentation"><div class="meter-fill" style={`width:${pct}%`}></div></div>
+</div>

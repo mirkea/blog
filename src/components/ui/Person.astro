@@ -1,0 +1,25 @@
+---
+// Avatar with a line of text: who the visitor talks to.
+interface Props {
+  image: string;
+  name?: string;
+  text: string;
+  size?: "sm" | "lg";
+  class?: string;
+}
+const { image, name, text, size = "sm", class: className } = Astro.props;
+---
+
+<div class:list={["person", size === "lg" && "!items-start gap-5", className]}>
+  <img src={image} alt="" class:list={["avatar", size === "lg" && "avatar-lg"]} />
+  {
+    size === "lg" ? (
+      <div>
+        {name && <p class="heading !text-xl">{name}</p>}
+        <p class="mt-1 leading-relaxed">{text}</p>
+      </div>
+    ) : (
+      <p>{text}</p>
+    )
+  }
+</div>

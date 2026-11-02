@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import logoRaw from "../../public/logo.svg?raw";
-import { Bot, ArrowUpRight, Smartphone, PhoneCall, Search, Hammer, ArrowRight, Check, CalendarDays, Wrench, Phone, MessageCircle } from "lucide-react";
+import Icon from "./ui/Icon.astro";
 
 export interface Props {
   lang: "ro" | "en";
@@ -80,17 +80,17 @@ const copy = {
     servicesTitle: "Cu ce va pot ajuta",
     services: [
       {
-        icon: Bot,
+        icon: "bot",
         name: "AI in firma voastra",
         text: "Gasim orele pierdute pe emailuri, oferte, facturi si postari, apoi le automatizam cu instrumente care exista deja. Va arat cum sa le folositi, ca sa nu depindeti de mine.",
       },
       {
-        icon: Smartphone,
+        icon: "smartphone",
         name: "Aplicatii web si mobile",
         text: "Cand chiar aveti nevoie de o aplicatie, o construiesc de la prima schita la lansare: web, mobil sau amandoua. Codul si datele raman ale voastre.",
       },
       {
-        icon: Wrench,
+        icon: "magic-stick",
         name: "Ati facut deja o aplicatie cu AI?",
         text: "Ati construit un prototip cu Lovable, Bolt, Cursor sau ChatGPT si s-a blocat? Il transform intr-o aplicatie care tine cu toata echipa pe ea: date sigure, conturi, plati, fara sa o luati de la zero.",
       },
@@ -130,21 +130,21 @@ const copy = {
     stepsTitle: "Cum lucrez",
     steps: [
       {
-        icon: PhoneCall,
+        icon: "phone-calling",
         name: "Apel gratuit",
         time: "15 minute",
         you: "Timpul vostru: 15 minute",
         text: "Imi spuneti ce vreti sa rezolvati. Va spun daca va pot ajuta si cum.",
       },
       {
-        icon: Search,
+        icon: "magnifier",
         name: "Analiza",
         time: "2-5 zile",
         you: "Timpul vostru: o ora de discutie si cateva raspunsuri",
         text: "Ma uit la cum lucrati azi si stabilim ce merita facut, cu un pret fix inainte de orice cod.",
       },
       {
-        icon: Hammer,
+        icon: "programming",
         name: "Construim",
         time: "2-4 saptamani",
         you: "Timpul vostru: cate o privire pe fiecare etapa",
@@ -255,17 +255,17 @@ const copy = {
     servicesTitle: "How I can help",
     services: [
       {
-        icon: Bot,
+        icon: "bot",
         name: "AI in your business",
         text: "We find the hours lost to email, quotes, invoices and posts, then automate them with tools that already exist. I show you how to run them, so you don't depend on me.",
       },
       {
-        icon: Smartphone,
+        icon: "smartphone",
         name: "Web and mobile apps",
         text: "When you really need an app, I build it from the first sketch to launch: web, mobile or both. The code and the data stay yours.",
       },
       {
-        icon: Wrench,
+        icon: "magic-stick",
         name: "Already built an app with AI?",
         text: "Made a prototype with Lovable, Bolt, Cursor or ChatGPT and it got stuck? I turn it into an app your whole team can rely on: safe data, accounts, payments, without starting from zero.",
       },
@@ -305,21 +305,21 @@ const copy = {
     stepsTitle: "How I work",
     steps: [
       {
-        icon: PhoneCall,
+        icon: "phone-calling",
         name: "Free call",
         time: "15 minutes",
         you: "Your time: 15 minutes",
         text: "You tell me what you want to solve. I tell you whether I can help and how.",
       },
       {
-        icon: Search,
+        icon: "magnifier",
         name: "Assessment",
         time: "2-5 days",
         you: "Your time: an hour's talk and a few answers",
         text: "I look at how you work today and we agree on what's worth doing, at a fixed price, before any code.",
       },
       {
-        icon: Hammer,
+        icon: "programming",
         name: "Build",
         time: "2-4 weeks",
         you: "Your time: a look at each stage",
@@ -369,105 +369,47 @@ const copy = {
   },
 }[lang];
 
-const inputClass =
-  "w-full rounded-md border border-zinc-200 bg-white px-3 py-2.5 text-base text-zinc-900 placeholder:text-zinc-400 focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-100 dark:focus:ring-zinc-100";
-const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300";
 ---
 
-<Layout title={copy.title} description={copy.description} lang={lang} landing>
+<Layout title={copy.title} description={copy.description} lang={lang} landing wide>
   <div class="services-page">
     <!-- Hero: copy, then the three example apps. Each ad links with ?exemplu=<key> to open its app first -->
-    <section class="bleed relative -mt-12 overflow-hidden bg-zinc-50 pt-10 pb-14 sm:pt-14 sm:pb-20 dark:bg-zinc-800/50">
-      <div class="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <div class="mb-8 flex flex-wrap items-center gap-x-5 gap-y-4 sm:mb-10">
-          <a href={Astro.url.pathname} class="flex shrink-0 items-center" aria-label="Mircea Braescu">
+    <section class="section section-surface !pt-6 sm:!pt-8">
+      <div class="wrap">
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-4">
+          <a href={Astro.url.pathname} class="flex shrink-0 items-center text-ink" aria-label="Mircea Braescu">
             <span class="inline-block size-8 [&>svg]:h-full [&>svg]:w-full" set:html={logoRaw} />
           </a>
-          <span class="order-last inline-flex items-center gap-2 rounded-full sm:order-none border border-zinc-200 bg-white/80 px-3 py-1 text-xs font-medium text-zinc-600 backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/60 dark:text-zinc-300">
-            <span class="pulse-dot h-1.5 w-1.5 rounded-full bg-zinc-900 dark:bg-zinc-100"></span>
-            {copy.eyebrow}
-          </span>
-          <a
-            href={copy.switchHref}
-            hreflang={lang === "ro" ? "en" : "ro"}
-            class="ml-auto inline-flex items-center text-sm font-medium text-zinc-500 underline-offset-4 hover:text-zinc-900 hover:underline dark:text-zinc-400 dark:hover:text-zinc-100"
-          >
+          <span class="pill pill-float pill-dot order-last sm:order-none">{copy.eyebrow}</span>
+          <a href={copy.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="link-underline ml-auto text-sm">
             {copy.switchLabel}
           </a>
         </div>
-        <div class="reveal max-w-3xl">
-          <h1
-            id="hero-title"
-            data-heroes={JSON.stringify(copy.heroes)}
-            class="text-[2rem] leading-[1.05] font-extrabold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl dark:text-zinc-100"
-          >
+
+        <div class="rise mt-12 sm:mt-16">
+          <h1 id="hero-title" data-heroes={JSON.stringify(copy.heroes)} class="display max-w-6xl">
             <span class="block" data-h1a>{copy.h1a}</span>
-            <span class="mt-2 block">
-              <span data-h1b>{copy.h1b}</span>{" "}
-              <span class="inline-block max-w-full">
-                <span data-h1u class="hero-phrase">{copy.h1u}</span>
-              </span>
-            </span>
+            <span class="tone-2 block"><span data-h1b>{copy.h1b}</span> <span data-h1u>{copy.h1u}</span></span>
           </h1>
-          <p class="mt-4 max-w-xl text-base leading-relaxed text-zinc-600 sm:mt-6 sm:text-xl dark:text-zinc-400">
-            {copy.lead}
-          </p>
-          <div class="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:gap-4">
-            <a
-              href="#call"
-              class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-900 px-7 py-3 text-base font-semibold text-zinc-100 shadow-lg shadow-zinc-900/20 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
-            >
-              {copy.cta}
-              <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
-            </a>
+          <p class="lead mt-6 max-w-2xl">{copy.lead}</p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+            <a href="#call" class="btn btn-primary btn-lg">{copy.cta}<Icon name="arrow-right" /></a>
             <div class="grid grid-cols-2 gap-3 sm:flex">
-              <a
-                href={`tel:${phone.href}`}
-                data-umami-event="hero-call"
-                class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-5 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
-              >
-                <Phone size={16} />
-                {copy.callLabel}
-              </a>
-              <a
-                href={`https://wa.me/${phone.href.slice(1)}`}
-                target="_blank"
-                rel="noopener"
-                data-umami-event="hero-whatsapp"
-                class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-white/80 px-5 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:bg-zinc-900/60 dark:text-zinc-100 dark:hover:border-zinc-100"
-              >
-                <MessageCircle size={16} />
-                {copy.whatsappLabel}
-              </a>
+              <a href={`tel:${phone.href}`} data-umami-event="hero-call" class="btn btn-secondary btn-lg whitespace-nowrap"><Icon name="phone" />{copy.callLabel}</a>
+              <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" data-umami-event="hero-whatsapp" class="btn btn-secondary btn-lg whitespace-nowrap"><Icon name="message" />{copy.whatsappLabel}</a>
             </div>
           </div>
-          <a
-            href="#savings"
-            data-umami-event="hero-calc"
-            class="mt-3 inline-flex min-h-[44px] items-center text-sm font-medium text-zinc-900 underline underline-offset-4 sm:no-underline sm:hover:underline dark:text-zinc-100"
-          >
-            {copy.calcTitle}
-          </a>
-          <ul class="mt-10 hidden flex-col gap-2 text-sm text-zinc-600 sm:flex sm:flex-row sm:flex-wrap sm:gap-x-6 dark:text-zinc-400">
-            {
-              copy.trust.map((item) => (
-                <li class="flex items-center gap-2">
-                  <span class="flex shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
-                  {item}
-                </li>
-              ))
-            }
-            <li class="flex items-center gap-2">
-              <span class="flex shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
-              <a href="#despre" class="inline-flex items-center hover:text-zinc-900 hover:underline hover:underline-offset-4 dark:hover:text-zinc-100">{copy.trustWork}</a>
-            </li>
+          <a href="#savings" data-umami-event="hero-calc" class="link-more mt-5">{copy.calcTitle}<Icon name="chevron-right" /></a>
+          <ul class="checklist mt-10 hidden sm:flex sm:flex-row sm:flex-wrap sm:gap-x-8">
+            {copy.trust.map((item) => <li><Icon name="check" /><span>{item}</span></li>)}
+            <li><Icon name="check" /><a href="#despre" class="hover:underline hover:underline-offset-4">{copy.trustWork}</a></li>
           </ul>
         </div>
 
-        <div id="examples" class="reveal mt-8 sm:mt-16" data-default={copy.examples[0].key}>
-          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <p class="text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.examplesLabel}</p>
-            <div class="flex flex-wrap gap-2" role="tablist" aria-label={copy.examplesLabel}>
+        <div id="examples" class="rise mt-14 sm:mt-20" data-default={copy.examples[0].key}>
+          <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <p class="eyebrow">{copy.examplesLabel}</p>
+            <div class="seg self-start" role="tablist" aria-label={copy.examplesLabel}>
               {
                 copy.examples.map((example, index) => (
                   <button
@@ -479,7 +421,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
                     data-example={example.key}
                     data-umami-event="example-tab"
                     data-umami-event-tab={example.key}
-                    class="example-tab min-h-[44px] cursor-pointer rounded-full border border-zinc-300 px-4 text-sm font-medium text-zinc-700 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-300 dark:hover:border-zinc-100"
+                    class="seg-item"
                   >
                     {example.tab}
                   </button>
@@ -488,527 +430,322 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
             </div>
           </div>
           <!-- Phones: an iPhone-style frame around the portrait screens. From sm up: a browser window around the desktop ones -->
-          <div class="example-frame relative mx-auto max-w-[330px] rounded-[3rem] border-[10px] border-zinc-900 bg-zinc-900 shadow-2xl shadow-zinc-900/25 ring-1 ring-zinc-700 sm:max-w-none sm:rounded-xl sm:border sm:border-zinc-200 sm:bg-white sm:shadow-zinc-900/15 sm:ring-0 dark:sm:border-zinc-700 dark:sm:bg-zinc-900">
-            <div class="overflow-hidden rounded-[2.3rem] sm:rounded-[0.7rem]">
-            <div class="relative flex h-9 items-center justify-between bg-zinc-900 px-6 text-[13px] font-semibold text-white sm:hidden" aria-hidden="true">
-              <span>9:41</span>
-              <span class="absolute top-2 left-1/2 h-[22px] w-[88px] -translate-x-1/2 rounded-full bg-black"></span>
-              <span class="flex items-center gap-1">
-                <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1" /><rect x="4.5" y="5" width="3" height="6" rx="1" /><rect x="9" y="2.5" width="3" height="8.5" rx="1" /><rect x="13.5" y="0" width="3" height="11" rx="1" /></svg>
-                <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="3" stroke="currentColor" opacity="0.4" /><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor" /><rect x="21.5" y="3.5" width="1.5" height="4" rx="0.75" fill="currentColor" opacity="0.4" /></svg>
-              </span>
-            </div>
-            <div class="hidden items-center gap-1.5 border-b border-zinc-100 px-4 py-3 sm:flex dark:border-zinc-800">
-              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
-              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
-              <span class="h-2.5 w-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600"></span>
-              <span class="ml-3 font-mono text-xs text-zinc-400" data-example-url>{copy.examples[0].url}</span>
-            </div>
-            <div class="relative aspect-[9/16] bg-zinc-100 sm:aspect-[16/10] dark:bg-zinc-800">
-              <!-- Shown only with "reduce motion": the clips wait for a tap instead of autoplaying -->
-              <button
-                type="button"
-                data-example-play
-                data-umami-event="example-play"
-                hidden
-                class="absolute bottom-4 left-1/2 z-10 inline-flex min-h-[44px] -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full bg-zinc-900/90 px-5 text-sm font-semibold text-white shadow-lg backdrop-blur hover:bg-zinc-900"
-              >
-                <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor" aria-hidden="true"><path d="M0 0l12 7-12 7z" /></svg>
-                {copy.examplesPlay}
-              </button>
-              {
-                copy.examples.map((example, index) => (
-                  <div
-                    id={`panel-${example.key}`}
-                    role="tabpanel"
-                    aria-labelledby={`tab-${example.key}`}
-                    data-panel={example.key}
-                    data-url={example.url}
-                    class={`example-panel absolute inset-0 ${index === 0 ? "" : "is-hidden"}`}
-                  >
-                    <video
-                      class="hidden h-full w-full object-cover sm:block"
-                      data-size="desktop"
-                      poster={`${base}services/examples/${example.image}`}
-                      muted
-                      playsinline
-                      preload="none"
-                      aria-label={example.alt}
+          <div class="example-frame relative mx-auto max-w-[330px] rounded-[3rem] border-[10px] border-[#1d1d1f] bg-[#1d1d1f] [box-shadow:var(--shadow-float)] sm:max-w-none sm:rounded-card sm:border-0 sm:bg-canvas">
+            <div class="overflow-hidden rounded-[2.3rem] sm:rounded-card">
+              <div class="relative flex h-9 items-center justify-between bg-[#1d1d1f] px-6 text-[13px] font-semibold text-white sm:hidden" aria-hidden="true">
+                <span>9:41</span>
+                <span class="absolute top-2 left-1/2 h-[22px] w-[88px] -translate-x-1/2 rounded-full bg-black"></span>
+                <span class="flex items-center gap-1">
+                  <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1" /><rect x="4.5" y="5" width="3" height="6" rx="1" /><rect x="9" y="2.5" width="3" height="8.5" rx="1" /><rect x="13.5" y="0" width="3" height="11" rx="1" /></svg>
+                  <svg width="24" height="11" viewBox="0 0 24 11" fill="none"><rect x="0.5" y="0.5" width="20" height="10" rx="3" stroke="currentColor" opacity="0.4" /><rect x="2" y="2" width="15" height="7" rx="1.6" fill="currentColor" /><rect x="21.5" y="3.5" width="1.5" height="4" rx="0.75" fill="currentColor" opacity="0.4" /></svg>
+                </span>
+              </div>
+              <div class="hidden items-center gap-1.5 border-b border-line px-5 py-3.5 sm:flex">
+                <span class="h-2.5 w-2.5 rounded-full bg-surface-2"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-surface-2"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-surface-2"></span>
+                <span class="caption ml-3 font-mono" data-example-url>{copy.examples[0].url}</span>
+              </div>
+              <div class="relative aspect-[9/16] bg-surface sm:aspect-[16/10]">
+                <!-- Shown only with "reduce motion": the clips wait for a tap instead of autoplaying -->
+                <button type="button" data-example-play data-umami-event="example-play" hidden class="btn btn-primary absolute bottom-4 left-1/2 z-10 -translate-x-1/2">
+                  <Icon name="play" variant="bold" />
+                  {copy.examplesPlay}
+                </button>
+                {
+                  copy.examples.map((example, index) => (
+                    <div
+                      id={`panel-${example.key}`}
+                      role="tabpanel"
+                      aria-labelledby={`tab-${example.key}`}
+                      data-panel={example.key}
+                      data-url={example.url}
+                      class={`example-panel absolute inset-0 ${index === 0 ? "" : "is-hidden"}`}
                     >
-                      <source src={`${base}services/examples/${example.video}`} type="video/mp4" />
-                    </video>
-                    <video
-                      class="h-full w-full object-cover sm:hidden"
-                      data-size="mobile"
-                      poster={`${base}services/examples/${example.mobileImage}`}
-                      muted
-                      playsinline
-                      preload="none"
-                      aria-label={example.alt}
-                    >
-                      <source src={`${base}services/examples/${example.mobileVideo}`} type="video/mp4" />
-                    </video>
-                  </div>
-                ))
-              }
-            </div>
+                      <video class="hidden h-full w-full object-cover sm:block" data-size="desktop" poster={`${base}services/examples/${example.image}`} muted playsinline preload="none" aria-label={example.alt}>
+                        <source src={`${base}services/examples/${example.video}`} type="video/mp4" />
+                      </video>
+                      <video class="h-full w-full object-cover sm:hidden" data-size="mobile" poster={`${base}services/examples/${example.mobileImage}`} muted playsinline preload="none" aria-label={example.alt}>
+                        <source src={`${base}services/examples/${example.mobileVideo}`} type="video/mp4" />
+                      </video>
+                    </div>
+                  ))
+                }
+              </div>
             </div>
           </div>
-          <p class="mt-4 max-w-3xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+          <p class="body mt-5 max-w-3xl text-[0.95rem]">
             {
               copy.examples.map((example, index) => (
                 <span data-caption={example.key} class={index === 0 ? "" : "hidden"}>
-                  <span class="font-semibold text-zinc-900 dark:text-zinc-100">{example.name}.</span> {example.caption}
+                  <span class="font-semibold text-ink">{example.name}.</span> {example.caption}
                 </span>
               ))
             }
-            <span class="text-zinc-400"> {copy.examplesNote}</span>
+            <span class="text-ink-3"> {copy.examplesNote}</span>
           </p>
-          <ul class="mt-6 flex flex-col gap-2 text-sm text-zinc-600 sm:hidden dark:text-zinc-400">
-            {
-              copy.trust.map((item) => (
-                <li class="flex items-center gap-2">
-                  <span class="flex shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
-                  {item}
-                </li>
-              ))
-            }
-            <li class="-my-3 flex items-center gap-2">
-              <span class="flex shrink-0 text-zinc-900 dark:text-zinc-100"><Check size={16} /></span>
-              <a href="#despre" class="inline-flex items-center hover:text-zinc-900 hover:underline hover:underline-offset-4 dark:hover:text-zinc-100">{copy.trustWork}</a>
-            </li>
+          <ul class="checklist mt-6 sm:hidden">
+            {copy.trust.map((item) => <li><Icon name="check" /><span>{item}</span></li>)}
+            <li><Icon name="check" /><a href="#despre" class="underline underline-offset-4">{copy.trustWork}</a></li>
           </ul>
         </div>
       </div>
     </section>
 
     <!-- Honest note -->
-    <section class="reveal py-14 sm:py-20">
-      <p class="mb-4 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">
-        {copy.honestTitle}
-      </p>
-      <p class="honest text-2xl leading-snug font-semibold tracking-tight text-zinc-900 sm:text-3xl dark:text-zinc-100" set:html={copy.honest} />
+    <section class="section section-tight">
+      <div class="wrap rise">
+        <p class="eyebrow mb-4">{copy.honestTitle}</p>
+        <p class="title-sm highlight max-w-4xl" set:html={copy.honest} />
+      </div>
     </section>
 
-    <!-- Services -->
-    <section class="reveal pb-14 sm:pb-20">
-      <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
-        {copy.servicesTitle}
-      </h2>
-      <div id="services-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        {
-          copy.services.map((service, index) => (
-            <div data-service={index} class={`lift group relative overflow-hidden rounded-xl border border-zinc-200 bg-white p-7 dark:border-zinc-700 dark:bg-zinc-800/60 ${index === 2 ? "sm:col-span-2" : ""}`}>
-              <span data-num class="pointer-events-none absolute -top-6 -right-2 font-mono text-[7rem] leading-none font-bold text-zinc-100 transition-colors duration-300 group-hover:text-zinc-200 dark:text-zinc-800 dark:group-hover:text-zinc-700">
-                {index + 1}
-              </span>
-              <div class="relative">
-                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900">
-                  <service.icon size={22} />
-                </div>
-                <h3 class="mb-3 text-xl font-semibold text-zinc-900 dark:text-zinc-100">{service.name}</h3>
-                <p class="leading-relaxed text-zinc-600 dark:text-zinc-400">{service.text}</p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-      <div class="mt-8" data-track-view="prices">
-        <p class="mb-3 text-sm font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400">{copy.priceTitle}</p>
-        <dl class="divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-700 dark:border-zinc-700">
+    <!-- Services and prices -->
+    <section class="section !pt-0">
+      <div class="wrap">
+        <h2 class="title rise">{copy.servicesTitle}</h2>
+        <div id="services-grid" class="rise mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-y-0">
           {
-            copy.prices.map((price) => (
-              <div class="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                <dt class="text-zinc-700 dark:text-zinc-300">{price.name}</dt>
-                <dd class="shrink-0 font-mono text-lg font-bold text-zinc-900 dark:text-zinc-100">{price.value}</dd>
+            copy.services.map((service, index) => (
+              <div data-service={index} class:list={["card flex flex-col md:row-span-3 md:grid md:grid-rows-subgrid md:gap-y-0", index === 0 && "card-ink"]}>
+                <span class="icon-tile mb-6 self-start"><Icon name={service.icon} /></span>
+                <h3 class="heading">{service.name}</h3>
+                <p class="body mt-3">{service.text}</p>
               </div>
             ))
           }
-        </dl>
-        {copy.priceExample.map((line, i) => <p class={`${i ? "mt-2" : "mt-4"} text-sm text-zinc-600 dark:text-zinc-400`}>{line}</p>)}
-        <ul class="mt-4 flex flex-col gap-2 text-sm text-zinc-900 dark:text-zinc-100">
-          {
-            copy.priceFoot.map((line) => (
-              <li class="flex items-start gap-2">
-                <span class="mt-0.5 shrink-0"><Check size={16} /></span>
-                <span>{line}</span>
-              </li>
-            ))
-          }
-        </ul>
+        </div>
+
+        <div class="rise mt-16 grid gap-10 lg:grid-cols-[2fr_3fr]" data-track-view="prices">
+          <div>
+            <h3 class="title-sm">{copy.priceTitle}</h3>
+            {copy.priceExample.map((line) => <p class="body mt-4">{line}</p>)}
+          </div>
+          <div>
+            <dl class="rows">
+              {copy.prices.map((price) => <div><dt>{price.name}</dt><dd>{price.value}</dd></div>)}
+            </dl>
+            <ul class="checklist mt-8">
+              {copy.priceFoot.map((line) => <li><Icon name="check" /><span>{line}</span></li>)}
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Savings calculator: same math as the internal pricer (hours x hourly cost x 48 weeks) -->
-    <section id="savings" data-track-view="calculator" class="reveal scroll-mt-24 pb-14 sm:pb-20">
-      <div
-        id="savings-calc"
-        class="relative overflow-hidden rounded-2xl bg-zinc-900 p-7 text-zinc-100 sm:p-10 dark:bg-zinc-100 dark:text-zinc-900"
-        data-currency={copy.calcCurrency}
-        data-locale={copy.calcLocale}
-      >
-        <div class="calc-grid pointer-events-none absolute inset-0 opacity-[0.07]" aria-hidden="true"></div>
-        <div class="relative">
-          <h2 class="mb-2 text-3xl font-bold tracking-tight sm:text-4xl">{copy.calcTitle}</h2>
-          <p class="mb-10 max-w-xl text-zinc-400 dark:text-zinc-600">{copy.calcLead}</p>
-          <div class="grid grid-cols-1 gap-10 sm:grid-cols-2">
-            <div class="flex flex-col gap-8">
-              <div>
-                <div class="mb-3 flex items-baseline justify-between gap-4">
-                  <label for="calc-hours" class="text-sm font-medium text-zinc-300 dark:text-zinc-700">{copy.calcHours}</label>
-                  <output id="calc-hours-out" for="calc-hours" class="font-mono text-2xl font-bold">10</output>
+    <section id="savings" data-track-view="calculator" class="section !pt-0 scroll-mt-6">
+      <div class="wrap rise">
+        <div id="savings-calc" class="card card-ink !p-[clamp(1.75rem,5vw,4.5rem)]" data-currency={copy.calcCurrency} data-locale={copy.calcLocale}>
+          <h2 class="title">{copy.calcTitle}</h2>
+          <p class="lead mt-5 max-w-2xl">{copy.calcLead}</p>
+          <div class="mt-12 grid grid-cols-1 gap-x-16 gap-y-10 lg:grid-cols-2">
+            <div class="grid content-start gap-8">
+              <div class="field">
+                <div class="flex items-baseline justify-between gap-4">
+                  <label for="calc-hours" class="label">{copy.calcHours}</label>
+                  <output id="calc-hours-out" for="calc-hours" class="heading tabular-nums">10</output>
                 </div>
-                <input id="calc-hours" type="range" min="1" max="60" step="1" value="10" class="calc-range w-full cursor-pointer" />
+                <input id="calc-hours" type="range" min="1" max="60" step="1" value="10" class="range mt-2" />
               </div>
-              <div>
-                <label for="calc-rate" class="mb-3 block text-sm font-medium text-zinc-300 dark:text-zinc-700">{copy.calcRate}</label>
+              <div class="field">
+                <label for="calc-rate" class="label">{copy.calcRate}</label>
                 <div class="flex items-center gap-3">
-                  <input
-                    id="calc-rate"
-                    type="number"
-                    inputmode="decimal"
-                    min="0"
-                    step="5"
-                    value={copy.calcRateDefault}
-                    class="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-2.5 font-mono text-lg text-zinc-100 focus:border-zinc-100 focus:ring-1 focus:ring-zinc-100 focus:outline-none dark:border-zinc-300 dark:bg-white dark:text-zinc-900 dark:focus:border-zinc-900 dark:focus:ring-zinc-900"
-                  />
-                  <span class="text-zinc-400 dark:text-zinc-600">{copy.calcCurrency}</span>
+                  <input id="calc-rate" type="number" inputmode="decimal" min="0" step="5" value={copy.calcRateDefault} class="input tabular-nums" />
+                  <span class="body">{copy.calcCurrency}</span>
                 </div>
               </div>
             </div>
             <div class="flex flex-col justify-between gap-8">
               <div>
-                <p class="text-sm text-zinc-400 dark:text-zinc-600">{copy.calcResult}</p>
-                <p class="mt-2 text-5xl font-extrabold tracking-tight tabular-nums sm:text-6xl">
-                  <span id="calc-result">0</span>
-                  <span class="text-2xl font-bold text-zinc-400 sm:text-3xl dark:text-zinc-500">{copy.calcCurrency}</span>
-                </p>
-                <p class="mt-1 text-sm text-zinc-400 dark:text-zinc-600">{copy.calcPerYear}</p>
+                <p class="body">{copy.calcResult}</p>
+                <p class="title mt-2 tabular-nums"><span id="calc-result">0</span> <span class="tone-2">{copy.calcCurrency}</span></p>
+                <p class="body mt-1">{copy.calcPerYear}</p>
               </div>
-              <a
-                href="#call"
-                id="calc-cta"
-                data-umami-event="calc-cta"
-                class="group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-zinc-100 px-6 py-3 text-base font-semibold text-zinc-900 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-700"
-              >
-                {copy.calcCta}
-                <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
-              </a>
+              <a href="#call" id="calc-cta" data-umami-event="calc-cta" class="btn btn-invert btn-lg self-start">{copy.calcCta}<Icon name="arrow-right" /></a>
             </div>
           </div>
-          <p class="mt-8 text-xs leading-relaxed text-zinc-500">{copy.calcNote}</p>
+          <hr class="divider mt-12" />
+          <p class="caption mt-6">{copy.calcNote}</p>
         </div>
       </div>
     </section>
 
-    <!-- Steps -->
-    <section id="how" class="reveal scroll-mt-24 py-14 sm:py-20">
-      <h2 class="mb-10 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
-        {copy.stepsTitle}
-      </h2>
-      <ol class="relative grid grid-cols-1 gap-6 sm:grid-cols-3 sm:grid-rows-[repeat(6,auto)] sm:gap-x-6 sm:gap-y-0">
-        <span class="absolute top-6 right-[16%] left-[16%] hidden h-px bg-zinc-200 sm:block dark:bg-zinc-700" aria-hidden="true"></span>
-        {
-          copy.steps.map((step, index) => (
-            <li class="relative flex gap-4 sm:row-span-6 sm:grid sm:grid-rows-subgrid sm:content-start sm:items-start sm:justify-items-center sm:gap-0 sm:text-center">
-              {index < copy.steps.length - 1 && <span class="absolute top-12 -bottom-6 left-5 w-px bg-zinc-200 sm:hidden dark:bg-zinc-700" aria-hidden="true"></span>}
-              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-900 sm:mx-auto sm:mb-5 sm:h-12 sm:w-12 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
-                <step.icon size={20} />
-              </div>
-              <div class="min-w-0 flex-1 sm:contents">
-                <p class="mb-1 font-mono text-xs text-zinc-400">0{index + 1}</p>
-                <div class="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 sm:contents">
-                  <h3 class="text-lg font-semibold text-zinc-900 sm:mb-2 dark:text-zinc-100">{step.name}</h3>
-                  <p class="inline-flex rounded-full bg-zinc-900 px-3 py-1 font-mono text-xs font-semibold text-zinc-100 sm:mb-3 dark:bg-zinc-100 dark:text-zinc-900">{step.time}</p>
+    <!-- Steps: every card has the same rows, so number, title, time and "your time" line up -->
+    <section id="how" class="section section-surface scroll-mt-6">
+      <div class="wrap">
+        <h2 class="title rise">{copy.stepsTitle}</h2>
+        <ol class="rise mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-y-0">
+          {
+            copy.steps.map((step, index) => (
+              <li class="card card-white flex flex-col md:row-span-5 md:grid md:grid-rows-subgrid md:gap-y-0">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                  <span class="icon-tile"><Icon name={step.icon} /></span>
+                  <span class="pill pill-quiet whitespace-nowrap">{step.time}</span>
                 </div>
-                <p class="text-sm leading-relaxed text-zinc-600 sm:min-h-[4.3rem] dark:text-zinc-400">{step.text}</p>
-                <p class="mt-2 text-sm font-medium text-zinc-900 dark:text-zinc-100">{step.you}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
+                <p class="caption mt-6">0{index + 1}</p>
+                <h3 class="heading mt-1">{step.name}</h3>
+                <p class="body mt-3">{step.text}</p>
+                <p class="pt-6 text-[0.95rem] font-medium text-ink">{step.you}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
     </section>
 
     <!-- About -->
-    <section id="despre" class="reveal scroll-mt-24 border-t border-zinc-100 py-14 sm:py-20 dark:border-zinc-800">
-      <div class="flex flex-col items-start gap-6 sm:flex-row sm:gap-10">
-        <img
-          src={`${base}profile.webp`}
-          alt="Mircea Braescu"
-          width="144"
-          height="144"
-          class="h-28 w-28 shrink-0 rounded-full object-cover ring-4 ring-zinc-100 sm:h-36 sm:w-36 dark:ring-zinc-800"
-          loading="lazy"
-        />
-        <div>
-          <h2 class="mb-3 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-            {copy.aboutTitle}
-          </h2>
-          <p class="text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.about}</p>
-          <p class="mt-5 text-base font-medium text-zinc-900 dark:text-zinc-100">{copy.projectsLead}</p>
-          <ul class="mt-2 flex flex-col gap-2 text-base text-zinc-600 dark:text-zinc-400">
+    <section id="despre" class="section scroll-mt-6">
+      <div class="wrap rise grid items-start gap-10 md:grid-cols-[auto_1fr] md:gap-16">
+        <img src={`${base}profile.webp`} alt="Mircea Braescu" width="176" height="176" class="size-32 rounded-full object-cover md:size-44" loading="lazy" />
+        <div class="max-w-3xl">
+          <h2 class="title">{copy.aboutTitle}</h2>
+          <p class="lead mt-6">{copy.about}</p>
+          <p class="mt-8 font-medium text-ink">{copy.projectsLead}</p>
+          <ul class="checklist mt-3">
             {
               copy.projects.map((project) => (
-                <li>
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener"
-                    class="font-semibold text-zinc-900 underline underline-offset-4 hover:text-zinc-600 dark:text-zinc-100 dark:hover:text-zinc-300"
-                  >{project.name}</a>{`: ${project.text}`}
-                </li>
+                <li><Icon name="check" /><span><a href={project.url} target="_blank" rel="noopener" class="font-semibold text-ink underline underline-offset-4">{project.name}</a>{`: ${project.text}`}</span></li>
               ))
             }
           </ul>
-          <a
-            href={`${base}about`}
-            class="mt-4 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
-          >
-            {copy.aboutLink}
-            <ArrowRight size={16} />
-          </a>
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener"
-            class="mt-4 ml-6 inline-flex min-h-[44px] items-center gap-1 text-sm font-medium text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-100"
-          >
-            {copy.linkedinLabel}
-            <ArrowUpRight size={16} />
-          </a>
+          <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-2">
+            <a href={`${base}about`} class="link-more">{copy.aboutLink}<Icon name="chevron-right" /></a>
+            <a href={linkedin} target="_blank" rel="noopener" class="link-more">{copy.linkedinLabel}<Icon name="arrow-up-right" /></a>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Form -->
-    <section id="call" data-track-view="contact" class="reveal scroll-mt-24 pb-6">
-      <div class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl shadow-zinc-900/5 sm:p-10 dark:border-zinc-700 dark:bg-zinc-800/60">
-        <h2 class="mb-2 text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl dark:text-zinc-100">
-          {copy.formTitle}
-        </h2>
-        <p class="mb-8 text-zinc-600 dark:text-zinc-400">{copy.formLead}</p>
+    <section id="call" data-track-view="contact" class="section section-surface scroll-mt-6">
+      <div class="wrap">
+        <header class="rise max-w-3xl">
+          <h2 class="title">{copy.formTitle}</h2>
+          <p class="lead mt-5">{copy.formLead}</p>
+        </header>
 
-        <div class="mb-10 flex flex-col gap-5 rounded-xl bg-zinc-900 p-6 text-zinc-100 sm:flex-row sm:items-center sm:justify-between sm:p-7 dark:bg-zinc-100 dark:text-zinc-900">
-          <div class="flex items-start gap-4">
-            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-zinc-800 dark:bg-zinc-200">
-              <CalendarDays size={20} />
-            </div>
-            <div>
-              <p class="text-lg font-semibold">{copy.calTitle}</p>
-              <p class="text-sm text-zinc-400 dark:text-zinc-600">{copy.calText}</p>
-            </div>
-          </div>
-          <a
-            href={`https://cal.com/${calLink}`}
-            target="_blank"
-            rel="noopener"
-            id="cal-button"
-            data-cal-link={calLink}
-            data-cal-namespace="15min"
-            data-cal-config='{"layout":"month_view"}'
-            class="group inline-flex min-h-[52px] shrink-0 items-center justify-center gap-2 rounded-lg bg-zinc-100 px-6 py-3 text-base font-semibold text-zinc-900 transition-all duration-200 hover:-translate-y-0.5 hover:bg-white dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-700"
-          >
-            {copy.calButton}
-            <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
-          </a>
-        </div>
-
-        <div class="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <a
-            href={`tel:${phone.href}`}
-            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
-          >
-            <Phone size={18} />
-            <span>{copy.callLabel}: {phone[lang]}</span>
-          </a>
-          <a
-            href={`https://wa.me/${phone.href.slice(1)}`}
-            target="_blank"
-            rel="noopener"
-            class="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border border-zinc-300 px-4 py-3 text-base font-semibold text-zinc-900 transition-colors duration-200 hover:border-zinc-900 dark:border-zinc-600 dark:text-zinc-100 dark:hover:border-zinc-100"
-          >
-            <MessageCircle size={18} />
-            {copy.whatsappLabel}
-          </a>
-        </div>
-
-        <p class="mb-6 font-medium text-zinc-900 dark:text-zinc-100">{copy.orForm}</p>
-
-        <form
-          id="lead-form"
-          class="grid grid-cols-1 gap-5 sm:grid-cols-2"
-          data-endpoint={leadsWorkerUrl}
-          data-lang={lang}
-          data-sending={copy.sending}
-          data-success={copy.success}
-          data-error={copy.error}
-          data-email-error={copy.emailError}
-          data-mail-subject={copy.mailSubject}
-          novalidate
-        >
-          <div>
-            <label for="lead-name" class={labelClass}>{copy.fields.name}</label>
-            <input id="lead-name" name="name" type="text" autocomplete="name" required class={inputClass} />
-          </div>
-          <div>
-            <label for="lead-phone" class={labelClass}>{copy.fields.phone}</label>
-            <input id="lead-phone" name="phone" type="tel" autocomplete="tel" required class={inputClass} />
-          </div>
-          <details class="details group sm:col-span-2">
-            <summary class="flex min-h-[44px] cursor-pointer list-none items-center gap-2 font-medium text-zinc-700 dark:text-zinc-300">
-              <span class="details-plus inline-block w-4 text-center font-mono">+</span>
-              {copy.moreDetails}
-            </summary>
-            <div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <div>
-              <label for="lead-company" class={labelClass}>{copy.fields.company}</label>
-              <input id="lead-company" name="company" type="text" autocomplete="organization" class={inputClass} />
-            </div>
-            <div>
-              <label for="lead-email" class={labelClass}>{copy.fields.email}</label>
-              <input id="lead-email" name="email" type="email" autocomplete="email" class={inputClass} />
-            </div>
-            <fieldset class="sm:col-span-2">
-              <legend class={labelClass}>{copy.fields.interest}</legend>
-              <div class="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-3">
-                {
-                  copy.fields.interestOptions.map((option, index) => (
-                    <label class="interest-option flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-zinc-200 px-4 text-zinc-700 transition-colors duration-200 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-300">
-                      <input
-                        type="radio"
-                        name="interest"
-                        value={option}
-                        checked={index === 2}
-                        class="h-4 w-4 accent-zinc-900 dark:accent-zinc-100"
-                      />
-                      {option}
-                    </label>
-                  ))
-                }
-              </div>
-            </fieldset>
-            <div class="sm:col-span-2">
-              <label for="lead-message" class={labelClass}>{copy.fields.message}</label>
-              <textarea
-                id="lead-message"
-                name="message"
-                rows="4"
-                placeholder={copy.fields.messagePlaceholder}
-                class={inputClass}></textarea>
-            </div>
-            </div>
-          </details>
-          <input type="hidden" name="hours_per_week" id="lead-hours" />
-          <input type="hidden" name="hourly_cost" id="lead-rate" />
-          <input type="hidden" name="yearly_savings" id="lead-savings" />
-          <!-- Honeypot: real people never see or fill this -->
-          <div class="hidden" aria-hidden="true">
-            <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
-          </div>
-          <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p class="mb-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{copy.safety}</p>
-              <p class="text-sm text-zinc-500 dark:text-zinc-400">{copy.consent}</p>
-            </div>
-            <button
-              type="submit"
-              class="inline-flex min-h-[52px] cursor-pointer items-center justify-center rounded-lg bg-zinc-900 px-8 py-3 text-base font-semibold text-zinc-100 transition-all duration-200 hover:-translate-y-0.5 hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        <div class="rise mt-12 grid gap-4 lg:grid-cols-[2fr_3fr]">
+          <!-- Fastest path first: pick a slot, or call / WhatsApp -->
+          <div class="card card-ink flex flex-col">
+            <h3 class="heading">{copy.calTitle}</h3>
+            <p class="body mt-2">{copy.calText}</p>
+            <a
+              href={`https://cal.com/${calLink}`}
+              target="_blank"
+              rel="noopener"
+              id="cal-button"
+              data-cal-link={calLink}
+              data-cal-namespace="15min"
+              data-cal-config='{"layout":"month_view"}'
+              class="btn btn-invert btn-lg mt-8 self-start"
             >
-              {copy.submit}
-            </button>
+              {copy.calButton}<Icon name="arrow-right" />
+            </a>
+            <div class="mt-auto pt-10">
+              <hr class="divider mb-6" />
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                <a href={`tel:${phone.href}`} class="btn btn-secondary"><Icon name="phone" />{copy.callLabel}: {phone[lang]}</a>
+                <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" class="btn btn-secondary"><Icon name="message" />{copy.whatsappLabel}</a>
+              </div>
+            </div>
           </div>
-          <p id="lead-status" role="status" class="text-base font-medium text-zinc-900 sm:col-span-2 dark:text-zinc-100"></p>
-        </form>
-        <div id="lead-done" hidden tabindex="-1" class="rounded-xl border border-zinc-200 bg-zinc-50 p-6 text-center outline-none sm:p-10 dark:border-zinc-700 dark:bg-zinc-900/60">
-          <span class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-zinc-900 text-zinc-100 dark:bg-zinc-100 dark:text-zinc-900"><Check size={24} /></span>
-          <p class="mb-2 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{copy.doneTitle}</p>
-          <p class="mx-auto max-w-md leading-relaxed text-zinc-600 dark:text-zinc-400">{copy.success}</p>
+
+          <div class="card card-white">
+            <p class="heading">{copy.orForm}</p>
+            <form
+              id="lead-form"
+              class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2"
+              data-endpoint={leadsWorkerUrl}
+              data-lang={lang}
+              data-sending={copy.sending}
+              data-success={copy.success}
+              data-error={copy.error}
+              data-email-error={copy.emailError}
+              data-mail-subject={copy.mailSubject}
+              novalidate
+            >
+              <div class="field">
+                <label for="lead-name" class="label">{copy.fields.name}</label>
+                <input id="lead-name" name="name" type="text" autocomplete="name" required class="input" />
+              </div>
+              <div class="field">
+                <label for="lead-phone" class="label">{copy.fields.phone}</label>
+                <input id="lead-phone" name="phone" type="tel" autocomplete="tel" required class="input" />
+              </div>
+              <details class="disclosure disclosure-inline sm:col-span-2">
+                <summary><Icon name="add-circle" />{copy.moreDetails}</summary>
+                <div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div class="field">
+                    <label for="lead-company" class="label">{copy.fields.company}</label>
+                    <input id="lead-company" name="company" type="text" autocomplete="organization" class="input" />
+                  </div>
+                  <div class="field">
+                    <label for="lead-email" class="label">{copy.fields.email}</label>
+                    <input id="lead-email" name="email" type="email" autocomplete="email" class="input" />
+                  </div>
+                  <fieldset class="field sm:col-span-2">
+                    <legend class="label mb-2">{copy.fields.interest}</legend>
+                    <div class="options">
+                      {
+                        copy.fields.interestOptions.map((option, index) => (
+                          <label class="option"><input type="radio" name="interest" value={option} checked={index === 2} />{option}</label>
+                        ))
+                      }
+                    </div>
+                  </fieldset>
+                  <div class="field sm:col-span-2">
+                    <label for="lead-message" class="label">{copy.fields.message}</label>
+                    <textarea id="lead-message" name="message" rows="4" placeholder={copy.fields.messagePlaceholder} class="textarea"></textarea>
+                  </div>
+                </div>
+              </details>
+              <input type="hidden" name="hours_per_week" id="lead-hours" />
+              <input type="hidden" name="hourly_cost" id="lead-rate" />
+              <input type="hidden" name="yearly_savings" id="lead-savings" />
+              <!-- Honeypot: real people never see or fill this -->
+              <div class="hidden" aria-hidden="true">
+                <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+              </div>
+              <div class="sm:col-span-2">
+                <button type="submit" class="btn btn-primary btn-lg disabled:opacity-60">{copy.submit}<Icon name="arrow-right" /></button>
+              </div>
+              <div class="sm:col-span-2">
+                <p class="caption leading-relaxed">{copy.safety}</p>
+                <p class="caption mt-2">{copy.consent}</p>
+              </div>
+              <p id="lead-status" role="status" class="font-medium text-ink empty:hidden sm:col-span-2"></p>
+            </form>
+            <div id="lead-done" hidden tabindex="-1" class="py-10 text-center outline-none">
+              <span class="icon-tile mx-auto"><Icon name="check" /></span>
+              <p class="title-sm mt-6">{copy.doneTitle}</p>
+              <p class="body mx-auto mt-3 max-w-md">{copy.success}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </div>
-  <footer slot="footer" class="border-t border-zinc-100 dark:border-zinc-800">
-    <div class="mx-auto flex max-w-3xl flex-col gap-4 px-4 py-8 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 dark:text-zinc-400">
-      <p>
-        &copy; {new Date().getFullYear()} MIRKEA INTERACTIVE S.R.L., {lang === "ro" ? "CUI" : "company ID"} 50876040. {copy.footerRights}
-      </p>
-      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-        <a href="mailto:contact@mirkea.com" class="hover:text-zinc-900 dark:hover:text-zinc-100">contact@mirkea.com</a>
-        <a href={linkedin} target="_blank" rel="noopener" class="hover:text-zinc-900 dark:hover:text-zinc-100">LinkedIn</a>
-        <a href={copy.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="hover:text-zinc-900 dark:hover:text-zinc-100">{copy.switchLabel}</a>
+  <footer slot="footer" class="section section-tight border-t border-line">
+    <div class="wrap flex flex-col gap-4 text-sm text-ink-2 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {new Date().getFullYear()} MIRKEA INTERACTIVE S.R.L., {lang === "ro" ? "CUI" : "company ID"} 50876040. {copy.footerRights}</p>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <a href="mailto:contact@mirkea.com" class="hover:text-ink">contact@mirkea.com</a>
+        <a href={linkedin} target="_blank" rel="noopener" class="hover:text-ink">LinkedIn</a>
+        <a href={copy.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="hover:text-ink">{copy.switchLabel}</a>
       </div>
     </div>
   </footer>
 </Layout>
 
 <style>
-  /* Wide sections break out of the blog's narrow column */
-  .bleed {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-  }
-
-
-  .calc-grid {
-    background-image:
-      linear-gradient(currentColor 1px, transparent 1px),
-      linear-gradient(90deg, currentColor 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-
-  .calc-range {
-    accent-color: #f4f4f5;
-  }
-
-  :global(.dark) .calc-range {
-    accent-color: #18181b;
-  }
-
   .example-panel {
     transition: opacity 0.4s ease;
   }
-
   .example-panel.is-hidden {
     opacity: 0;
     pointer-events: none;
   }
-
-  .example-tab[aria-selected="true"] {
-    background: var(--color-zinc-900);
-    border-color: var(--color-zinc-900);
-    color: var(--color-zinc-100);
-  }
-
-  :global(.dark) .example-tab[aria-selected="true"] {
-    background: var(--color-zinc-100);
-    border-color: var(--color-zinc-100);
-    color: var(--color-zinc-900);
-  }
-
-  .details[open] .details-plus {
-    transform: rotate(45deg);
-  }
-
-  .details-plus {
-    transition: transform 0.2s ease;
-  }
-
-  .interest-option:has(input:checked) {
-    border-color: currentColor;
-  }
-
-  .lift {
-    transition:
-      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.3s ease;
-  }
-
-  .lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px -20px rgb(24 24 27 / 0.25);
-  }
-
   /* Side buttons of the phone frame, phones only */
   @media (max-width: 639px) {
     .example-frame::before,
@@ -1017,13 +754,13 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       position: absolute;
       width: 3px;
       border-radius: 2px;
-      background: #27272a;
+      background: #2c2c2e;
     }
     .example-frame::before {
       left: -13px;
       top: 110px;
       height: 56px;
-      box-shadow: 0 -40px 0 -10px #27272a;
+      box-shadow: 0 -40px 0 -10px #2c2c2e;
     }
     .example-frame::after {
       right: -13px;
@@ -1031,98 +768,10 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
       height: 80px;
     }
   }
-
-  /* Bar sits under the words themselves, so a long ad headline can wrap instead of being clipped. */
-  .hero-phrase {
-    background-image: linear-gradient(currentColor, currentColor);
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    background-size: 0% 6px;
-    padding-bottom: 6px;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-  }
-
-  .is-visible .hero-phrase {
-    background-size: 100% 6px;
-    transition: background-size 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
-  }
-
-  .pulse-dot {
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.3;
-    }
-  }
-
-  .honest :global(mark) {
-    background: #e4e4e7;
-    color: #18181b;
-    padding: 0 0.15em;
-    border-radius: 0.2em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-  :global(.dark) .honest :global(mark) {
-    background: #3f3f46;
-    color: #f4f4f5;
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    transition:
-      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reveal,
-    .hero-phrase {
-      opacity: 1;
-      transform: none;
-      background-size: 100% 6px;
-      transition: none;
-    }
-
-    .pulse-dot {
-      animation: none;
-    }
-  }
 </style>
 
 <script>
   function setupServicesPage() {
-    const sections = document.querySelectorAll(".services-page .reveal");
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1 },
-      );
-      sections.forEach((section) => observer.observe(section));
-    } else {
-      sections.forEach((section) => section.classList.add("is-visible"));
-    }
-
     const examples = document.getElementById("examples");
     if (examples && !examples.dataset.ready) {
       examples.dataset.ready = "true";
@@ -1178,7 +827,7 @@ const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zin
         const u = title.querySelector("[data-h1u]");
         if (u) u.textContent = heroes[fromAd].h1u;
       }
-      // The AI-built app rescue link shows that card first.
+      // the AI-built app rescue link shows that card first.
       const grid = document.getElementById("services-grid");
       const rescue = grid?.querySelector('[data-service="2"]');
       if (fromAd === "inchirieri" && grid && rescue) {

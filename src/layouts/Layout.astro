@@ -1,6 +1,7 @@
 ---
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
+import IconTemplates from "../components/ui/IconTemplates.astro";
 import Background from "../components/Background.astro";
 import "../styles/global.css";
 import "./styles/logo-anim.css";
@@ -14,9 +15,20 @@ export interface Props {
   lang?: string;
   // Landing pages (the services page): logo-only header, the page's own footer, no SPA transitions
   landing?: boolean;
+  // Full-width pages built from sections (home, /ui): no narrow column, sections set their own width
+  wide?: boolean;
+  // Keep the page out of search engines (the /ui dev page)
+  noindex?: boolean;
 }
 
-const { title, description = "A minimalist personal blog", lang = "en", landing = false } = Astro.props;
+const {
+  title,
+  description = "A minimalist personal blog",
+  lang = "en",
+  landing = false,
+  wide = false,
+  noindex = false,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 ---
 
@@ -31,6 +43,7 @@ const base = import.meta.env.BASE_URL;
 
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="facebook-domain-verification" content="jf6n5g4wwxpt0shkdmpw65f29tjlnj" />
     <title>{title}</title>
     <!-- Apply theme synchronously to avoid flash of wrong theme -->
@@ -59,13 +72,14 @@ const base = import.meta.env.BASE_URL;
       data-website-id="67c800ae-6f9e-4a16-b173-5f79d2d97ee5"></script>
   </head>
   <body
-    class="flex min-h-screen flex-col bg-white text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100"
+    class="flex min-h-screen flex-col bg-canvas text-ink"
     data-landing={landing ? "" : undefined}
+    data-shell={wide ? "wide" : "narrow"}
   >
     <!-- Page transition overlay - for smooth transitions between pages -->
     <div
       id="page-transition"
-      class="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-white opacity-0 transition-opacity duration-300 dark:bg-zinc-900"
+      class="pointer-events-none fixed inset-0 z-40 flex items-center justify-center bg-canvas opacity-0 transition-opacity duration-300"
     >
       <Fragment set:html={logoStrokeRaw} />
     </div>
@@ -73,14 +87,45 @@ const base = import.meta.env.BASE_URL;
     <!-- Background component with dot pattern and ambient glow -->
     <Background />
 
-    <div class="mx-auto w-full max-w-3xl flex-grow px-4 sm:px-6">
-      {
-        landing ? null : <Navigation />
-      }
-      <main class="py-12">
-        <slot />
-      </main>
-    </div>
+    {
+      wide ? (
+        <>
+          {landing ? null : <Navigation />}
+          <main class="flex-grow">
+            <slot />
+          </main>
+        </>
+      ) : (
+        <div class="mx-auto w-full max-w-3xl flex-grow px-4 sm:px-6">
+          {landing ? null : <Navigation />}
+          <main class="py-12">
+            <slot />
+          </main>
+        </div>
+      )
+    }
+    <script is:inline>
+      // .rise blocks fade up once when they scroll into view (ui.css)
+      (function () {
+        var run = function () {
+          var items = document.querySelectorAll(".rise:not(.is-in)");
+          if (!("IntersectionObserver" in window)) {
+            items.forEach(function (el) { el.classList.add("is-in"); });
+            return;
+          }
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            });
+          }, { rootMargin: "0px 0px -8% 0px" });
+          items.forEach(function (el) { io.observe(el); });
+        };
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+        else run();
+        // Content swapped in by the in-page router needs the same treatment
+        document.addEventListener("spa-content-loaded", run);
+      })();
+    </script>
     {landing ? <slot name="footer" /> : <Footer />}
 
     {
@@ -130,7 +175,7 @@ const base = import.meta.env.BASE_URL;
         <div
           id="consent-bar"
           hidden
-          class="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-w-xl flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-4 text-sm text-zinc-700 shadow-xl sm:flex-row sm:items-center dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+          class="card card-outline fixed inset-x-3 bottom-3 z-50 mx-auto flex max-w-xl flex-col gap-3 !p-4 text-sm text-ink-2 sm:flex-row sm:items-center sm:!pl-6"
         >
           <p class="flex-1 leading-relaxed">
             {lang === "ro"
@@ -138,10 +183,10 @@ const base = import.meta.env.BASE_URL;
               : "I use a Meta cookie to see which ads bring people here. It only starts if you agree."}
           </p>
           <div class="flex gap-2">
-            <button type="button" data-consent="no" class="min-h-[44px] flex-1 cursor-pointer rounded-lg border border-zinc-300 px-4 font-medium sm:flex-none dark:border-zinc-600">
+            <button type="button" data-consent="no" class="btn btn-secondary btn-sm flex-1 sm:flex-none">
               {lang === "ro" ? "Nu, multumesc" : "No thanks"}
             </button>
-            <button type="button" data-consent="yes" class="min-h-[44px] flex-1 cursor-pointer rounded-lg bg-zinc-900 px-4 font-semibold text-zinc-100 sm:flex-none dark:bg-zinc-100 dark:text-zinc-900">
+            <button type="button" data-consent="yes" class="btn btn-primary btn-sm flex-1 sm:flex-none">
               Accept
             </button>
           </div>
@@ -256,6 +301,16 @@ const base = import.meta.env.BASE_URL;
             // Extract the main content
             const newContent = doc.querySelector("main");
             if (!newContent) throw new Error("Could not find main content in the fetched page");
+
+            // Only <main> is swapped. Landing pages (own header, footer, consent, pixel, page scripts)
+            // and pages built on the other shell (wide vs narrow column) need a full page load.
+            if (
+              doc.body.hasAttribute("data-landing") ||
+              doc.body.getAttribute("data-shell") !== document.body.getAttribute("data-shell")
+            ) {
+              window.location.href = url;
+              return;
+            }
 
             // Extract the title
             const newTitle = doc.querySelector("title");
@@ -536,5 +591,6 @@ const base = import.meta.env.BASE_URL;
       // Initialize theme handling
       document.addEventListener("DOMContentLoaded", setupThemeHandling);
     </script>
+    <IconTemplates />
   </body>
 </html>

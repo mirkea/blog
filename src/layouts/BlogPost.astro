@@ -68,40 +68,19 @@ if (heroImage) {
 
 <Layout title={title} description={description}>
   <article class="mx-auto max-w-4xl">
-    <div class="mb-8">
-      <h1
-        class="mb-4 text-4xl font-bold tracking-tight text-zinc-900 sm:text-5xl dark:text-zinc-100"
-      >
-        {title}
-      </h1>
-
-      <div class="mb-6 flex items-center gap-x-2 text-sm text-zinc-500 dark:text-zinc-400">
+    <header class="mb-10">
+      <p class="caption">
         <FormattedDate date={pubDate} />
-        {
-          readingTime && (
-            <>
-              <span>·</span> <span>{readingTime}</span>
-            </>
-          )
-        }
-      </div>
+        {readingTime && <> · {readingTime}</>}
+      </p>
+      <h1 class="title mt-4 !text-[clamp(2.2rem,5.5vw,3.6rem)]">{title}</h1>
+      <TagList tags={tags} class="mt-6" />
+    </header>
 
-      <TagList tags={tags} class="mt-2" />
-    </div>
-
-    <!-- Hero image with improved styling -->
     {
       heroImage && (
-        <div class="relative mb-8 overflow-hidden rounded-md shadow-lg sm:mb-8">
-          <div class="aspect-[16/9] w-full">
-            <img
-              src={heroImageUrl}
-              alt={title}
-              class="h-full w-full object-cover"
-              loading="eager"
-            />
-          </div>
-          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        <div class="mb-10 aspect-[16/9] w-full overflow-hidden rounded-card bg-surface">
+          <img src={heroImageUrl} alt={title} class="h-full w-full object-cover" loading="eager" />
         </div>
       )
     }
@@ -112,7 +91,7 @@ if (heroImage) {
     <MarkdownImageLightbox client:load />
 
     <!-- Add the like button after the content -->
-    <div class="mt-12 border-t border-zinc-200 pt-8 dark:border-zinc-800">
+    <div class="mt-12 border-t border-line pt-8">
       <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
         <ShareButtons url={canonicalURL.toString()} title={title} />
         <!-- Convert URL to string -->
@@ -121,7 +100,7 @@ if (heroImage) {
 
     {
       updatedDate && (
-        <div class="mt-8 text-sm text-zinc-500 italic dark:text-zinc-400">
+        <div class="caption mt-8">
           Last updated on <FormattedDate date={updatedDate} />
         </div>
       )
@@ -130,8 +109,8 @@ if (heroImage) {
 
   <slot name="after-article" />
 
-  <div class="mx-auto mt-16 border-t border-zinc-200 pt-10 dark:border-zinc-800">
-    <h2 class="mb-6 text-lg font-semibold text-zinc-900 dark:text-zinc-100">Comments</h2>
+  <div class="mx-auto mt-16 border-t border-line pt-10">
+    <h2 class="title-sm mb-6">Comments</h2>
     <div
       id="cusdis_thread"
       data-host="https://cusdis.com"
@@ -382,6 +361,8 @@ if (heroImage) {
 </Layout>
 
 <script>
+  const iconHtml = (name: string) => document.querySelector(`template[data-icon="${name}"]`)?.innerHTML ?? "";
+
   // Enhanced blog post SPA transitions
   function setupBlogPostTransitions() {
     // Animate article entrance
@@ -439,12 +420,7 @@ if (heroImage) {
         // Create copy button
         const copyButton = document.createElement("button");
         copyButton.className = "copy-code-button";
-        copyButton.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-            <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-          </svg>
-        `;
+        copyButton.innerHTML = iconHtml("copy");
 
         // Add copy functionality
         copyButton.addEventListener("click", () => {
@@ -452,19 +428,10 @@ if (heroImage) {
           navigator.clipboard.writeText(code);
 
           // Show copied feedback
-          copyButton.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
-          `;
+          copyButton.innerHTML = iconHtml("check");
 
           setTimeout(() => {
-            copyButton.innerHTML = `
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-              </svg>
-            `;
+            copyButton.innerHTML = iconHtml("copy");
           }, 2000);
         });
 
@@ -522,11 +489,7 @@ if (heroImage) {
         // Add quote icon
         const icon = document.createElement("div");
         icon.className = "quote-icon";
-        icon.innerHTML = `
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
-          </svg>
-        `;
+        icon.innerHTML = iconHtml("quote");
 
         blockquote.insertBefore(icon, blockquote.firstChild);
       });

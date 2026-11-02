@@ -1,0 +1,27 @@
+---
+// The site's one icon set: Solar (Linear style by default). Names and licence: src/lib/icons.ts
+import { getIcon, type IconName, type IconVariant } from "../../lib/icons";
+export type { IconName } from "../../lib/icons";
+
+interface Props {
+  name: IconName;
+  variant?: IconVariant;
+  class?: string;
+  size?: number;
+  label?: string;
+}
+const { name, variant, class: className, size, label } = Astro.props;
+const { body, width, height } = getIcon(name, variant);
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${width} ${height}`}
+  width={size}
+  height={size}
+  class:list={["icon", className]}
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  set:html={body}
+/>

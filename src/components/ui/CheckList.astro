@@ -1,0 +1,22 @@
+---
+import Icon from "./Icon.astro";
+// Bulleted list with a check (done / included), a ring (planned) or a cross (not for you).
+interface Props {
+  items: string[];
+  icon?: "check" | "dot" | "x";
+  tone?: "default" | "positive" | "muted";
+  class?: string;
+}
+const { items, icon = "check", tone = "default", class: className } = Astro.props;
+---
+
+<ul class:list={["checklist", tone !== "default" && `checklist-${tone}`, className]}>
+  {
+    items.map((item) => (
+      <li>
+        <Icon name={icon} class={icon === "dot" ? "!size-3.5 !mt-1.5" : undefined} />
+        <span>{item}</span>
+      </li>
+    ))
+  }
+</ul>

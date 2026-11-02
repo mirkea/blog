@@ -1,0 +1,10 @@
+---
+// Icons that scripts insert at runtime (copy buttons, quote marks). Scripts read them with
+// document.querySelector('template[data-icon="copy"]').innerHTML, so they stay Solar icons
+// without shipping the icon set to the browser.
+import Icon from "./Icon.astro";
+---
+
+<template data-icon="copy"><Icon name="copy" class="size-4" /></template>
+<template data-icon="check"><Icon name="check" class="size-4" /></template>
+<template data-icon="quote"><Icon name="quote" class="size-6" /></template>
