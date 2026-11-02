@@ -1,11 +1,11 @@
 ---
-import Icon from "./Icon.astro";
+import Icon, { type IconName } from "./Icon.astro";
 // Pill button. With href it renders a link, otherwise a <button>.
 interface Props {
   href?: string;
   variant?: "primary" | "secondary" | "invert" | "link";
   size?: "sm" | "md" | "lg";
-  icon?: "arrow-right" | "chevron-right" | "calendar" | "phone" | "message" | "mail";
+  icon?: IconName;
   iconStart?: boolean;
   type?: "button" | "submit";
   class?: string;

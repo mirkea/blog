@@ -18,6 +18,26 @@ const recentPosts = allPosts
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
 
+// Two offers, each with its own landing page. Copy mirrors those pages, in English.
+const offers = [
+  {
+    tag: "For small and mid-sized businesses",
+    title: "AI and apps for your business.",
+    text: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new.",
+    points: ["Web apps from €3,000, mobile apps from €5,000", "A fixed price before any code is written", "The first call, 15 minutes, is free"],
+    cta: { text: "See services", href: `${base}en/services` },
+    alt: { text: "In Romanian", href: `${base}servicii` },
+  },
+  {
+    tag: "For founders",
+    title: "A technical co-founder for your product.",
+    text: "I join you as technical co-founder and we start a new company for the product. I stay for the long run and own the product, so you can focus on customers and sales.",
+    points: ["I build at my cost, or you pay part for a smaller stake", "Someone besides you already has the problem", "At most 3 founders at a time"],
+    cta: { text: "See the founder offer", href: `${base}fondatori` },
+    note: "Page in Romanian",
+  },
+];
+
 // Get all unique tags from posts
 const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].slice(0, 5);
 ---
@@ -37,7 +57,34 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
     </SectionHeading>
   </Section>
 
-  <Section tone="surface">
+  <Section id="work" tone="surface">
+    <SectionHeading title="Work with me." title2="Two ways in." align="left" />
+    <!-- Both cards share rows, so tag, title, text, list and button line up -->
+    <div class="rise mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-0">
+      {
+        offers.map((offer, index) => (
+          <div class:list={["card flex flex-col !p-[clamp(1.75rem,4vw,3rem)] md:row-span-5 md:grid md:grid-rows-subgrid md:gap-y-0", index === 0 ? "card-ink" : "card-white"]}>
+            <span class:list={["pill self-start justify-self-start", "pill-quiet"]}>{offer.tag}</span>
+            <h3 class="title-sm mt-6">{offer.title}</h3>
+            <p class="body mt-4">{offer.text}</p>
+            <div class="mt-8">
+              <hr class="divider mb-6" />
+              <ul class="checklist">
+                {offer.points.map((point) => <li><Icon name="check" /><span>{point}</span></li>)}
+              </ul>
+            </div>
+            <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 self-end">
+              <a href={offer.cta.href} class:list={["btn btn-lg", index === 0 ? "btn-invert" : "btn-primary"]}>{offer.cta.text}<Icon name="arrow-right" /></a>
+              {offer.alt && <a href={offer.alt.href} hreflang="ro" class="link-underline">{offer.alt.text}</a>}
+              {offer.note && <span class="caption">{offer.note}</span>}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section>
     <div class="rise flex flex-wrap items-end justify-between gap-4">
       <h2 class="title">Recent posts.</h2>
       <a href={`${base}blog`} class="link-more pb-2">View all posts <Icon name="chevron-right" /></a>
@@ -54,7 +101,6 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
             tags={post.data.tags}
             heroImage={post.data.image}
             index={index}
-            tone="white"
           />
         ))
       }
@@ -63,7 +109,7 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
 
   {
     allTags.length > 0 && (
-      <Section>
+      <Section tone="surface">
         <div class="rise flex flex-wrap items-end justify-between gap-4">
           <h2 class="title">Explore topics.</h2>
           <a href={`${base}tags`} class="link-more pb-2">View all topics <Icon name="chevron-right" /></a>
@@ -72,7 +118,7 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
           {allTags.map((tag) => {
             const tagCount = allPosts.filter((post) => post.data.tags && post.data.tags.includes(tag)).length;
             return (
-              <a href={`${base}tags/${tag}`} class="card card-link flex items-center justify-between gap-4 !py-6">
+              <a href={`${base}tags/${tag}`} class="card card-white card-link flex items-center justify-between gap-4 !py-6">
                 <div>
                   <p class="heading !text-xl">#{tag}</p>
                   <p class="caption mt-1">Explore articles about {tag}</p>

@@ -18,6 +18,8 @@ import CompareTable from "../components/ui/CompareTable.astro";
 import Field from "../components/ui/Field.astro";
 import Person from "../components/ui/Person.astro";
 import PostCard from "../components/PostCard.astro";
+import Icon from "../components/ui/Icon.astro";
+import { ALIASES } from "../lib/icons";
 
 const base = import.meta.env.BASE_URL;
 const ex = `${base}services/examples`;
@@ -33,8 +35,13 @@ const toc = [
   ["compare", "Table"],
   ["cta", "Call to action"],
   ["forms", "Forms"],
+  ["patterns", "Patterns"],
+  ["icons", "Icons"],
   ["posts", "Posts"],
 ];
+
+// Kit icon names (src/lib/icons.ts). Any other Solar name works too.
+const kitIcons = Object.keys(ALIASES);
 
 const colours = [
   ["ink", "Primary: text, buttons, dark cards"],
@@ -135,7 +142,7 @@ const colours = [
           <Button disabled>Disabled</Button>
         </div>
         <div class="flex flex-wrap items-center gap-6">
-          <a href="#buttons" class="link-more">More about me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 18 6-6-6-6" /></svg></a>
+          <a href="#buttons" class="link-more">More about me <Icon name="chevron-right" /></a>
           <a href="#buttons" class="link-underline">Underlined link</a>
         </div>
       </div>
@@ -221,7 +228,7 @@ const colours = [
       <Card tone="ink" icon="chart" title="Featured card" text="The ink card is the one to notice. Use one per group, at most." meta="Works with you or your team" class="lg:col-span-2" />
       <Card tone="white" icon="trending-up" title="White card" text="On grey bands, cards are white." meta="Meta line" />
       <Card tone="white" icon="pin" title="With a link" text="Lifts a little on hover." meta="Hover me" href="#cards" />
-      <Card tone="white" icon="message" title="Icon on top" text="A stroke icon, then the title." meta="Lucide icons" />
+      <Card tone="white" icon="message" title="Icon on top" text="A stroke icon, then the title." meta="Solar icons" />
       <Card tone="white" icon="pen" title="Short text" text="Two lines at most." meta="Meta line" />
       <Card tone="white" icon="search" title="Spans two" text="Wide cards fill the row when the count is odd." meta="Meta line" class="lg:col-span-2" />
     </div>
@@ -361,6 +368,96 @@ const colours = [
         </div>
       </div>
     </div>
+  </Section>
+
+  <!-- Patterns -->
+  <Section id="patterns">
+    <SectionHeading title="Patterns." title2="Built from the same parts." align="left" />
+    <div class="mt-12 grid gap-4 lg:grid-cols-2">
+      <div class="card">
+        <p class="caption">Option pills: a radio or checkbox as a pill, 48px like every control</p>
+        <div class="options mt-5">
+          <label class="option"><input type="radio" name="ui-opt" checked />Nothing yet</label>
+          <label class="option"><input type="radio" name="ui-opt" />Sketches</label>
+          <label class="option"><input type="radio" name="ui-opt" />A prototype</label>
+        </div>
+        <p class="caption mt-10">Inline disclosure: optional fields in a form</p>
+        <details class="disclosure disclosure-inline mt-3">
+          <summary><Icon name="add-circle" />Add details (optional)</summary>
+          <div class="field mt-4"><label class="label" for="ui-co">Company</label><input id="ui-co" class="input" /></div>
+        </details>
+      </div>
+      <div class="card">
+        <p class="caption">Rows: a label and a value split by hairlines</p>
+        <dl class="rows mt-5">
+          <div><dt>Web app, works on any phone</dt><dd>from €3,000</dd></div>
+          <div><dt>Mobile app in both stores</dt><dd>from €5,000</dd></div>
+          <div><dt>Audit of an app built with AI</dt><dd>free</dd></div>
+        </dl>
+      </div>
+      <div class="card">
+        <p class="caption">Disclosure: questions and answers</p>
+        <div class="mt-3">
+          <details class="disclosure" open>
+            <summary>How long does a first version take?<Icon name="add-circle" /></summary>
+            <p>Two to four weeks for a well-scoped first version, tested with you before launch.</p>
+          </details>
+          <details class="disclosure">
+            <summary>Do I need a company first?<Icon name="add-circle" /></summary>
+            <p>Not to start. It is set up when the terms are written.</p>
+          </details>
+        </div>
+      </div>
+      <div class="card">
+        <p class="caption">Highlight: one phrase marked inside a statement</p>
+        <p class="title-sm highlight mt-5">Sometimes <mark>a good form or a booking page</mark> solves the same problem faster.</p>
+        <p class="caption mt-10">Icon tile and a quiet pill on one line</p>
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <span class="icon-tile"><Icon name="phone-calling" /></span>
+          <span class="pill pill-quiet whitespace-nowrap">15 minutes</span>
+        </div>
+      </div>
+      <div class="card card-ink grid gap-x-12 gap-y-8 lg:col-span-2 lg:grid-cols-2">
+        <div class="grid content-start gap-8">
+          <p class="caption">On ink: fields, slider, quiet pill and buttons invert</p>
+          <div class="field">
+            <div class="flex items-baseline justify-between gap-4"><label for="ui-hours" class="label">Hours per week</label><output class="heading">10</output></div>
+            <input id="ui-hours" type="range" min="1" max="60" value="10" class="range mt-2" />
+          </div>
+          <div class="field">
+            <label for="ui-rate" class="label">Cost of one hour</label>
+            <input id="ui-rate" type="number" value="30" class="input" />
+          </div>
+        </div>
+        <div class="flex flex-col justify-between gap-8">
+          <div>
+            <span class="pill pill-quiet">Sample</span>
+            <p class="title mt-4">14.400 <span class="tone-2">EUR</span></p>
+            <p class="body mt-1">a year</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <Button variant="invert" icon="arrow-right">Primary on ink</Button>
+            <Button variant="secondary" icon="phone" iconStart>Secondary on ink</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Icons -->
+  <Section id="icons" tone="surface">
+    <SectionHeading title="Icons." title2="One set: Solar." align="left" lead="Linear style by default, Bold for a filled accent. These are the kit names; any other Solar name works too. Brand logos stay as their own marks." />
+    <div class="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6">
+      {
+        kitIcons.map((name) => (
+          <div class="card card-white flex flex-col items-center gap-3 !p-5 text-center">
+            <Icon name={name} class="size-7" />
+            <span class="caption">{name}</span>
+          </div>
+        ))
+      }
+    </div>
+    <p class="caption mt-6">Solar by 480 Design, CC BY 4.0. Read at build time from @iconify-json/solar, so no icon code ships to the browser.</p>
   </Section>
 
   <!-- Posts -->

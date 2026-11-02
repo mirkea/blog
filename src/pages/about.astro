@@ -4,63 +4,53 @@ import Layout from "../layouts/Layout.astro";
 import Section from "../components/ui/Section.astro";
 import Button from "../components/ui/Button.astro";
 import Meter from "../components/ui/Meter.astro";
-import {
-  Search,
-  Code2,
-  ListChecks,
-  Users,
-  PenTool,
-  FileCode,
-  Braces,
-  Atom,
-  Bot,
-} from "lucide-react";
+import Icon from "../components/ui/Icon.astro";
 
 const skills = [
   {
     name: "Product Discovery",
     level: 95,
-    icon: Search,
+    icon: "magnifier",
   },
   {
     name: "Rapid Prototyping",
     level: 95,
-    icon: Code2,
+    icon: "code-square",
   },
   {
     name: "Production Management",
     level: 95,
-    icon: ListChecks,
+    icon: "checklist-minimalistic",
   },
   {
     name: "Stakeholder Alignment",
     level: 90,
-    icon: Users,
+    icon: "users-group-rounded",
   },
   {
     name: "UX / Wireframing",
     level: 90,
-    icon: PenTool,
+    icon: "pen-new-square",
   },
   {
     name: "HTML / CSS",
     level: 95,
-    icon: FileCode,
+    icon: "file-code",
   },
   {
     name: "JavaScript",
     level: 75,
-    icon: Braces,
+    icon: "programming",
   },
   {
     name: "React",
     level: 80,
-    icon: Atom,
+    icon: "atom",
   },
   {
     name: "AI Workflows",
     level: 80,
-    icon: Bot,
+    icon: "cpu",
   },
 ];
 ---
@@ -113,7 +103,7 @@ const skills = [
         skills.map((skill) => (
           <div class="card flex items-center gap-5 !py-6">
             <span class="grid size-11 shrink-0 place-items-center rounded-full bg-canvas text-ink">
-              <skill.icon size={18} />
+              <Icon name={skill.icon} class="size-5" />
             </span>
             <div class="min-w-0 flex-1">
               <Meter label={skill.name} value={skill.level} max={100} display={`${skill.level}%`} />
