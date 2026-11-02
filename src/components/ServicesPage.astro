@@ -26,7 +26,7 @@ const copy = {
     h1a: "Aveti nevoie de o aplicatie?",
     h1b: "Sau doar de mai putina",
     h1u: "munca manuala?",
-    // ?exemplu=<key> from an ad swaps in the headline that ad promised; studio (ad A) keeps the default
+    // ?exemplu=<key> from an ad swaps in the headline that ad promised; studio keeps the default
     heroes: {
       service: { h1a: "Pierdeti ore cu oferte si facturi?", h1b: "Le", h1u: "automatizam impreuna." },
       inchirieri: { h1a: "Ati facut deja o aplicatie cu AI?", h1b: "O facem sa", h1u: "mearga pe bune." },
@@ -827,7 +827,7 @@ const copy = {
         const u = title.querySelector("[data-h1u]");
         if (u) u.textContent = heroes[fromAd].h1u;
       }
-      // Radu (ad D) came for the AI-built app rescue: show that card first.
+      // the AI-built app rescue link shows that card first.
       const grid = document.getElementById("services-grid");
       const rescue = grid?.querySelector('[data-service="2"]');
       if (fromAd === "inchirieri" && grid && rescue) {
