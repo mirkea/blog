@@ -18,23 +18,25 @@ const recentPosts = allPosts
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3);
 
-// Two offers, each with its own landing page. Copy mirrors those pages, in English.
+// Two offers, each with its own landing page. Founders first (his main goal). Copy mirrors those pages, in English.
 const offers = [
   {
-    tag: "For small and mid-sized businesses",
-    title: "AI and apps for your business.",
-    text: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new.",
-    points: ["Web apps from €3,000, mobile apps from €5,000", "A fixed price before any code is written", "The first call, 15 minutes, is free"],
-    cta: { text: "See services", href: `${base}en/services` },
-    alt: { text: "In Romanian", href: `${base}servicii` },
-  },
-  {
+    key: "founders",
     tag: "For founders",
     title: "A technical co-founder for your product.",
     text: "I join you as technical co-founder and we start a new company for the product. I stay for the long run and own the product, so you can focus on customers and sales.",
     points: ["I build at my cost, or you pay part for a smaller stake", "Someone besides you already has the problem", "At most 3 founders at a time"],
     cta: { text: "See the founder offer", href: `${base}fondatori` },
     note: "Page in Romanian",
+  },
+  {
+    key: "services",
+    tag: "For small and mid-sized businesses",
+    title: "AI and apps for your business.",
+    text: "An honest answer on what is worth building for your business: a web or mobile app, an AI tool, or nothing new.",
+    points: ["Web apps from €3,000, mobile apps from €5,000", "A fixed price before any code is written", "The first call, 15 minutes, is free"],
+    cta: { text: "See services", href: `${base}en/services` },
+    alt: { text: "In Romanian", href: `${base}servicii` },
   },
 ];
 
@@ -57,7 +59,7 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
     </SectionHeading>
   </Section>
 
-  <Section id="work" tone="surface">
+  <Section id="work" tone="surface" data-track-view="home-offers">
     <SectionHeading title="Work with me." title2="Two ways in." align="left" />
     <!-- Both cards share rows, so tag, title, text, list and button line up -->
     <div class="rise mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-y-0">
@@ -74,8 +76,8 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
               </ul>
             </div>
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 self-end">
-              <a href={offer.cta.href} class:list={["btn btn-lg", index === 0 ? "btn-invert" : "btn-primary"]}>{offer.cta.text}<Icon name="arrow-right" /></a>
-              {offer.alt && <a href={offer.alt.href} hreflang="ro" class="link-underline">{offer.alt.text}</a>}
+              <a href={offer.cta.href} data-umami-event="home-offer" data-umami-event-offer={offer.key} class:list={["btn btn-lg", index === 0 ? "btn-invert" : "btn-primary"]}>{offer.cta.text}<Icon name="arrow-right" /></a>
+              {offer.alt && <a href={offer.alt.href} hreflang="ro" data-umami-event="home-offer" data-umami-event-offer={`${offer.key}-ro`} class="link-underline">{offer.alt.text}</a>}
               {offer.note && <span class="caption">{offer.note}</span>}
             </div>
           </div>
@@ -132,3 +134,25 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
     )
   }
 </Layout>
+
+<script is:inline>
+  // Umami: one "view-home-offers" event per visit when the offers section is first seen.
+  (function () {
+    var el = document.querySelector('[data-track-view="home-offers"]');
+    if (!el || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      try {
+        if (sessionStorage.getItem("view-home-offers")) return;
+        sessionStorage.setItem("view-home-offers", "1");
+      } catch (e) {}
+      var send = function (tries) {
+        if (window.umami && window.umami.track) window.umami.track("view-home-offers");
+        else if (tries < 20) setTimeout(function () { send(tries + 1); }, 500);
+      };
+      send(0);
+    }, { threshold: 0.3 });
+    io.observe(el);
+  })();
+</script>
