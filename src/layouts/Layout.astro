@@ -126,6 +126,16 @@ const base = import.meta.env.BASE_URL;
         document.addEventListener("spa-content-loaded", run);
       })();
     </script>
+    <script is:inline>
+      // Umami: <details data-track-open="faq" data-track-label="..."> sends "faq-open" each time it is opened.
+      // toggle does not bubble, so listen in the capture phase; this also covers content swapped in later.
+      document.addEventListener("toggle", function (e) {
+        var el = e.target;
+        if (!el || !el.open || !el.getAttribute || !el.hasAttribute("data-track-open")) return;
+        var data = { page: location.pathname, item: (el.getAttribute("data-track-label") || "").slice(0, 120) };
+        if (window.umami && window.umami.track) window.umami.track(el.getAttribute("data-track-open") + "-open", data);
+      }, true);
+    </script>
     {landing ? <slot name="footer" /> : <Footer />}
 
     {

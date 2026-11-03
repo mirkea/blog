@@ -109,25 +109,25 @@ const copy = {
   steps: [
     {
       icon: "pen",
-      name: "Imi spui ideea",
+      name: "Imi spui\nideea",
       time: "30 de minute",
       text: "Intr-un apel sau in scris. Daca imi scrii, iti raspund in cel mult o zi lucratoare, cu ce cred si ce intrebari am.",
     },
     {
       icon: "hand-shake",
-      name: "Exploram problema",
+      name: "Exploram\nproblema",
       time: "1-2 saptamani, gratuit",
       text: "Imi dai context si ma pui in legatura cu cel putin un om, in afara de tine, care are problema. La final alegem ce intra in prima versiune si scriem termenii. Pana semnam, nu platesti nimic si nu cedezi nimic din firma.",
     },
     {
       icon: "programming",
-      name: "Construim prima versiune",
+      name: "Construim prima\nversiune",
       time: "2-4 saptamani",
       text: "Pe etape, ca primii clienti sa o foloseasca repede. Tu aduci clientii si ce spun ei, eu produsul.",
     },
     {
       icon: "graph-up",
-      name: "Mergem mai departe",
+      name: "Mergem\nmai departe",
       time: "dupa lansare",
       text: "Raman in produs si il crestem dupa ce spun clientii. Partea mea se castiga pe masura ce lucram.",
     },
@@ -343,12 +343,12 @@ const copy = {
           {
             copy.steps.map((step, index) => (
               <li class="card card-white flex flex-col lg:row-span-4 lg:grid lg:grid-rows-subgrid lg:gap-y-0">
-                <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex flex-col items-start gap-4">
                   <span class="icon-tile"><Icon name={step.icon} /></span>
                   <span class="pill pill-quiet whitespace-nowrap">{step.time}</span>
                 </div>
                 <p class="caption mt-6">0{index + 1}</p>
-                <h3 class="heading mt-1">{step.name}</h3>
+                <h3 class="heading mt-1 whitespace-pre-line">{step.name}</h3>
                 <p class="body mt-3">{step.text}</p>
               </li>
             ))
@@ -376,7 +376,7 @@ const copy = {
         <div class="rise">
           {
             copy.faq.map((item, index) => (
-              <details class="disclosure" data-umami-event="founder-faq" data-umami-event-q={String(index + 1)}>
+              <details class="disclosure" data-track-open="faq" data-track-label={`${index + 1}. ${item.q}`}>
                 <summary>{item.q}<Icon name="add-circle" /></summary>
                 <p>{item.a}</p>
               </details>
