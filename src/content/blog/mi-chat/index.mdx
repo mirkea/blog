@@ -50,7 +50,7 @@ That's when it clicked: the chats themselves were fine, and what I actually need
 
 I asked Claude about the technical feasibility and it didn't seem complicated. As luck would have it, I already had some code watching over my sessions for a separate app of mine, so it was mostly a matter of refactoring that and making it more usable.
 
-So MiChat (the "Mi" comes from Mirkea, my online name) ended up as an Electron app that opens claude.ai in its own windows, one per account, signed in like you normally would. That's a perfect fit for me, since 98% of my work happens on my MacBook, and when I need to orchestrate agents on the go, the Claude mobile app is good enough.
+So MiChat ended up as an Electron app that opens claude.ai in its own windows, one per account, signed in like you normally would. That's a perfect fit for me, since 98% of my work happens on my MacBook, and when I need to orchestrate agents on the go, the Claude mobile app is good enough.
 
 For the sidebar, it asks the same internal endpoints the Claude web app uses for its own sidebar: session lists, working or waiting status, last-updated times and unread flags. It's not an official public API, and apart from a few conveniences that press buttons on the page for me, it isn't scraping either (keep that detail in mind, because it comes back at the end).
 
@@ -109,7 +109,7 @@ Like with my other recent projects, Claude wrote the code, and I steered, review
     { value: "1 week", label: "From idea to daily driver" },
     { value: "352", label: "Commits" },
     { value: "132", label: "Pull requests" },
-    { value: "~1B", label: "Tokens" },
+    { value: "~19M", label: "New tokens" },
   ]}
 />
 
@@ -153,7 +153,7 @@ As for tokens, building the app and styling the sidebar took the lion's share:
 
 ![MiChat project usage in Claude: about 1 billion tokens, most of them on building the app and styling the sidebar](./assets/token-usage.webp)
 
-One thing that surprised me: about 98% of those tokens were cache reads, meaning Claude rereading context it already had. A billion tokens sounds dramatic, but most of it is just Claude remembering what we were doing.
+The panel says about a billion tokens, which sounds a lot scarier than it is. About 98% of that is cache reads: every time Claude takes another step, it rereads the whole conversation so far, and every reread gets counted again. The new tokens, what I sent and what Claude wrote back, come to about 19 million, so that's the number I'd use to size a project like this.
 
 ## So, was it worth it?
 
