@@ -1,0 +1,127 @@
+---
+export interface Segment {
+  key: string;
+  label: string;
+  value: number;
+}
+
+export interface Props {
+  segments: Segment[];
+  /** Key of the segment the toggle hides, to zoom in on the rest. */
+  hideKey: string;
+  hideLabel: string;
+  showLabel: string;
+  id?: string;
+}
+
+const { segments, hideKey, hideLabel, showLabel, id = "devlog-token-mix" } = Astro.props;
+---
+
+<div class="devlog-charts">
+  <div class="devlog-chart-card devlog-mix" id={id}>
+    <div class="devlog-mix-head">
+      <span class="devlog-mix-total"></span>
+      <button type="button" class="devlog-mix-toggle" aria-pressed="false"></button>
+    </div>
+    <div class="devlog-mix-bar" role="img"></div>
+    <ul class="devlog-mix-legend"></ul>
+  </div>
+</div>
+
+<script define:vars={{ segments, hideKey, hideLabel, showLabel, id }}>
+  (function () {
+    var root = document.getElementById(id);
+    if (!root) return;
+    var bar = root.querySelector(".devlog-mix-bar");
+    var legend = root.querySelector(".devlog-mix-legend");
+    var totalEl = root.querySelector(".devlog-mix-total");
+    var toggle = root.querySelector(".devlog-mix-toggle");
+    var hidden = false;
+
+    function fmt(v) {
+      if (v >= 1e9) return (v / 1e9).toFixed(v >= 1e10 ? 0 : 2).replace(/\.?0+$/, "") + "B";
+      if (v >= 1e6) return (v / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+      if (v >= 1e3) return (v / 1e3).toFixed(1).replace(/\.0$/, "") + "k";
+      return String(v);
+    }
+    function pct(v, total) {
+      var p = (v / total) * 100;
+      if (p > 0 && p < 0.1) return "<0.1%";
+      return (p < 10 ? p.toFixed(1) : Math.round(p)) + "%";
+    }
+
+    var segEls = {};
+    var rowEls = {};
+    segments.forEach(function (s, i) {
+      var seg = document.createElement("div");
+      seg.className = "devlog-mix-seg devlog-mix-seg-" + i;
+      seg.setAttribute("data-key", s.key);
+      bar.appendChild(seg);
+      segEls[s.key] = seg;
+
+      var li = document.createElement("li");
+      li.className = "devlog-mix-row";
+      li.innerHTML =
+        '<span class="devlog-mix-sq devlog-mix-seg-' +
+        i +
+        '"></span><span class="devlog-mix-name">' +
+        s.label +
+        '</span><span class="devlog-mix-val"><b></b> <span class="devlog-mix-pct"></span></span>';
+      legend.appendChild(li);
+      rowEls[s.key] = li;
+
+      function on() {
+        root.classList.add("devlog-mix-focus");
+        seg.classList.add("is-active");
+        li.classList.add("is-active");
+      }
+      function off() {
+        root.classList.remove("devlog-mix-focus");
+        seg.classList.remove("is-active");
+        li.classList.remove("is-active");
+      }
+      seg.addEventListener("mouseenter", on);
+      seg.addEventListener("mouseleave", off);
+      li.addEventListener("mouseenter", on);
+      li.addEventListener("mouseleave", off);
+    });
+
+    function render() {
+      var visible = segments.filter(function (s) {
+        return !(hidden && s.key === hideKey);
+      });
+      var total = visible.reduce(function (sum, s) {
+        return sum + s.value;
+      }, 0);
+      totalEl.innerHTML =
+        "<b>" + fmt(total) + "</b> tokens" + (hidden ? " without cache reads" : " in total");
+      segments.forEach(function (s) {
+        var isHidden = hidden && s.key === hideKey;
+        var share = isHidden ? 0 : (s.value / total) * 100;
+        segEls[s.key].style.width = share + "%";
+        segEls[s.key].title = s.label + ": " + fmt(s.value) + " (" + pct(s.value, total) + ")";
+        rowEls[s.key].classList.toggle("is-hidden", isHidden);
+        rowEls[s.key].querySelector("b").textContent = fmt(s.value);
+        rowEls[s.key].querySelector(".devlog-mix-pct").textContent = isHidden
+          ? "hidden"
+          : pct(s.value, total);
+      });
+      bar.setAttribute(
+        "aria-label",
+        visible
+          .map(function (s) {
+            return s.label + " " + pct(s.value, total);
+          })
+          .join(", "),
+      );
+      toggle.textContent = hidden ? showLabel : hideLabel;
+      toggle.setAttribute("aria-pressed", hidden ? "true" : "false");
+    }
+
+    toggle.addEventListener("click", function () {
+      hidden = !hidden;
+      render();
+    });
+    render();
+  })();
+</script>

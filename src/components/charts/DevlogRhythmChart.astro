@@ -74,7 +74,15 @@ const svgId = `${id}-svg`;
       t.textContent = v;
       svg.appendChild(t);
     });
-    var dateTickIdx = isMobile ? [0, 17, n - 1] : [0, 6, 13, 20, 27, n - 1];
+    // Short ranges (a week or so) label every day; longer ones keep the weekly ticks.
+    var midIdx = Math.floor((n - 1) / 2);
+    var dateTickIdx = isMobile
+      ? [0, midIdx, n - 1]
+      : n <= 10
+        ? daily.map(function (_d, i) {
+            return i;
+          })
+        : [0, 6, 13, 20, 27, n - 1];
     dateTickIdx.forEach(function (i) {
       var t = el("text", { class: "devlog-axis-tick", x: xAt(i), y: H - (isMobile ? 12 : 6), "text-anchor": "middle" });
       t.textContent = fmtDate(daily[i][0]);
