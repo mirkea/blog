@@ -13,10 +13,7 @@ tags:
 
 import ImageGallery from "../../../components/ImageGallery";
 import DevlogStatStrip from "../../../components/charts/DevlogStatStrip.astro";
-import DevlogCommitTypeBars from "../../../components/charts/DevlogCommitTypeBars.astro";
 import DevlogRhythmChart from "../../../components/charts/DevlogRhythmChart.astro";
-import DevlogHourHistogram from "../../../components/charts/DevlogHourHistogram.astro";
-import DevlogTokenMix from "../../../components/charts/DevlogTokenMix.astro";
 
 ![MiChat with one project open: its threads on the left, the chat on the right](./assets/layout-per-project.webp)
 
@@ -134,13 +131,6 @@ The first day was the busiest by far: 106 commits on day one, which is the "work
   ]}
 />
 
-And since MiChat is a side project, most of the work happened in the late afternoon and evening, with 5 PM as the busiest hour (Bucharest time):
-
-<DevlogHourHistogram
-  id="michat-hours"
-  data={[9, 9, 0, 0, 0, 0, 0, 0, 0, 18, 11, 22, 7, 14, 30, 20, 33, 55, 37, 16, 20, 21, 9, 21]}
-/>
-
 Out of the 132 pull requests, 131 are already merged, and Claude is by far the top committer. At some point I also set things up so that small sidebar UI changes merge themselves once the checks pass, so I only have to review the changes that actually matter.
 
 <ImageGallery
@@ -161,34 +151,9 @@ Out of the 132 pull requests, 131 are already merged, and Claude is by far the t
 
 As for tokens, building the app and styling the sidebar took the lion's share:
 
-<DevlogCommitTypeBars
-  id="michat-token-bars"
-  data={[
-    ["build", 599],
-    ["styling", 216],
-    ["redesign", 64],
-    ["overview", 54],
-    ["icons", 53],
-    ["other", 37],
-  ]}
-/>
+![MiChat project usage in Claude: about 1 billion tokens, most of them on building the app and styling the sidebar](./assets/token-usage.webp)
 
-_Tokens per thread, in millions: building the app, styling the sidebar, redesigning it, the overview, the favorite icons and everything else._
-
-One thing that surprised me: about 98% of those tokens were cache reads, meaning Claude rereading context it already had. A billion tokens sounds dramatic, but most of it is just Claude remembering what we were doing. Hide the cache reads and you can see how small the rest really is:
-
-<DevlogTokenMix
-  id="michat-token-mix"
-  hideKey="cacheRead"
-  hideLabel="Hide cache reads"
-  showLabel="Show cache reads"
-  segments={[
-    { key: "input", label: "Input", value: 221500 },
-    { key: "output", label: "Output", value: 2100000 },
-    { key: "cacheWrite", label: "Cache writes", value: 16700000 },
-    { key: "cacheRead", label: "Cache reads", value: 1000000000 },
-  ]}
-/>
+One thing that surprised me: about 98% of those tokens were cache reads, meaning Claude rereading context it already had. A billion tokens sounds dramatic, but most of it is just Claude remembering what we were doing.
 
 ## So, was it worth it?
 
