@@ -42,6 +42,7 @@ const proof = [
   { name: "verified.eu", text: "Delivery PM, 5+ years. B2B platform acquired for €31M." },
   { name: "Carvuu", text: "Social app for car owners. Idea to production in 2 months." },
   { name: "AcoMag", text: "Online shop. First version live in under a month, running 2+ years." },
+  { name: "MiStuff", text: "My own tasks, notes and lists app. Built it, I use it every day." },
 ];
 
 // Get all unique tags from posts
@@ -52,9 +53,9 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
   <Section>
     <div class="rise grid items-center gap-10 md:grid-cols-[3fr_2fr] md:gap-16">
       <div class="order-2 text-center md:order-1 md:text-left">
-        <p class="eyebrow mb-4">Mircea Braescu · Bucharest</p>
+        <p class="eyebrow mb-4">Mircea Braescu · Bucharest · Startup Wise Guys Founders Club</p>
         <h1 class="display !text-[clamp(2.6rem,6vw,5rem)]"><span class="block">PM by trade.</span><span class="tone-2 block">Builder by choice.</span></h1>
-        <p class="lead mt-6 max-w-xl max-md:mx-auto">10 years in product, 20 in software. I take products from idea to launch: with founders as their technical co-founder, with businesses as their builder.</p>
+        <p class="lead mt-6 max-w-xl max-md:mx-auto">I help founders launch their product: I join as technical co-founder and build it with you, from the first screen to paying users. 10 years in product, 20 in software.</p>
         <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row md:justify-start sm:justify-center">
           <Button href="#work" size="lg" icon="arrow-right">Work with me</Button>
           <a href={`${base}about`} class="link-more">More about me <Icon name="chevron-right" /></a>
@@ -66,7 +67,7 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
         </div>
       </div>
     </div>
-    <div class="rise mt-16 grid gap-4 sm:grid-cols-3">
+    <div class="rise mt-16 grid gap-4 grid-cols-2 lg:grid-cols-4">
       {proof.map((p) => (
         <div class="card !py-6">
           <p class="heading !text-xl">{p.name}</p>
