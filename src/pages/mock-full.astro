@@ -39,10 +39,10 @@ const offers = [
 ];
 
 const proof = [
-  { name: "verified.eu", text: "Delivery PM, 5+ years. B2B platform acquired for €31M." },
-  { name: "Carvuu", text: "Social app for car owners. Idea to production in 2 months." },
-  { name: "AcoMag", text: "Online shop. First version live in under a month, running 2+ years." },
-  { name: "MiStuff", text: "My own tasks, notes and lists app. Built it, I use it every day." },
+  { name: "verified.eu", text: "Delivery PM, 5+ years. B2B platform acquired for €31M.", href: "https://www.verified.eu/", cta: "Visit site" },
+  { name: "Carvuu", text: "Social app for car owners. Idea to production in 2 months.", href: "https://carvuu.com", cta: "Visit site" },
+  { name: "AcoMag", text: "Online shop. First version live in under a month, running 2+ years.", href: "https://acomag.ro", cta: "Visit site" },
+  { name: "MiStuff", text: "My own tasks, notes and lists app. Built it, I use it every day.", href: "/blog/mistuff", cta: "The story" },
 ];
 
 // Get all unique tags from posts
@@ -69,9 +69,10 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags || []))].s
     </div>
     <div class="rise mt-16 grid gap-4 grid-cols-2 lg:grid-cols-4">
       {proof.map((p) => (
-        <div class="card !py-6">
+        <div class="card flex flex-col !py-6">
           <p class="heading !text-xl">{p.name}</p>
           <p class="caption mt-1">{p.text}</p>
+          {p.href && <a href={p.href} class="link-more mt-auto pt-3">{p.cta} <Icon name="chevron-right" /></a>}
         </div>
       ))}
     </div>
