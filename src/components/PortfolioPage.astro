@@ -1,0 +1,602 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "./ui/Icon.astro";
+
+// Hidden portfolio: noindex, out of the sitemap, linked from nowhere. Sent by hand to leads.
+// Pitches what he does, never results or numbers (kitchen career decision, 17.Nov.2026).
+// Romanian is the default and has no diacritics on purpose. ZDAP stays unnamed until he says otherwise.
+interface Props {
+  lang: "ro" | "en";
+}
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const calLink = "braescu-mircea/15min";
+const phone = { href: "+40741141095", ro: "0741 141 095", en: "+40 741 141 095" };
+
+type Project = {
+  slug: string;
+  name: string;
+  url?: string;
+  status: string;
+  period: string;
+  what: string;
+  forWho: string;
+  does: string;
+  did: string[];
+  tech: string;
+  privateNote?: string;
+  role: string;
+  client?: string;
+  shots: string[]; // after the cover (desktop-1) and the phone (mobile-1)
+};
+
+const ui = {
+  ro: {
+    title: "Portofoliu | Mircea Braescu",
+    description: "Proiecte recente: magazine online, aplicatii web si mobile, SEO. Ce face fiecare, pentru cine si ce am facut eu.",
+    switchHref: `${base}en/portfolio`,
+    switchLabel: "English",
+    eyebrow: "Portofoliu",
+    h1: "Ce am construit pe cont propriu",
+    h1b: "si ce am facut in fiecare.",
+    lead: "Am lucrat la zeci de alte proiecte ca parte din echipe mai mari. Cele de mai jos le-am construit pe cont propriu, de la idee la lansare: site-uri si magazine online, SEO, aplicatii web si mobile facute pe masura.",
+    role: "Rolul meu",
+    client: "Client",
+    about: "Sunt Mircea Braescu. Lucrez in software de 20 de ani, ca product manager, designer si programator; am fost PM pe verified.eu. Iau un proiect de la prima discutie pana la lansare.",
+    ai: "Lucrez cu agenti AI, care scriu codul repede. Designul, arhitectura si calitatea raman responsabilitatea mea.",
+    linkedin: "Profilul meu pe LinkedIn",
+    forWho: "Pentru cine",
+    does: "Ce face",
+    did: "Ce am facut",
+    tech: "Tehnologii",
+    visit: "Deschide",
+    zoom: "Mareste imaginea",
+    close: "Inchide",
+    ctaTitle: "Ai o idee sau o problema in firma?",
+    ctaText: "Spune-mi ce ai nevoie. In 15 minute vedem impreuna daca si cum te pot ajuta.",
+    ctaCal: "Programeaza 15 minute",
+    ctaPhone: phone.ro,
+    ctaWa: "WhatsApp",
+  },
+  en: {
+    title: "Portfolio | Mircea Braescu",
+    description: "Recent projects: online shops, web and mobile apps, SEO. What each one does, who it is for and what I did.",
+    switchHref: `${base}portofoliu`,
+    switchLabel: "Romana",
+    eyebrow: "Portfolio",
+    h1: "What I built on my own",
+    h1b: "and what I did on each.",
+    lead: "I have worked on dozens of other projects as part of larger teams. The ones below I built on my own, from idea to launch: websites and online shops, SEO, custom web and mobile apps.",
+    role: "My role",
+    client: "Client",
+    about: "I'm Mircea Braescu. I've worked in software for 20 years as a product manager, designer and developer; I was a PM on verified.eu. I take a project from the first conversation to launch.",
+    ai: "I work with AI agents that write code fast. The design, the architecture and the quality stay my responsibility.",
+    linkedin: "My LinkedIn profile",
+    forWho: "Who it is for",
+    does: "What it does",
+    did: "What I did",
+    tech: "Stack",
+    visit: "Open",
+    zoom: "Enlarge image",
+    close: "Close",
+    ctaTitle: "Have an idea or a problem in your business?",
+    ctaText: "Tell me what you need. In 15 minutes we see together whether and how I can help.",
+    ctaCal: "Book 15 minutes",
+    ctaPhone: phone.en,
+    ctaWa: "WhatsApp",
+  },
+}[lang];
+
+const projects: Record<"ro" | "en", Project[]> = {
+  ro: [
+    {
+      slug: "acomag",
+      client: "Un antreprenor din Matca, Galati, cu firma lui de accesorii pentru acoperisuri.",
+      role: "Designul, dezvoltarea, SEO-ul si reclamele magazinului.",
+      name: "AcoMag",
+      url: "https://www.acomag.ro",
+      status: "Live",
+      period: "din aprilie 2026",
+      what: "Magazin online de suruburi, ancore, folii si accesorii pentru acoperisuri si dulgherie.",
+      forWho: "Acoperisari, dulgheri si constructori, plus cei care isi fac singuri acoperisul.",
+      does: "Vinde online suruburi structurale, conexpanduri, folii anticondens si accesorii de acoperis, cu livrare rapida si ridicare din depozit. Fiecare categorie explica tipurile si cum alegi, iar ghidurile de pe blog il ajuta pe client sa aleaga produsul potrivit pentru lucrarea lui.",
+      did: ["Design si dezvoltarea magazinului", "SEO si continut", "Google Ads si masurare"],
+      tech: "MerchantPro (Twig, API), Google Ads, Merchant Center, GA4, Tag Manager, Search Console, schema.org, Python",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "nextaria",
+      client: "Un fondator din industria de ferestre si usi, care isi porneste firma acum.",
+      role: "Arhitect si lead tehnic: conduc o echipa de agenti AI care scrie codul.",
+      name: "Nextaria",
+      status: "In lucru",
+      period: "din noiembrie 2026",
+      privateNote: "Aplicatie interna, inca nelansata",
+      what: "Suita de aplicatii web pentru producatorii de ferestre si usi si pentru distribuitorii lor.",
+      forWho: "Producatori europeni de tamplarie din aluminiu, PVC si lemn, echipele lor de vanzari si de birou, plus dealerii care le vand produsele.",
+      does: "Configuratorul calculeaza oferte complete pentru ferestre si usi din aluminiu, pozitie cu pozitie, cu schita si preturi din catalogul tehnic al producatorului. Distribuitorul trimite un proiect o singura data si primeste oferte comparabile de la mai multi producatori. Un back office comun tine firmele, cataloagele si importurile, cu un singur login pentru toate aplicatiile.",
+      did: ["Arhitectura suitei", "UX/UI design", "Dezvoltare cu o echipa de agenti AI"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, Vercel, pnpm workspaces, Vitest, Playwright, PostHog",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "carvuu",
+      client: "Un fondator din Tecuci, cu ideea aplicatiei. Am construit-o impreuna cu un prieten.",
+      role: "Produsul, designul si dezvoltarea, impreuna cu un prieten.",
+      name: "Carvuu",
+      url: "https://carvuu.com",
+      status: "Live",
+      period: "din mai 2026",
+      what: "Aplicatie sociala pentru masini: numarul de inmatriculare devine profilul public al masinii.",
+      forWho: "Soferii care vor sa-si arate masina si cei care vad o masina pe strada si vor sa ajunga la proprietar.",
+      does: "Cauti un numar de inmatriculare si gasesti pagina masinii: poze, povestea ei, reactii. Oricine lasa un bilet pe parbriz, fara cont, iar proprietarul il primeste in inbox si raspunde. Tot acolo isi tine actele masinii (RCA, rovinieta, ITP) si primeste notificari inainte sa expire.",
+      did: ["Produs si identitate", "UX/UI design", "Dezvoltare completa"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, PWA cu notificari push, Lingui, PostHog, Vercel",
+      shots: ["desktop-2", "mobile-2"],
+    },
+    {
+      slug: "agentie",
+      client: "Proiect propriu, cu un partener din Golf.",
+      role: "Cofondator: raspund de produs, design si partea tehnica.",
+      name: "Agentie de marketing cu AI",
+      status: "In lucru",
+      period: "din octombrie 2026",
+      privateNote: "Inca nelansata public",
+      what: "Agentie de marketing digital condusa de agenti AI si verificata de oameni, pentru afaceri din tarile Golfului, incepand cu clinicile dentare.",
+      forWho: "Clinici dentare si afaceri locale din Emirate si Arabia Saudita (cafenele, imobiliare, retail), fara echipa de marketing sau cu un singur om de marketing.",
+      does: "Agentii AI se ocupa de reclame, profilul Google Business, recenzii, social media si mesajele pe WhatsApp, in araba si engleza. Un receptioner AI pe WhatsApp raspunde pacientilor, programeaza vizite si trimite memento-uri, iar proprietarul aproba totul dintr-un singur chat.",
+      did: ["Strategie si cercetare", "Site, demo si identitate", "Arhitectura platformei"],
+      tech: "HTML, CSS, JavaScript, Vercel. Platforma: Claude, Supabase pe AWS in Emirate, WhatsApp Business, Google Business Profile, Meta si Google Ads, GA4",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "kutaway",
+      client: "Proiect propriu.",
+      role: "Ideea, designul si dezvoltarea, de la zero.",
+      name: "Kutaway",
+      url: "https://app.kutaway.com",
+      status: "Live",
+      period: "din noiembrie 2026",
+      what: "Harta vie a unui produs software, pe care echipa care il construieste si clientul care il plateste o citesc impreuna.",
+      forWho: "Agentii si echipe care construiesc software pentru clienti, si clientii lor: oamenii de business care vor sa inteleaga ce primesc.",
+      does: "Arata tot produsul pe o singura harta: cine il foloseste, serviciile externe, aplicatiile, functiile si datele. Harta o deseneaza si o tine la zi asistentul AI al echipei, care citeste codul. Fluxurile se pot rula pas cu pas, ca clientul sa vada cum circula o cerere prin sistem.",
+      did: ["Produs si identitate", "UX/UI design", "Arhitectura si dezvoltare"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, React Flow, ELK, Supabase, Vercel, conector Claude (MCP)",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "mistuff",
+      client: "Proiect propriu.",
+      role: "Tot, de la idee la aplicatia pe care o folosesc in fiecare zi.",
+      name: "MiStuff",
+      status: "Folosita zilnic",
+      period: "din octombrie 2026",
+      privateNote: "Aplicatie personala",
+      what: "Aplicatia mea de taskuri, liste si notite, facuta ca sa inlocuiasca TickTick.",
+      forWho: "Pentru mine: o folosesc zilnic pentru proiecte, casa si viata personala.",
+      does: "Strange intr-un singur loc taskurile planificate pe zile, listele, notitele pe proiecte, cumparaturile si calendarul din Google. Merge offline pe telefon si pe desktop si se sincronizeaza singura. Asistentul AI citeste si actualizeaza taskuri, notite si liste direct in aplicatie.",
+      did: ["Produs si UX/UI", "Arhitectura offline-first", "Legatura cu asistentul AI"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Tiptap, PWA, PowerSync, Supabase, Google Calendar, MCP, Vercel",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+  ],
+  en: [
+    {
+      slug: "acomag",
+      client: "A business owner in Matca, Galati, with his own roofing supplies company.",
+      role: "Design, development, SEO and ads for the shop.",
+      name: "AcoMag",
+      url: "https://www.acomag.ro",
+      status: "Live",
+      period: "since April 2026",
+      what: "Online shop for screws, anchors, membranes and accessories for roofing and carpentry.",
+      forWho: "Roofers, carpenters and builders, plus people who build their own roof.",
+      does: "Sells structural wood screws, anchor bolts, roof membranes and roofing accessories online, with fast delivery and warehouse pickup. Every category explains the types and how to choose, and the blog guides help customers pick the right product for the job.",
+      did: ["Shop design and build", "SEO and content", "Google Ads and measurement"],
+      tech: "MerchantPro (Twig, API), Google Ads, Merchant Center, GA4, Tag Manager, Search Console, schema.org, Python",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "nextaria",
+      client: "A founder in the window and door industry, starting his company now.",
+      role: "Architect and tech lead: I run a team of AI agents that writes the code.",
+      name: "Nextaria",
+      status: "In progress",
+      period: "since November 2026",
+      privateNote: "Internal app, not launched yet",
+      what: "A suite of web apps for window and door manufacturers and their distributors.",
+      forWho: "European makers of aluminium, PVC and wood windows and doors, their sales and office teams, plus the dealers who sell their products.",
+      does: "The configurator prices complete aluminium window and door quotes, line by line, with a drawing and prices from the maker's technical catalog. A distributor sends a project once and gets comparable quotes from several makers. A shared back office runs companies, catalogs and imports, with one login for every app.",
+      did: ["Suite architecture", "UX/UI design", "Development with a team of AI agents"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, Vercel, pnpm workspaces, Vitest, Playwright, PostHog",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "carvuu",
+      client: "A founder in Tecuci, Romania, with the idea for the app. I built it together with a friend.",
+      role: "Product, design and development, together with a friend.",
+      name: "Carvuu",
+      url: "https://carvuu.com",
+      status: "Live",
+      period: "since May 2026",
+      what: "A social app for cars: the licence plate becomes the car's public profile.",
+      forWho: "Drivers who want to show off their car, and people who see a car in the street and want to reach its owner.",
+      does: "Look up a plate and find the car's page: photos, its story, reactions. Anyone can leave a note on the windscreen without an account; the owner gets it in their inbox and replies. Owners also keep the car's papers there (insurance, road tax, inspection) and get reminders before they expire.",
+      did: ["Product and identity", "UX/UI design", "Full-stack development"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, PWA with push notifications, Lingui, PostHog, Vercel",
+      shots: ["desktop-2", "mobile-2"],
+    },
+    {
+      slug: "agentie",
+      client: "My own project, with a partner in the Gulf.",
+      role: "Co-founder: I own product, design and the tech side.",
+      name: "AI marketing agency",
+      status: "In progress",
+      period: "since October 2026",
+      privateNote: "Not public yet",
+      what: "A done-for-you digital marketing agency run by AI agents and checked by people, for businesses in the Gulf, starting with dental clinics.",
+      forWho: "Dental clinics and local businesses in the UAE and Saudi Arabia (cafes, real estate, retail) with no marketing team, or a team of one.",
+      does: "AI agents handle ads, the Google Business profile, reviews, social media and WhatsApp messages, in Arabic and English. An AI front desk on WhatsApp answers patients, books visits and sends reminders, and the owner approves everything from one chat.",
+      did: ["Strategy and research", "Site, demo and identity", "Platform architecture"],
+      tech: "HTML, CSS, JavaScript, Vercel. Platform: Claude, Supabase on AWS in the UAE, WhatsApp Business, Google Business Profile, Meta and Google Ads, GA4",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "kutaway",
+      client: "My own project.",
+      role: "The idea, the design and the build, from scratch.",
+      name: "Kutaway",
+      url: "https://app.kutaway.com",
+      status: "Live",
+      period: "since November 2026",
+      what: "A living map of a software product that the team building it and the client paying for it read together.",
+      forWho: "Agencies and teams that build software for clients, and those clients: business people who want to understand what they are getting.",
+      does: "Shows the whole product on one map: who uses it, outside services, apps, features and data. The team's AI assistant draws the map and keeps it current by reading the code. Flows play step by step, so a client sees how a request moves through the system.",
+      did: ["Product and identity", "UX/UI design", "Architecture and development"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, React Flow, ELK, Supabase, Vercel, Claude connector (MCP)",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+    {
+      slug: "mistuff",
+      client: "My own project.",
+      role: "All of it, from the idea to the app I use every day.",
+      name: "MiStuff",
+      status: "Used daily",
+      period: "since October 2026",
+      privateNote: "Personal app",
+      what: "My own tasks, lists and notes app, built to replace TickTick.",
+      forWho: "Me: I use it every day for projects, home and personal life.",
+      does: "Brings together tasks planned by day, lists, project notes, shopping and the Google calendar. Works offline on phone and desktop and syncs by itself. The AI assistant reads and updates tasks, notes and lists right in the app.",
+      did: ["Product and UX/UI", "Offline-first architecture", "Link to the AI assistant"],
+      tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Tiptap, PWA, PowerSync, Supabase, Google Calendar, MCP, Vercel",
+      shots: ["desktop-2", "desktop-3", "mobile-2"],
+    },
+  ],
+};
+
+const list = projects[lang];
+const img = (slug: string, shot: string) => `${base}portfolio/${slug}-${shot}.webp`;
+const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
+---
+
+<Layout title={ui.title} description={ui.description} lang={lang} wide noindex>
+  <div class="portfolio">
+    <section class="section section-surface !pt-10 sm:!pt-14">
+      <div class="wrap">
+        <div class="flex items-center gap-4">
+          <span class="pill pill-float">{ui.eyebrow}</span>
+          <a href={ui.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="link-underline ml-auto text-sm">{ui.switchLabel}</a>
+        </div>
+        <div class="rise mt-10 sm:mt-14">
+          <h1 class="title max-w-5xl">
+            <span class="block">{ui.h1}</span>
+            <span class="tone-2 block">{ui.h1b}</span>
+          </h1>
+          <p class="lead mt-6 max-w-3xl">{ui.lead}</p>
+        </div>
+        <div class="rise mt-10 flex max-w-3xl items-start gap-5">
+          <img src={`${base}profile.webp`} alt="Mircea Braescu" width="80" height="80" class="size-16 shrink-0 rounded-full object-cover sm:size-20" />
+          <div>
+            <p class="body">{ui.about}</p>
+            <p class="body mt-2">{ui.ai}</p>
+            <a href="https://www.linkedin.com/in/mircea-braescu/" target="_blank" rel="noopener" class="link-underline mt-3 inline-flex items-center gap-1.5 text-sm font-medium">{ui.linkedin}<Icon name="arrow-up-right" class="size-4" /></a>
+          </div>
+        </div>
+        <nav class="rise mt-10 flex flex-wrap gap-2" aria-label={ui.eyebrow}>
+          {list.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}</a>)}
+        </nav>
+      </div>
+    </section>
+
+    {
+      list.map((p, i) => (
+        <section id={p.slug} class:list={["section project", i % 2 === 1 && "section-surface"]}>
+          <div class="wrap project-grid">
+            <div class="rise p-head min-w-0">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="pill pill-ink">{p.status}</span>
+                <span class="caption">{p.period}</span>
+              </div>
+              <h2 class="title-sm mt-5">{p.name}</h2>
+              <p class="lead mt-3">{p.what}</p>
+              <div class="mt-5">
+                {p.url ? (
+                  <a href={p.url} target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-1.5 font-medium">
+                    {host(p.url)}
+                    <Icon name="arrow-up-right" class="size-4" />
+                  </a>
+                ) : (
+                  <span class="caption">{p.privateNote}</span>
+                )}
+              </div>
+              <div class="mt-6">
+                <p class="eyebrow">{ui.role}</p>
+                <p class="mt-1.5 text-[1.0625rem] font-medium leading-relaxed text-ink">{p.role}</p>
+              </div>
+              {p.client && (
+                <div class="mt-5">
+                  <p class="eyebrow">{ui.client}</p>
+                  <p class="body mt-1.5">{p.client}</p>
+                </div>
+              )}
+            </div>
+
+            <div class="rise p-body min-w-0">
+              <dl class="space-y-6">
+                <div>
+                  <dt class="eyebrow">{ui.forWho}</dt>
+                  <dd class="body mt-1.5">{p.forWho}</dd>
+                </div>
+                <div>
+                  <dt class="eyebrow">{ui.does}</dt>
+                  <dd class="body mt-1.5">{p.does}</dd>
+                </div>
+                <div>
+                  <dt class="eyebrow">{ui.did}</dt>
+                  <dd class="mt-3 flex flex-wrap gap-2">
+                    {p.did.map((d) => <span class="pill did">{d}</span>)}
+                  </dd>
+                </div>
+                <div>
+                  <details class="tech">
+                    <summary class="eyebrow">{ui.tech}<Icon name="chevron-down" class="size-4" /></summary>
+                    <p class="caption mt-1.5">{p.tech}</p>
+                  </details>
+                </div>
+              </dl>
+            </div>
+
+            <div class="rise p-media min-w-0">
+              <div class="stage">
+                <button type="button" class="shot browser" data-full={img(p.slug, "desktop-1")} aria-label={`${ui.zoom}: ${p.name}`}>
+                  <span class="browser-bar" aria-hidden="true">
+                    <i /><i /><i />
+                    <span class="browser-url">{p.url ? host(p.url) : p.name}</span>
+                  </span>
+                  <img src={img(p.slug, "desktop-1")} alt={`${p.name}, desktop`} width="1920" height="1200" loading={i === 0 ? "eager" : "lazy"} />
+                </button>
+                <button type="button" class="shot phone" data-full={img(p.slug, "mobile-1")} aria-label={`${ui.zoom}: ${p.name}, mobile`}>
+                  <img src={img(p.slug, "mobile-1")} alt={`${p.name}, mobile`} width="600" height="1298" loading="lazy" />
+                </button>
+              </div>
+              <div class="thumbs" style={`--n:${p.shots.length}`}>
+                {p.shots.map((s) => (
+                  <button type="button" class:list={["shot thumb", s.startsWith("mobile") && "thumb-phone"]} data-full={img(p.slug, s)} aria-label={`${ui.zoom}: ${p.name}`}>
+                    <img src={img(p.slug, s)} alt={`${p.name}, ${s.startsWith("mobile") ? "mobile" : "desktop"}`} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      ))
+    }
+
+    <section class:list={["section", list.length % 2 === 1 && "section-surface"]}>
+      <div class="wrap">
+        <div class="rise card card-ink flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div class="max-w-2xl">
+            <h2 class="title-sm">{ui.ctaTitle}</h2>
+            <p class="lead mt-4">{ui.ctaText}</p>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href={`https://cal.com/${calLink}`} target="_blank" rel="noopener" data-umami-event="portfolio-cal" class="btn btn-invert btn-lg"><Icon name="calendar" />{ui.ctaCal}</a>
+            <a href={`tel:${phone.href}`} data-umami-event="portfolio-call" class="btn btn-secondary btn-lg"><Icon name="phone" />{ui.ctaPhone}</a>
+            <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" data-umami-event="portfolio-whatsapp" class="btn btn-secondary btn-lg"><Icon name="message" />{ui.ctaWa}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <dialog id="shot-viewer" class="viewer" aria-label={ui.zoom}>
+      <form method="dialog"><button class="viewer-close btn btn-secondary btn-sm" aria-label={ui.close}><Icon name="x" /></button></form>
+      <img alt="" />
+    </dialog>
+  </div>
+</Layout>
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "head" "media" "body";
+    gap: 2.5rem;
+  }
+  .p-head { grid-area: head; }
+  .p-media { grid-area: media; }
+  .p-body { grid-area: body; }
+  @media (min-width: 1024px) {
+    .project-grid {
+      grid-template-columns: 5fr 7fr;
+      grid-template-areas: "head media" "body media";
+      grid-template-rows: auto 1fr;
+      column-gap: 3.5rem;
+      row-gap: 2rem;
+    }
+    .p-media > * {
+      position: relative;
+    }
+    .p-media {
+      align-self: start;
+      position: sticky;
+      top: 6rem;
+    }
+  }
+  .stage {
+    position: relative;
+    padding: 0 0 2.5rem 0;
+  }
+  .shot {
+    display: block;
+    cursor: zoom-in;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: var(--canvas);
+    box-shadow: var(--shadow-float);
+    transition: transform 0.3s var(--ease);
+  }
+  .shot:hover {
+    transform: translateY(-3px);
+  }
+  .shot:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .browser {
+    width: 100%;
+    box-shadow:
+      0 0 0 1px var(--line),
+      var(--shadow-float);
+  }
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 2rem;
+    padding-inline: 0.875rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+  }
+  .section-surface .browser-bar {
+    background: var(--canvas);
+  }
+  .browser-bar i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--line);
+  }
+  .browser-url {
+    margin-inline: auto;
+    padding-right: 2.25rem;
+    font-size: 0.75rem;
+    color: var(--ink-3);
+  }
+  .phone {
+    position: absolute;
+    right: -0.5rem;
+    bottom: 0;
+    width: 24%;
+    min-width: 7rem;
+    border-radius: 1.5rem;
+    border: 5px solid var(--ink);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.18);
+  }
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+    max-width: 76%;
+  }
+  .thumb {
+    aspect-ratio: 16 / 10;
+    border-radius: 0.75rem;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .thumb-phone img {
+    object-position: top center;
+  }
+  .did {
+    font-weight: 500;
+  }
+  .tech summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .tech summary::-webkit-details-marker {
+    display: none;
+  }
+  .tech[open] summary :global(svg) {
+    transform: rotate(180deg);
+  }
+  .section-surface .did {
+    background: var(--canvas);
+  }
+  .viewer {
+    max-width: min(96vw, 1600px);
+    max-height: 94vh;
+    padding: 0;
+    border-radius: 1rem;
+    background: var(--canvas);
+    overflow: auto;
+  }
+  .viewer::backdrop {
+    background: rgb(0 0 0 / 0.7);
+  }
+  .viewer img {
+    display: block;
+    max-width: 100%;
+    max-height: 94vh;
+    margin-inline: auto;
+  }
+  .viewer-close {
+    position: sticky;
+    top: 0.75rem;
+    float: right;
+    margin: 0.75rem 0.75rem -3.5rem 0;
+    z-index: 1;
+  }
+  @media (max-width: 639px) {
+    .thumbs {
+      max-width: 70%;
+    }
+    .phone {
+      right: 0;
+      min-width: 6rem;
+      border-width: 4px;
+      border-radius: 1.1rem;
+    }
+  }
+</style>
+
+<script>
+  const viewer = document.getElementById("shot-viewer") as HTMLDialogElement | null;
+  const full = viewer?.querySelector("img");
+  document.querySelectorAll<HTMLButtonElement>(".portfolio .shot").forEach((b) => {
+    b.addEventListener("click", () => {
+      if (!viewer || !full) return;
+      full.src = b.dataset.full || "";
+      full.alt = b.querySelector("img")?.alt || "";
+      viewer.showModal();
+    });
+  });
+  // Click outside the image closes it
+  viewer?.addEventListener("click", (e) => {
+    if (e.target === viewer) viewer.close();
+  });
+</script>
