@@ -25,6 +25,7 @@ type Project = {
   did: string[];
   tech: string;
   privateNote?: string;
+  role: string;
   shots: string[]; // after the cover (desktop-1) and the phone (mobile-1)
 };
 
@@ -38,6 +39,10 @@ const ui = {
     h1: "Proiecte recente",
     h1b: "si ce am facut in fiecare.",
     lead: "Inteleg ce ai nevoie si construiesc solutia potrivita: site-uri si magazine online, SEO, aplicatii web si mobile facute pe masura.",
+    role: "Rolul meu",
+    about: "Sunt Mircea Braescu. Lucrez in software de 20 de ani, ca product manager, designer si programator; am fost PM pe verified.eu. Iau un proiect de la prima discutie pana la lansare.",
+    ai: "Lucrez cu agenti AI, care scriu codul repede. Designul, arhitectura si calitatea raman responsabilitatea mea.",
+    linkedin: "Profilul meu pe LinkedIn",
     forWho: "Pentru cine",
     does: "Ce face",
     did: "Ce am facut",
@@ -60,6 +65,10 @@ const ui = {
     h1: "Recent projects",
     h1b: "and what I did on each.",
     lead: "I work out what you need and build the right thing for it: websites and online shops, SEO, custom web and mobile apps.",
+    role: "My role",
+    about: "I'm Mircea Braescu. I've worked in software for 20 years as a product manager, designer and developer; I was a PM on verified.eu. I take a project from the first conversation to launch.",
+    ai: "I work with AI agents that write code fast. The design, the architecture and the quality stay my responsibility.",
+    linkedin: "My LinkedIn profile",
     forWho: "Who it is for",
     does: "What it does",
     did: "What I did",
@@ -79,6 +88,7 @@ const projects: Record<"ro" | "en", Project[]> = {
   ro: [
     {
       slug: "acomag",
+      role: "Designul, dezvoltarea, SEO-ul si reclamele magazinului.",
       name: "AcoMag",
       url: "https://www.acomag.ro",
       status: "Live",
@@ -86,22 +96,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Magazin online de suruburi, ancore, folii si accesorii pentru acoperisuri si dulgherie.",
       forWho: "Acoperisari, dulgheri si constructori, plus cei care isi fac singuri acoperisul.",
       does: "Vinde online suruburi structurale, conexpanduri, folii anticondens si accesorii de acoperis, cu livrare rapida si ridicare din depozit. Fiecare categorie explica tipurile si cum alegi, iar ghidurile de pe blog il ajuta pe client sa aleaga produsul potrivit pentru lucrarea lui.",
-      did: [
-        "UX/UI pentru prima pagina, categorii si produs",
-        "Template-uri pe platforma de e-commerce",
-        "Catalog: texte, atribute, filtre, imagini",
-        "SEO tehnic si date structurate",
-        "Texte SEO pentru categorii",
-        "Blog cu ghiduri de alegere",
-        "Produsele listate in Google Shopping",
-        "Campanii Google Ads",
-        "Masurare: GA4, Tag Manager, Search Console",
-      ],
+      did: ["Design si dezvoltarea magazinului", "SEO si continut", "Google Ads si masurare"],
       tech: "MerchantPro (Twig, API), Google Ads, Merchant Center, GA4, Tag Manager, Search Console, schema.org, Python",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "nextaria",
+      role: "Arhitect si lead tehnic: conduc o echipa de agenti AI care scrie codul.",
       name: "Nextaria",
       status: "In lucru",
       period: "din noiembrie 2026",
@@ -109,18 +110,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Suita de aplicatii web pentru producatorii de ferestre si usi si pentru distribuitorii lor.",
       forWho: "Producatori europeni de tamplarie din aluminiu, PVC si lemn, echipele lor de vanzari si de birou, plus dealerii care le vand produsele.",
       does: "Configuratorul calculeaza oferte complete pentru ferestre si usi din aluminiu, pozitie cu pozitie, cu schita si preturi din catalogul tehnic al producatorului. Distribuitorul trimite un proiect o singura data si primeste oferte comparabile de la mai multi producatori. Un back office comun tine firmele, cataloagele si importurile, cu un singur login pentru toate aplicatiile.",
-      did: [
-        "Arhitectura: mai multe firme pe o platforma, un login",
-        "UX/UI design",
-        "Dezvoltare, ca lead al unei echipe de agenti AI",
-        "Autentificare si roluri",
-        "Testare automata si lansari",
-      ],
+      did: ["Arhitectura suitei", "UX/UI design", "Dezvoltare cu o echipa de agenti AI"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, Vercel, pnpm workspaces, Vitest, Playwright, PostHog",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "carvuu",
+      role: "Produsul, designul si dezvoltarea, impreuna cu un prieten.",
       name: "Carvuu",
       url: "https://carvuu.com",
       status: "Live",
@@ -128,12 +124,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Aplicatie sociala pentru masini: numarul de inmatriculare devine profilul public al masinii.",
       forWho: "Facuta impreuna cu un prieten, pentru un client din Tecuci. Pentru soferii care vor sa-si arate masina si pentru cei care vad o masina pe strada si vor sa ajunga la proprietar.",
       does: "Cauti un numar de inmatriculare si gasesti pagina masinii: poze, povestea ei, reactii. Oricine lasa un bilet pe parbriz, fara cont, iar proprietarul il primeste in inbox si raspunde. Tot acolo isi tine actele masinii (RCA, rovinieta, ITP) si primeste notificari inainte sa expire.",
-      did: ["Product design", "UX/UI design", "Nume si identitate vizuala", "Arhitectura", "Dezvoltare frontend si backend"],
+      did: ["Produs si identitate", "UX/UI design", "Dezvoltare completa"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, PWA cu notificari push, Lingui, PostHog, Vercel",
       shots: ["desktop-2", "mobile-2"],
     },
     {
       slug: "agentie",
+      role: "Cofondator: raspund de produs, design si partea tehnica.",
       name: "Agentie de marketing cu AI",
       status: "In lucru",
       period: "din octombrie 2026",
@@ -141,21 +138,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Agentie de marketing digital condusa de agenti AI si verificata de oameni, pentru afaceri din tarile Golfului, incepand cu clinicile dentare.",
       forWho: "Clinici dentare si afaceri locale din Emirate si Arabia Saudita (cafenele, imobiliare, retail), fara echipa de marketing sau cu un singur om de marketing.",
       does: "Agentii AI se ocupa de reclame, profilul Google Business, recenzii, social media si mesajele pe WhatsApp, in araba si engleza. Un receptioner AI pe WhatsApp raspunde pacientilor, programeaza vizite si trimite memento-uri, iar proprietarul aproba totul dintr-un singur chat.",
-      did: [
-        "Cofondator, cu un partener din Golf",
-        "Strategie de produs si pozitionare",
-        "Interviuri cu clinici si teste de concept",
-        "UX/UI: site-ul si demo-ul pe WhatsApp",
-        "Logo si imagini pentru social media",
-        "Dezvoltare front-end",
-        "Arhitectura si costuri de operare",
-        "Texte in araba si engleza",
-      ],
+      did: ["Strategie si cercetare", "Site, demo si identitate", "Arhitectura platformei"],
       tech: "HTML, CSS, JavaScript, Vercel. Platforma: Claude, Supabase pe AWS in Emirate, WhatsApp Business, Google Business Profile, Meta si Google Ads, GA4",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "kutaway",
+      role: "Ideea, designul si dezvoltarea, de la zero.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
       status: "Live",
@@ -163,12 +152,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Harta vie a unui produs software, pe care echipa care il construieste si clientul care il plateste o citesc impreuna.",
       forWho: "Agentii si echipe care construiesc software pentru clienti, si clientii lor: oamenii de business care vor sa inteleaga ce primesc.",
       does: "Arata tot produsul pe o singura harta: cine il foloseste, serviciile externe, aplicatiile, functiile si datele. Harta o deseneaza si o tine la zi asistentul AI al echipei, care citeste codul. Fluxurile se pot rula pas cu pas, ca clientul sa vada cum circula o cerere prin sistem.",
-      did: ["Ideea si deciziile de produs", "Nume si identitate vizuala", "UX/UI design", "Arhitectura", "Dezvoltare, impreuna cu Claude"],
+      did: ["Produs si identitate", "UX/UI design", "Arhitectura si dezvoltare"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, React Flow, ELK, Supabase, Vercel, conector Claude (MCP)",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "mistuff",
+      role: "Tot, de la idee la aplicatia pe care o folosesc in fiecare zi.",
       name: "MiStuff",
       status: "Folosita zilnic",
       period: "din octombrie 2026",
@@ -176,13 +166,7 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Aplicatia mea de taskuri, liste si notite, facuta ca sa inlocuiasca TickTick.",
       forWho: "Pentru mine: o folosesc zilnic pentru proiecte, casa si viata personala.",
       does: "Strange intr-un singur loc taskurile planificate pe zile, listele, notitele pe proiecte, cumparaturile si calendarul din Google. Merge offline pe telefon si pe desktop si se sincronizeaza singura. Asistentul AI citeste si actualizeaza taskuri, notite si liste direct in aplicatie.",
-      did: [
-        "Product management",
-        "UX/UI design, desktop si mobil",
-        "Arhitectura offline-first si sincronizare",
-        "Dezvoltare cu agenti AI",
-        "Legatura cu asistentul AI (Claude)",
-      ],
+      did: ["Produs si UX/UI", "Arhitectura offline-first", "Legatura cu asistentul AI"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Tiptap, PWA, PowerSync, Supabase, Google Calendar, MCP, Vercel",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
@@ -190,6 +174,7 @@ const projects: Record<"ro" | "en", Project[]> = {
   en: [
     {
       slug: "acomag",
+      role: "Design, development, SEO and ads for the shop.",
       name: "AcoMag",
       url: "https://www.acomag.ro",
       status: "Live",
@@ -197,22 +182,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "Online shop for screws, anchors, membranes and accessories for roofing and carpentry.",
       forWho: "Roofers, carpenters and builders, plus people who build their own roof.",
       does: "Sells structural wood screws, anchor bolts, roof membranes and roofing accessories online, with fast delivery and warehouse pickup. Every category explains the types and how to choose, and the blog guides help customers pick the right product for the job.",
-      did: [
-        "UX/UI for the home, category and product pages",
-        "Templates on the e-commerce platform",
-        "Catalog: copy, attributes, filters, images",
-        "Technical SEO and structured data",
-        "SEO copy for categories",
-        "Blog with buying guides",
-        "Products listed in Google Shopping",
-        "Google Ads campaigns",
-        "Measurement: GA4, Tag Manager, Search Console",
-      ],
+      did: ["Shop design and build", "SEO and content", "Google Ads and measurement"],
       tech: "MerchantPro (Twig, API), Google Ads, Merchant Center, GA4, Tag Manager, Search Console, schema.org, Python",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "nextaria",
+      role: "Architect and tech lead: I run a team of AI agents that writes the code.",
       name: "Nextaria",
       status: "In progress",
       period: "since November 2026",
@@ -220,18 +196,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "A suite of web apps for window and door manufacturers and their distributors.",
       forWho: "European makers of aluminium, PVC and wood windows and doors, their sales and office teams, plus the dealers who sell their products.",
       does: "The configurator prices complete aluminium window and door quotes, line by line, with a drawing and prices from the maker's technical catalog. A distributor sends a project once and gets comparable quotes from several makers. A shared back office runs companies, catalogs and imports, with one login for every app.",
-      did: [
-        "Architecture: many companies on one platform, one login",
-        "UX/UI design",
-        "Development, leading a team of AI agents",
-        "Authentication and roles",
-        "Automated testing and releases",
-      ],
+      did: ["Suite architecture", "UX/UI design", "Development with a team of AI agents"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, Vercel, pnpm workspaces, Vitest, Playwright, PostHog",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "carvuu",
+      role: "Product, design and development, together with a friend.",
       name: "Carvuu",
       url: "https://carvuu.com",
       status: "Live",
@@ -239,12 +210,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "A social app for cars: the licence plate becomes the car's public profile.",
       forWho: "Built with a friend for a client in Tecuci, Romania. For drivers who want to show off their car, and for people who see a car in the street and want to reach its owner.",
       does: "Look up a plate and find the car's page: photos, its story, reactions. Anyone can leave a note on the windscreen without an account; the owner gets it in their inbox and replies. Owners also keep the car's papers there (insurance, road tax, inspection) and get reminders before they expire.",
-      did: ["Product design", "UX/UI design", "Naming and visual identity", "Architecture", "Frontend and backend development"],
+      did: ["Product and identity", "UX/UI design", "Full-stack development"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, PWA with push notifications, Lingui, PostHog, Vercel",
       shots: ["desktop-2", "mobile-2"],
     },
     {
       slug: "agentie",
+      role: "Co-founder: I own product, design and the tech side.",
       name: "AI marketing agency",
       status: "In progress",
       period: "since October 2026",
@@ -252,21 +224,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "A done-for-you digital marketing agency run by AI agents and checked by people, for businesses in the Gulf, starting with dental clinics.",
       forWho: "Dental clinics and local businesses in the UAE and Saudi Arabia (cafes, real estate, retail) with no marketing team, or a team of one.",
       does: "AI agents handle ads, the Google Business profile, reviews, social media and WhatsApp messages, in Arabic and English. An AI front desk on WhatsApp answers patients, books visits and sends reminders, and the owner approves everything from one chat.",
-      did: [
-        "Co-founder, with a partner in the Gulf",
-        "Product strategy and positioning",
-        "Clinic interviews and concept tests",
-        "UX/UI: the site and the WhatsApp demo",
-        "Logo and social media imagery",
-        "Front-end development",
-        "Architecture and running costs",
-        "Arabic and English copy",
-      ],
+      did: ["Strategy and research", "Site, demo and identity", "Platform architecture"],
       tech: "HTML, CSS, JavaScript, Vercel. Platform: Claude, Supabase on AWS in the UAE, WhatsApp Business, Google Business Profile, Meta and Google Ads, GA4",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "kutaway",
+      role: "The idea, the design and the build, from scratch.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
       status: "Live",
@@ -274,12 +238,13 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "A living map of a software product that the team building it and the client paying for it read together.",
       forWho: "Agencies and teams that build software for clients, and those clients: business people who want to understand what they are getting.",
       does: "Shows the whole product on one map: who uses it, outside services, apps, features and data. The team's AI assistant draws the map and keeps it current by reading the code. Flows play step by step, so a client sees how a request moves through the system.",
-      did: ["Idea and product decisions", "Naming and visual identity", "UX/UI design", "Architecture", "Development, with Claude"],
+      did: ["Product and identity", "UX/UI design", "Architecture and development"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, React Flow, ELK, Supabase, Vercel, Claude connector (MCP)",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
     {
       slug: "mistuff",
+      role: "All of it, from the idea to the app I use every day.",
       name: "MiStuff",
       status: "Used daily",
       period: "since October 2026",
@@ -287,13 +252,7 @@ const projects: Record<"ro" | "en", Project[]> = {
       what: "My own tasks, lists and notes app, built to replace TickTick.",
       forWho: "Me: I use it every day for projects, home and personal life.",
       does: "Brings together tasks planned by day, lists, project notes, shopping and the Google calendar. Works offline on phone and desktop and syncs by itself. The AI assistant reads and updates tasks, notes and lists right in the app.",
-      did: [
-        "Product management",
-        "UX/UI design, desktop and mobile",
-        "Offline-first architecture and sync",
-        "Development with AI agents",
-        "Link to the AI assistant (Claude)",
-      ],
+      did: ["Product and UX/UI", "Offline-first architecture", "Link to the AI assistant"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Tiptap, PWA, PowerSync, Supabase, Google Calendar, MCP, Vercel",
       shots: ["desktop-2", "desktop-3", "mobile-2"],
     },
@@ -319,6 +278,14 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
             <span class="tone-2 block">{ui.h1b}</span>
           </h1>
           <p class="lead mt-6 max-w-3xl">{ui.lead}</p>
+        </div>
+        <div class="rise mt-10 flex max-w-3xl items-start gap-5">
+          <img src={`${base}profile.webp`} alt="Mircea Braescu" width="80" height="80" class="size-16 shrink-0 rounded-full object-cover sm:size-20" />
+          <div>
+            <p class="body">{ui.about}</p>
+            <p class="body mt-2">{ui.ai}</p>
+            <a href="https://www.linkedin.com/in/mircea-braescu/" target="_blank" rel="noopener" class="link-underline mt-3 inline-flex items-center gap-1.5 text-sm font-medium">{ui.linkedin}<Icon name="arrow-up-right" class="size-4" /></a>
+          </div>
         </div>
         <nav class="rise mt-10 flex flex-wrap gap-2" aria-label={ui.eyebrow}>
           {list.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}</a>)}
@@ -346,6 +313,10 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
                 ) : (
                   <span class="caption">{p.privateNote}</span>
                 )}
+              </div>
+              <div class="mt-6">
+                <p class="eyebrow">{ui.role}</p>
+                <p class="mt-1.5 text-[1.0625rem] font-medium leading-relaxed text-ink">{p.role}</p>
               </div>
             </div>
 
