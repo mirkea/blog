@@ -2,10 +2,20 @@ import { useEffect, useState } from "react";
 import Lightbox, { type LightboxImage } from "./Lightbox";
 
 // Opens the blog's Swiper lightbox for the portfolio screenshots: every image of one project is one gallery.
+type Active = { images: LightboxImage[]; index: number } | null;
+
+// One document listener for the whole site: after a language switch (view transitions) the page can hold
+// a second island, and two listeners opened two stacked galleries. Only the newest island opens the gallery.
+let openGallery: ((a: Active) => void) | null = null;
+let listening = false;
+
 export default function PortfolioLightbox() {
-  const [active, setActive] = useState<{ images: LightboxImage[]; index: number } | null>(null);
+  const [active, setActive] = useState<Active>(null);
 
   useEffect(() => {
+    openGallery = setActive;
+    if (listening) return;
+    listening = true;
     const onClick = (e: MouseEvent) => {
       const shot = (e.target as HTMLElement).closest<HTMLElement>(".portfolio .shot");
       if (!shot) return;
@@ -20,10 +30,9 @@ export default function PortfolioLightbox() {
         images.push({ src, alt: s.querySelector("img")?.alt ?? "" });
       });
       const index = Math.max(0, images.findIndex((i) => i.src === shot.dataset.full));
-      setActive({ images, index });
+      openGallery?.({ images, index });
     };
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
   }, []);
 
   if (!active) return null;
