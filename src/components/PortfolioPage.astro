@@ -28,6 +28,7 @@ type Project = {
   privateNote?: string;
   role: string;
   client?: string;
+  phone?: boolean; // false hides the phone shot
   shots: string[]; // after the cover (desktop-1) and the phone (mobile-1)
 };
 
@@ -160,10 +161,11 @@ const projects: Record<"ro" | "en", Project[]> = {
       period: "din noiembrie 2026",
       what: "Harta vie a unui produs software, pe care echipa care il construieste si clientul pentru care il construieste o citesc impreuna, ca sa ramana aliniati.",
       forWho: "Agentii si echipe care construiesc software pentru clienti, si clientii lor: oamenii de business care vor sa inteleaga ce primesc.",
-      does: "Arata tot produsul pe o singura harta: cine il foloseste, serviciile externe, aplicatiile, functiile si datele. Harta o deseneaza si o tine la zi asistentul AI al echipei, care citeste codul. Fluxurile se pot rula pas cu pas, ca clientul sa vada cum circula o cerere prin sistem.",
+      does: "Arata tot produsul pe o singura harta: cine il foloseste, serviciile externe, aplicatiile, functiile si datele. Harta o deseneaza si o tine la zi asistentul AI al echipei, care citeste codul.",
       did: ["Produs si identitate", "UX/UI design", "Arhitectura si dezvoltare"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, React Flow, ELK, Supabase, Vercel, conector Claude (MCP)",
-      shots: ["desktop-2", "desktop-3", "mobile-2"],
+      phone: false,
+      shots: ["desktop-2"],
     },
     {
       slug: "mistuff",
@@ -252,10 +254,11 @@ const projects: Record<"ro" | "en", Project[]> = {
       period: "since November 2026",
       what: "A living map of a software product that the team building it and the client it is built for read together, so they stay aligned.",
       forWho: "Agencies and teams that build software for clients, and those clients: business people who want to understand what they are getting.",
-      does: "Shows the whole product on one map: who uses it, outside services, apps, features and data. The team's AI assistant draws the map and keeps it current by reading the code. Flows play step by step, so a client sees how a request moves through the system.",
+      does: "Shows the whole product on one map: who uses it, outside services, apps, features and data. The team's AI assistant draws the map and keeps it current by reading the code.",
       did: ["Product and identity", "UX/UI design", "Architecture and development"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, React Flow, ELK, Supabase, Vercel, Claude connector (MCP)",
-      shots: ["desktop-2", "desktop-3", "mobile-2"],
+      phone: false,
+      shots: ["desktop-2"],
     },
     {
       slug: "mistuff",
@@ -376,11 +379,11 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
                   </span>
                   <img src={img(p.slug, "desktop-1")} alt={`${p.name}, desktop`} width="1920" height="1200" loading={i === 0 ? "eager" : "lazy"} />
                 </button>
-                <button type="button" class="shot phone" data-full={img(p.slug, "mobile-1")} aria-label={`${ui.zoom}: ${p.name}, mobile`}>
+                {p.phone !== false && <button type="button" class="shot phone" data-full={img(p.slug, "mobile-1")} aria-label={`${ui.zoom}: ${p.name}, mobile`}>
                   <img src={img(p.slug, "mobile-1")} alt={`${p.name}, mobile`} width="600" height="1298" loading="lazy" />
-                </button>
+                </button>}
               </div>
-              <div class="thumbs" style={`--n:${p.shots.length}`}>
+              <div class="thumbs" style={`--n:${Math.max(p.shots.length, 3)}`}>
                 {p.shots.map((s) => (
                   <button type="button" class:list={["shot thumb", s.startsWith("mobile") && "thumb-phone"]} data-full={img(p.slug, s)} aria-label={`${ui.zoom}: ${p.name}`}>
                     <img src={img(p.slug, s)} alt={`${p.name}, ${s.startsWith("mobile") ? "mobile" : "desktop"}`} loading="lazy" />
