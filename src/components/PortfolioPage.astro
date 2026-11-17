@@ -26,6 +26,7 @@ type Project = {
   tech: string;
   privateNote?: string;
   role: string;
+  client?: string;
   shots: string[]; // after the cover (desktop-1) and the phone (mobile-1)
 };
 
@@ -40,6 +41,7 @@ const ui = {
     h1b: "si ce am facut in fiecare.",
     lead: "Inteleg ce ai nevoie si construiesc solutia potrivita: site-uri si magazine online, SEO, aplicatii web si mobile facute pe masura.",
     role: "Rolul meu",
+    client: "Client",
     about: "Sunt Mircea Braescu. Lucrez in software de 20 de ani, ca product manager, designer si programator; am fost PM pe verified.eu. Iau un proiect de la prima discutie pana la lansare.",
     ai: "Lucrez cu agenti AI, care scriu codul repede. Designul, arhitectura si calitatea raman responsabilitatea mea.",
     linkedin: "Profilul meu pe LinkedIn",
@@ -66,6 +68,7 @@ const ui = {
     h1b: "and what I did on each.",
     lead: "I work out what you need and build the right thing for it: websites and online shops, SEO, custom web and mobile apps.",
     role: "My role",
+    client: "Client",
     about: "I'm Mircea Braescu. I've worked in software for 20 years as a product manager, designer and developer; I was a PM on verified.eu. I take a project from the first conversation to launch.",
     ai: "I work with AI agents that write code fast. The design, the architecture and the quality stay my responsibility.",
     linkedin: "My LinkedIn profile",
@@ -88,6 +91,7 @@ const projects: Record<"ro" | "en", Project[]> = {
   ro: [
     {
       slug: "acomag",
+      client: "Un antreprenor din Matca, Galati, cu firma lui de accesorii pentru acoperisuri.",
       role: "Designul, dezvoltarea, SEO-ul si reclamele magazinului.",
       name: "AcoMag",
       url: "https://www.acomag.ro",
@@ -116,13 +120,14 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "carvuu",
+      client: "Un antreprenor din Tecuci. Am construit-o impreuna cu un prieten.",
       role: "Produsul, designul si dezvoltarea, impreuna cu un prieten.",
       name: "Carvuu",
       url: "https://carvuu.com",
       status: "Live",
       period: "din mai 2026",
       what: "Aplicatie sociala pentru masini: numarul de inmatriculare devine profilul public al masinii.",
-      forWho: "Facuta impreuna cu un prieten, pentru un client din Tecuci. Pentru soferii care vor sa-si arate masina si pentru cei care vad o masina pe strada si vor sa ajunga la proprietar.",
+      forWho: "Soferii care vor sa-si arate masina si cei care vad o masina pe strada si vor sa ajunga la proprietar.",
       does: "Cauti un numar de inmatriculare si gasesti pagina masinii: poze, povestea ei, reactii. Oricine lasa un bilet pe parbriz, fara cont, iar proprietarul il primeste in inbox si raspunde. Tot acolo isi tine actele masinii (RCA, rovinieta, ITP) si primeste notificari inainte sa expire.",
       did: ["Produs si identitate", "UX/UI design", "Dezvoltare completa"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, PWA cu notificari push, Lingui, PostHog, Vercel",
@@ -130,6 +135,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "agentie",
+      client: "Proiect propriu, cu un partener din Golf.",
       role: "Cofondator: raspund de produs, design si partea tehnica.",
       name: "Agentie de marketing cu AI",
       status: "In lucru",
@@ -144,6 +150,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "kutaway",
+      client: "Proiect propriu.",
       role: "Ideea, designul si dezvoltarea, de la zero.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
@@ -158,6 +165,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "mistuff",
+      client: "Proiect propriu.",
       role: "Tot, de la idee la aplicatia pe care o folosesc in fiecare zi.",
       name: "MiStuff",
       status: "Folosita zilnic",
@@ -174,6 +182,7 @@ const projects: Record<"ro" | "en", Project[]> = {
   en: [
     {
       slug: "acomag",
+      client: "A business owner in Matca, Galati, with his own roofing supplies company.",
       role: "Design, development, SEO and ads for the shop.",
       name: "AcoMag",
       url: "https://www.acomag.ro",
@@ -202,13 +211,14 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "carvuu",
+      client: "A business owner in Tecuci, Romania. I built it together with a friend.",
       role: "Product, design and development, together with a friend.",
       name: "Carvuu",
       url: "https://carvuu.com",
       status: "Live",
       period: "since May 2026",
       what: "A social app for cars: the licence plate becomes the car's public profile.",
-      forWho: "Built with a friend for a client in Tecuci, Romania. For drivers who want to show off their car, and for people who see a car in the street and want to reach its owner.",
+      forWho: "Drivers who want to show off their car, and people who see a car in the street and want to reach its owner.",
       does: "Look up a plate and find the car's page: photos, its story, reactions. Anyone can leave a note on the windscreen without an account; the owner gets it in their inbox and replies. Owners also keep the car's papers there (insurance, road tax, inspection) and get reminders before they expire.",
       did: ["Product and identity", "UX/UI design", "Full-stack development"],
       tech: "React, TypeScript, Vite, Tailwind, shadcn/ui, Supabase, PWA with push notifications, Lingui, PostHog, Vercel",
@@ -216,6 +226,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "agentie",
+      client: "My own project, with a partner in the Gulf.",
       role: "Co-founder: I own product, design and the tech side.",
       name: "AI marketing agency",
       status: "In progress",
@@ -230,6 +241,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "kutaway",
+      client: "My own project.",
       role: "The idea, the design and the build, from scratch.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
@@ -244,6 +256,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "mistuff",
+      client: "My own project.",
       role: "All of it, from the idea to the app I use every day.",
       name: "MiStuff",
       status: "Used daily",
@@ -318,6 +331,12 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
                 <p class="eyebrow">{ui.role}</p>
                 <p class="mt-1.5 text-[1.0625rem] font-medium leading-relaxed text-ink">{p.role}</p>
               </div>
+              {p.client && (
+                <div class="mt-5">
+                  <p class="eyebrow">{ui.client}</p>
+                  <p class="body mt-1.5">{p.client}</p>
+                </div>
+              )}
             </div>
 
             <div class="rise p-body min-w-0">
