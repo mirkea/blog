@@ -28,7 +28,7 @@ type Project = {
   privateNote?: string;
   role: string;
   client?: string;
-  people?: { name: string; photo: string; linkedin: string }[]; // founders shown under Client
+  people?: { name: string; photo?: string; linkedin?: string }[]; // founders shown under Client
   phone?: boolean; // false hides the phone shot
   shots: string[]; // after the cover (desktop-1) and the phone (mobile-1)
 };
@@ -109,6 +109,7 @@ const projects: Record<"ro" | "en", Project[]> = {
   ro: [
     {
       slug: "acomag",
+      people: [{ name: "Liviu" }],
       client: "Un antreprenor din Matca, Galati, cu firma lui de accesorii pentru acoperisuri.",
       role: "Designul, dezvoltarea, SEO-ul si reclamele magazinului.",
       name: "AcoMag",
@@ -140,6 +141,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "carvuu",
+      people: [{ name: "Ionut", photo: "ionut" }],
       client: "Un prieten din Tecuci, fondatorul aplicatiei. Am construit-o impreuna.",
       role: "Produsul, designul si dezvoltarea, impreuna cu un prieten.",
       name: "Carvuu",
@@ -172,7 +174,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     {
       slug: "kutaway",
       people: [{ name: "Andrei Lucaci", photo: "andrei-lucaci", linkedin: "https://www.linkedin.com/in/andrei-lucaci" }, { name: "Dominykas Gobe", photo: "dominykas-gobe", linkedin: "https://www.linkedin.com/in/dominykas-gobe-a480a143" }],
-      client: "Proiect propriu. In programul Startup Wise Guys l-am inscris impreuna cu doi cofondatori.",
+      client: "Proiectul meu, eu sunt fondatorul. Acum il duc mai departe in programul Startup Wise Guys, impreuna cu doi cofondatori.",
       role: "Ideea, designul si dezvoltarea, de la zero.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
@@ -204,6 +206,7 @@ const projects: Record<"ro" | "en", Project[]> = {
   en: [
     {
       slug: "acomag",
+      people: [{ name: "Liviu" }],
       client: "A business owner in Matca, Galati, with his own roofing supplies company.",
       role: "Design, development, SEO and ads for the shop.",
       name: "AcoMag",
@@ -235,6 +238,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "carvuu",
+      people: [{ name: "Ionut", photo: "ionut" }],
       client: "A friend from Tecuci, Romania, the founder of the app. We built it together.",
       role: "Product, design and development, together with a friend.",
       name: "Carvuu",
@@ -267,7 +271,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     {
       slug: "kutaway",
       people: [{ name: "Andrei Lucaci", photo: "andrei-lucaci", linkedin: "https://www.linkedin.com/in/andrei-lucaci" }, { name: "Dominykas Gobe", photo: "dominykas-gobe", linkedin: "https://www.linkedin.com/in/dominykas-gobe-a480a143" }],
-      client: "My own project. I entered it in the Startup Wise Guys program together with two co-founders.",
+      client: "My own project, I am the founder. I am now taking it further in the Startup Wise Guys program, together with two co-founders.",
       role: "The idea, the design and the build, from scratch.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
@@ -373,13 +377,22 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
                   <p class="body mt-1.5">{p.client}</p>
                   {p.people && (
                     <div class="mt-3 flex flex-wrap gap-x-5 gap-y-3">
-                      {p.people.map((m) => (
-                        <a href={m.linkedin} target="_blank" rel="noopener" class="inline-flex items-center gap-2.5 text-sm font-medium">
+                      {p.people.map((m) => {
+                        const face = m.photo ? (
                           <img src={`${base}portfolio/people/${m.photo}.webp`} alt={m.name} width="40" height="40" loading="lazy" class="size-10 rounded-full object-cover" />
-                          <span class="link-underline">{m.name}</span>
-                          <Icon name="arrow-up-right" class="size-4" />
-                        </a>
-                      ))}
+                        ) : (
+                          <span class="avatar-empty" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="12" cy="8.5" r="4" /><path d="M4 20.5c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5z" /></svg></span>
+                        );
+                        return m.linkedin ? (
+                          <a href={m.linkedin} target="_blank" rel="noopener" class="inline-flex items-center gap-2.5 text-sm font-medium">
+                            {face}
+                            <span class="link-underline">{m.name}</span>
+                            <Icon name="arrow-up-right" class="size-4" />
+                          </a>
+                        ) : (
+                          <span class="inline-flex items-center gap-2.5 text-sm font-medium text-ink">{face}{m.name}</span>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -608,5 +621,16 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
       border-radius: 1.1rem;
     }
   }
+  .avatar-empty {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+    background: var(--color-line, rgba(127, 127, 127, 0.18));
+    color: var(--color-ink-3, rgba(127, 127, 127, 0.75));
+    overflow: hidden;
+  }
+  .avatar-empty svg { margin-top: 0.4rem; }
 </style>
 
