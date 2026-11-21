@@ -360,6 +360,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
             <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
               <a href={`tel:${phone.href}`} data-umami-event="portfolio-call-top" class="btn btn-primary"><Icon name="phone" />{ui.call}: {ui.ctaPhone}</a>
               <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" data-umami-event="portfolio-whatsapp-top" class="btn btn-secondary"><Icon name="message" />{ui.ctaWa}</a>
+              <a href={`https://cal.com/${calLink}`} target="_blank" rel="noopener" data-umami-event="portfolio-cal-top" class="btn btn-secondary"><Icon name="calendar" />{ui.ctaCal}</a>
             </div>
             <a href="https://www.linkedin.com/in/mircea-braescu/" target="_blank" rel="noopener" class="link-underline mt-4 inline-flex items-center gap-1.5 text-sm font-medium">{ui.linkedin}<Icon name="arrow-up-right" class="size-4" /></a>
             <p class="label mt-8">{ui.fitTitle}</p>
