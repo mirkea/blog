@@ -45,15 +45,15 @@ const ui = {
     h1b: "Proiectez si construiesc produse pentru fondatori si afaceri.",
     lead: "Din aprilie 2026 construiesc startup-uri: produse proprii sau impreuna cu fondatori care vor sa-si transforme ideea in produs.",
     facts: [
-      { icon: "layers", title: "6 produse din aprilie 2026", text: "Magazine online, aplicatii web si mobile si unelte cu AI." },
-      { icon: "photo", title: "20 de ani in software", text: "Product manager, designer si programator, din care 18 in echipa Code11." },
-      { icon: "code", title: "Construiesc cu agenti AI", text: "Codul se scrie repede. Designul, arhitectura si calitatea raman la mine." },
+      { value: "6", title: "produse pe cont propriu", text: "Din aprilie 2026, cand am plecat de la Code11: magazine online, aplicatii web si mobile si unelte cu AI." },
+      { value: "20", title: "de ani in software", text: "Product manager, designer si programator, din care 18 in echipa Code11." },
+      { value: "1", title: "om, de la prima discutie la lansare", text: "Lucrez cu agenti AI, care scriu codul repede. Designul, arhitectura si calitatea raman la mine." },
     ],
     fitTitle: "Cu cine lucrez cel mai bine",
     fitItems: ["Fondatori cu o idee de business si interes din piata, care cauta pe cineva sa le construiasca produsul.", "Cei care si-au facut singuri o prima versiune cu AI si vor sa o duca la un produs gata de productie."],
     seeAll: "Proiectele",
     founders: "Cum lucrez cu fondatorii",
-    since: "Din aprilie 2026:",
+    since: "Pe cont propriu, din aprilie 2026:",
     role: "Rolul meu",
     client: "Client",
     about: "Lucrez in software de 20 de ani, ca product manager, designer si programator, din care 18 in echipa Code11. Iau un proiect de la prima discutie pana la lansare.",
@@ -91,15 +91,15 @@ const ui = {
     h1b: "I design and build products for founders and businesses.",
     lead: "Since April 2026 I have been building startups: my own, or with founders who want to turn their idea into a product.",
     facts: [
-      { icon: "layers", title: "6 products since April 2026", text: "Online shops, web and mobile apps and AI tools." },
-      { icon: "photo", title: "20 years in software", text: "Product manager, designer and developer, 18 of them with the Code11 team." },
-      { icon: "code", title: "I build with AI agents", text: "The code gets written fast. The design, the architecture and the quality stay with me." },
+      { value: "6", title: "products on my own", text: "Since I left Code11 in April 2026: online shops, web and mobile apps and AI tools." },
+      { value: "20", title: "years in software", text: "Product manager, designer and developer, 18 of them with the Code11 team." },
+      { value: "1", title: "person, from the first call to launch", text: "I work with AI agents that write code fast. The design, the architecture and the quality stay with me." },
     ],
     fitTitle: "Who I work best with",
     fitItems: ["Founders with a business idea and market pull who need someone to build the product.", "People who vibe-coded a first version with AI and want to turn it into a production-ready product."],
     seeAll: "Projects",
     founders: "How I work with founders (in Romanian)",
-    since: "Since April 2026:",
+    since: "On my own, since April 2026:",
     role: "My role",
     client: "Client",
     about: "I've worked in software for 20 years as a product manager, designer and developer, 18 of them with the Code11 team. I take a project from the first conversation to launch.",
@@ -350,6 +350,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
           <a href={ui.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="link-underline ml-auto text-sm">{ui.switchLabel}</a>
         </div>
         <div class="rise mt-10 sm:mt-14">
+          <img src={`${base}profile.webp`} alt="Mircea Braescu" width="96" height="96" class="mb-6 size-20 rounded-full object-cover sm:size-24" />
           <h1 class="title max-w-5xl">
             <span class="block">{ui.h1}</span>
             <span class="tone-2 block">{ui.h1b}</span>
@@ -365,13 +366,9 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
         <div class="rise mt-10 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-4">
           {ui.facts.map((f) => (
             <div class="card card-white fact">
-              {f.icon === "photo" ? (
-                <img src={`${base}profile.webp`} alt="Mircea Braescu" width="48" height="48" class="size-12 rounded-full object-cover" />
-              ) : (
-                <span class="fact-icon"><Icon name={f.icon} class="size-6" /></span>
-              )}
+              <p class="fact-value">{f.value}</p>
               <div class="min-w-0">
-                <p class="text-lg font-semibold text-ink md:mt-5">{f.title}</p>
+                <p class="text-lg font-semibold text-ink md:mt-3">{f.title}</p>
                 <p class="body mt-1">{f.text}</p>
               </div>
             </div>
@@ -674,14 +671,12 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
       padding: clamp(1.5rem, 3vw, 2.25rem);
     }
   }
-  .fact-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 999px;
-    background: var(--surface);
+  .fact-value {
+    min-width: 3.25rem;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
     color: var(--ink);
   }
   .proj-tile {
