@@ -9,9 +9,8 @@ import PortfolioLightbox from "./PortfolioLightbox";
 // Romanian is the default and has no diacritics on purpose. ZDAP stays unnamed until he says otherwise.
 interface Props {
   lang: "ro" | "en";
-  variant?: "a" | "b"; // "b": visuals-first hero, preview at /portofoliu-b only
 }
-const { lang, variant = "a" } = Astro.props;
+const { lang } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const calLink = "braescu-mircea/15min";
 const phone = { href: "+40741141095", ro: "0741 141 095", en: "+40 741 141 095" };
@@ -350,61 +349,6 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
           <span class="pill pill-float">{ui.eyebrow}</span>
           <a href={ui.switchHref} hreflang={lang === "ro" ? "en" : "ro"} class="link-underline ml-auto text-sm">{ui.switchLabel}</a>
         </div>
-        {variant === "a" ? (
-          <>
-        <div class="rise mt-10 sm:mt-14">
-          <img src={`${base}profile.webp`} alt="Mircea Braescu" width="96" height="96" class="mb-6 size-20 rounded-full object-cover sm:size-24" />
-          <h1 class="title max-w-5xl">
-            <span class="block">{ui.h1}</span>
-            <span class="tone-2 block">{ui.h1b}</span>
-          </h1>
-          <p class="lead mt-6 max-w-2xl">{ui.lead}</p>
-          <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
-            <a href={`tel:${phone.href}`} data-umami-event="portfolio-call-top" class="btn btn-primary"><Icon name="phone" />{ui.call}: {ui.ctaPhone}</a>
-            <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" data-umami-event="portfolio-whatsapp-top" class="btn btn-secondary"><Icon name="message" />{ui.ctaWa}</a>
-            <a href="https://www.linkedin.com/in/mircea-braescu/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-1.5 text-sm font-medium">{ui.linkedin}<Icon name="arrow-up-right" class="size-4" /></a>
-          </div>
-        </div>
-
-        <div class="rise mt-10 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-4">
-          {ui.facts.map((f) => (
-            <div class="card card-white fact">
-              <p class="fact-value">{f.value}</p>
-              <div class="min-w-0">
-                <p class="text-lg font-semibold text-ink md:mt-3">{f.title}</p>
-                <p class="body mt-1">{f.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div class="rise card card-ink mt-4 grid gap-6 lg:grid-cols-[1fr_2fr] lg:items-center">
-          <div>
-            <p class="text-lg font-semibold">{ui.fitTitle}</p>
-            <a href={`${base}fondatori`} class="link-underline mt-3 inline-flex items-center gap-1.5 text-sm font-medium">{ui.founders}<Icon name="arrow-right" class="size-4" /></a>
-          </div>
-          <ul class="grid gap-4 sm:grid-cols-2">
-            {ui.fitItems.map((t) => <li class="flex gap-3"><Icon name="check" class="mt-0.5 size-5 shrink-0" /><span>{t}</span></li>)}
-          </ul>
-        </div>
-
-        <nav class="rise mt-14" aria-label={ui.seeAll}>
-          <p class="label">{ui.since}</p>
-          <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            {byStart.map((p) => (
-              <a href={`#${p.slug}`} class="proj-tile">
-                <span class="proj-thumb"><img src={img(p.slug, "desktop-1")} alt="" loading="lazy" /></span>
-                <span class="mt-2.5 flex items-baseline justify-between gap-2 px-1">
-                  <span class="text-sm font-semibold text-ink">{p.name}</span>
-                  <span class="caption">{month(p.period)}</span>
-                </span>
-              </a>
-            ))}
-          </div>
-        </nav>
-          </>
-        ) : (
-          <>
         <div class="mt-10 grid gap-10 sm:mt-14 lg:grid-cols-12 lg:items-center lg:gap-12">
           <div class="rise lg:col-span-5">
             <div class="flex items-center gap-4">
@@ -446,8 +390,6 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
             </div>
           ))}
         </div>
-          </>
-        )}
       </div>
     </section>
 
@@ -705,21 +647,6 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
     font-size: 0.75rem;
     color: var(--ink-3);
   }
-  .fact {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1.25rem;
-  }
-  .fact > :first-child {
-    flex-shrink: 0;
-  }
-  @media (min-width: 768px) {
-    .fact {
-      display: block;
-      padding: clamp(1.5rem, 3vw, 2.25rem);
-    }
-  }
   .hero-b-title {
     font-family: var(--font-display);
     font-size: clamp(2.25rem, 4.6vw, 3.75rem);
@@ -793,35 +720,6 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
     line-height: 1;
     letter-spacing: -0.04em;
     color: var(--ink);
-  }
-  .fact-value {
-    min-width: 3.25rem;
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: var(--ink);
-  }
-  .proj-tile {
-    display: block;
-    transition: transform 0.3s var(--ease);
-  }
-  .proj-tile:hover {
-    transform: translateY(-3px);
-  }
-  .proj-thumb {
-    display: block;
-    aspect-ratio: 16 / 10;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    background: var(--canvas);
-    box-shadow: 0 0 0 1px var(--line);
-  }
-  .proj-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
   }
   .c11-media {
     aspect-ratio: 16 / 10;
