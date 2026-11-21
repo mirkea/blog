@@ -56,6 +56,7 @@ const ui = {
     zoom: "Mareste imaginea",
     close: "Inchide",
     ctaTitle: "Ai o idee sau o problema in firma?",
+    ctaFit: "Lucrez cel mai bine cu fondatori care au o idee de business si interes din piata si cauta pe cineva sa le construiasca produsul. Si cu cei care si-au facut singuri o prima versiune cu AI si vor sa o duca la un produs gata de productie.",
     ctaText: "Spune-mi de ce ai nevoie. In 15 minute vedem impreuna daca si cum te pot ajuta.",
     ctaCal: "Programeaza 15 minute",
     ctaPhone: phone.ro,
@@ -84,6 +85,7 @@ const ui = {
     zoom: "Enlarge image",
     close: "Close",
     ctaTitle: "Have an idea or a problem in your business?",
+    ctaFit: "I work best with founders who have a business idea and market pull and need someone to build the product. And with people who vibe-coded a first version with AI and want to turn it into a production-ready product.",
     ctaText: "Tell me what you need. In a 15-minute call we see whether and how I can help.",
     ctaCal: "Book 15 minutes",
     ctaPhone: phone.en,
@@ -412,7 +414,8 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
         <div class="rise card card-ink flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div class="max-w-2xl">
             <h2 class="title-sm">{ui.ctaTitle}</h2>
-            <p class="lead mt-4">{ui.ctaText}</p>
+            <p class="lead mt-4">{ui.ctaFit}</p>
+            <p class="body mt-3">{ui.ctaText}</p>
           </div>
           <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href={`https://cal.com/${calLink}`} target="_blank" rel="noopener" data-umami-event="portfolio-cal" class="btn btn-invert btn-lg"><Icon name="calendar" />{ui.ctaCal}</a>
