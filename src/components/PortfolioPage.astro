@@ -62,6 +62,13 @@ const ui = {
     ctaFit: "Lucrez cel mai bine cu fondatori care au o idee de business si interes din piata si cauta pe cineva sa le construiasca produsul. Si cu cei care si-au facut singuri o prima versiune cu AI si vor sa o duca la un produs gata de productie.",
     ctaText: "Spune-mi de ce ai nevoie. In 15 minute vedem impreuna daca si cum te pot ajuta.",
     ctaCal: "Programeaza 15 minute",
+    beforeTitle: "Inainte, in echipa Code11 (2008-2026)",
+    beforeLead: "18 ani intr-un studio de produs nordic, intr-o echipa de circa 25 de oameni. Trei produse la care am lucrat acolo, ca product manager:",
+    before: [
+      { name: "Verified.eu", url: "https://www.verified.eu", what: "Platforma nordica de verificare a identitatii, verificari anti-spalare de bani si semnatura electronica pentru firme.", role: "Product manager intre 2016 si 2021; am construit si parti din interfata, in React." },
+      { name: "TasteForge", what: "Aplicatie cu AI care ajuta firmele de bunuri de larg consum sa decida ce produse noi lanseaza: tendinte, calitatea datelor si dezvoltarea conceptelor.", role: "Product manager: discutiile cu clientul, patru functii complexe definite si prototipate cu AI, fluxurile de date." },
+      { name: "Hidden Practice", what: "Aplicatie mobila de meditatie si longevitate, in format de povesti, pentru un fondator din Suedia.", role: "Product manager si dezvoltare pe aplicatia mobila, in React Native." },
+    ],
     ctaPhone: phone.ro,
     ctaWa: "WhatsApp",
   },
@@ -93,6 +100,13 @@ const ui = {
     ctaFit: "I work best with founders who have a business idea and market pull and need someone to build the product. And with people who vibe-coded a first version with AI and want to turn it into a production-ready product.",
     ctaText: "Tell me what you need. In a 15-minute call we see whether and how I can help.",
     ctaCal: "Book 15 minutes",
+    beforeTitle: "Before: with the Code11 team (2008-2026)",
+    beforeLead: "18 years at a Nordic product studio, in a team of about 25 people. Three products I worked on there as a product manager:",
+    before: [
+      { name: "Verified.eu", url: "https://www.verified.eu", what: "A Nordic platform for identity checks, anti-money-laundering checks and e-signatures for businesses.", role: "Product manager from 2016 to 2021; I also built parts of the interface in React." },
+      { name: "TasteForge", what: "An AI app that helps consumer goods companies decide which new products to launch: trends, data quality and concept development.", role: "Product manager: client discovery, four complex features defined and prototyped with AI, the data pipelines." },
+      { name: "Hidden Practice", what: "A meditation and longevity mobile app in a stories format, for a Swedish founder.", role: "Product manager and development on the mobile app, in React Native." },
+    ],
     ctaPhone: phone.en,
     ctaWa: "WhatsApp",
   },
@@ -451,6 +465,31 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
     }
 
     <section class:list={["section", list.length % 2 === 1 && "section-surface"]}>
+      <div class="wrap">
+        <div class="rise max-w-3xl">
+          <h2 class="title-sm">{ui.beforeTitle}</h2>
+          <p class="body mt-3">{ui.beforeLead}</p>
+        </div>
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          {ui.before.map((b) => (
+            <div class="rise card">
+              <h3 class="text-lg font-semibold text-ink">{b.name}</h3>
+              <p class="body mt-2">{b.what}</p>
+              <p class="label mt-5">{ui.role}</p>
+              <p class="body mt-1.5 text-ink">{b.role}</p>
+              {b.url && (
+                <a href={b.url} target="_blank" rel="noopener" class="link-underline mt-4 inline-flex items-center gap-1.5 text-sm font-medium">
+                  {host(b.url)}
+                  <Icon name="arrow-up-right" class="size-4" />
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class:list={["section", list.length % 2 === 0 && "section-surface"]}>
       <div class="wrap">
         <div class="rise card card-ink flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div class="max-w-2xl">
