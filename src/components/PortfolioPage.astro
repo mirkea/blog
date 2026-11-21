@@ -43,7 +43,15 @@ const ui = {
     eyebrow: "Portofoliu",
     h1: "Mircea Braescu.",
     h1b: "Proiectez si construiesc produse pentru fondatori si afaceri.",
-    lead: "Din aprilie 2026 construiesc startup-uri: produse proprii sau impreuna cu fondatori care vor sa-si transforme ideea in produs. Cele sase proiecte de mai jos le-am inceput toate de atunci: magazine online, aplicatii web si mobile si unelte cu AI.",
+    lead: "Din aprilie 2026 construiesc startup-uri: produse proprii sau impreuna cu fondatori care vor sa-si transforme ideea in produs.",
+    facts: [
+      { icon: "layers", title: "6 produse din aprilie 2026", text: "Magazine online, aplicatii web si mobile si unelte cu AI." },
+      { icon: "photo", title: "20 de ani in software", text: "Product manager, designer si programator, din care 18 in echipa Code11." },
+      { icon: "code", title: "Construiesc cu agenti AI", text: "Codul se scrie repede. Designul, arhitectura si calitatea raman la mine." },
+    ],
+    fitTitle: "Cu cine lucrez cel mai bine",
+    fitItems: ["Fondatori cu o idee de business si interes din piata, care cauta pe cineva sa le construiasca produsul.", "Cei care si-au facut singuri o prima versiune cu AI si vor sa o duca la un produs gata de productie."],
+    seeAll: "Proiectele",
     founders: "Cum lucrez cu fondatorii",
     since: "Din aprilie 2026:",
     role: "Rolul meu",
@@ -81,7 +89,15 @@ const ui = {
     eyebrow: "Portfolio",
     h1: "Mircea Braescu.",
     h1b: "I design and build products for founders and businesses.",
-    lead: "Since April 2026 I have been building startups: my own, or with founders who want to turn their idea into a product. I started all six projects below since then: online shops, web and mobile apps and AI tools.",
+    lead: "Since April 2026 I have been building startups: my own, or with founders who want to turn their idea into a product.",
+    facts: [
+      { icon: "layers", title: "6 products since April 2026", text: "Online shops, web and mobile apps and AI tools." },
+      { icon: "photo", title: "20 years in software", text: "Product manager, designer and developer, 18 of them with the Code11 team." },
+      { icon: "code", title: "I build with AI agents", text: "The code gets written fast. The design, the architecture and the quality stay with me." },
+    ],
+    fitTitle: "Who I work best with",
+    fitItems: ["Founders with a business idea and market pull who need someone to build the product.", "People who vibe-coded a first version with AI and want to turn it into a production-ready product."],
+    seeAll: "Projects",
     founders: "How I work with founders (in Romanian)",
     since: "Since April 2026:",
     role: "My role",
@@ -338,25 +354,53 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
             <span class="block">{ui.h1}</span>
             <span class="tone-2 block">{ui.h1b}</span>
           </h1>
-          <p class="lead mt-6 max-w-3xl">{ui.lead}</p>
-          <p class="body mt-4 max-w-3xl text-ink">{ui.ctaFit}</p>
-          <a href={`${base}fondatori`} class="link-underline mt-3 inline-flex items-center gap-1.5 text-sm font-medium">{ui.founders}<Icon name="arrow-right" class="size-4" /></a>
-        </div>
-        <div class="rise mt-10 flex max-w-3xl items-start gap-5">
-          <img src={`${base}profile.webp`} alt="Mircea Braescu" width="80" height="80" class="size-16 shrink-0 rounded-full object-cover sm:size-20" />
-          <div>
-            <p class="body">{ui.about}</p>
-            <p class="body mt-2">{ui.ai}</p>
-            <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
-              <a href={`tel:${phone.href}`} data-umami-event="portfolio-call-top" class="btn btn-primary"><Icon name="phone" />{ui.call}: {ui.ctaPhone}</a>
-              <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" data-umami-event="portfolio-whatsapp-top" class="btn btn-secondary"><Icon name="message" />{ui.ctaWa}</a>
-              <a href="https://www.linkedin.com/in/mircea-braescu/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-1.5 text-sm font-medium">{ui.linkedin}<Icon name="arrow-up-right" class="size-4" /></a>
-            </div>
+          <p class="lead mt-6 max-w-2xl">{ui.lead}</p>
+          <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <a href={`tel:${phone.href}`} data-umami-event="portfolio-call-top" class="btn btn-primary"><Icon name="phone" />{ui.call}: {ui.ctaPhone}</a>
+            <a href={`https://wa.me/${phone.href.slice(1)}`} target="_blank" rel="noopener" data-umami-event="portfolio-whatsapp-top" class="btn btn-secondary"><Icon name="message" />{ui.ctaWa}</a>
+            <a href="https://www.linkedin.com/in/mircea-braescu/" target="_blank" rel="noopener" class="link-underline inline-flex items-center gap-1.5 text-sm font-medium">{ui.linkedin}<Icon name="arrow-up-right" class="size-4" /></a>
           </div>
         </div>
-        <nav class="rise mt-10 flex flex-wrap gap-2" aria-label={ui.eyebrow}>
-          <span class="caption self-center mr-1">{ui.since}</span>
-          {byStart.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}<span class="tone-2 ml-1.5 font-normal">{month(p.period)}</span></a>)}
+
+        <div class="rise mt-10 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-4">
+          {ui.facts.map((f) => (
+            <div class="card card-white fact">
+              {f.icon === "photo" ? (
+                <img src={`${base}profile.webp`} alt="Mircea Braescu" width="48" height="48" class="size-12 rounded-full object-cover" />
+              ) : (
+                <span class="fact-icon"><Icon name={f.icon} class="size-6" /></span>
+              )}
+              <div class="min-w-0">
+                <p class="text-lg font-semibold text-ink md:mt-5">{f.title}</p>
+                <p class="body mt-1">{f.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="rise card card-ink mt-4 grid gap-6 lg:grid-cols-[1fr_2fr] lg:items-center">
+          <div>
+            <p class="text-lg font-semibold">{ui.fitTitle}</p>
+            <a href={`${base}fondatori`} class="link-underline mt-3 inline-flex items-center gap-1.5 text-sm font-medium">{ui.founders}<Icon name="arrow-right" class="size-4" /></a>
+          </div>
+          <ul class="grid gap-4 sm:grid-cols-2">
+            {ui.fitItems.map((t) => <li class="flex gap-3"><Icon name="check" class="mt-0.5 size-5 shrink-0" /><span>{t}</span></li>)}
+          </ul>
+        </div>
+
+        <nav class="rise mt-14" aria-label={ui.seeAll}>
+          <p class="label">{ui.since}</p>
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {byStart.map((p) => (
+              <a href={`#${p.slug}`} class="proj-tile">
+                <span class="proj-thumb"><img src={img(p.slug, "desktop-1")} alt="" loading="lazy" /></span>
+                <span class="mt-2.5 flex items-baseline justify-between gap-2 px-1">
+                  <span class="text-sm font-semibold text-ink">{p.name}</span>
+                  <span class="caption">{month(p.period)}</span>
+                </span>
+              </a>
+            ))}
+          </div>
         </nav>
       </div>
     </section>
@@ -614,6 +658,52 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
     padding-right: 2.25rem;
     font-size: 0.75rem;
     color: var(--ink-3);
+  }
+  .fact {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+  .fact > :first-child {
+    flex-shrink: 0;
+  }
+  @media (min-width: 768px) {
+    .fact {
+      display: block;
+      padding: clamp(1.5rem, 3vw, 2.25rem);
+    }
+  }
+  .fact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  .proj-tile {
+    display: block;
+    transition: transform 0.3s var(--ease);
+  }
+  .proj-tile:hover {
+    transform: translateY(-3px);
+  }
+  .proj-thumb {
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--canvas);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .proj-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
   }
   .c11-media {
     aspect-ratio: 16 / 10;
