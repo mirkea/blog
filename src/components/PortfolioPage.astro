@@ -21,6 +21,7 @@ type Project = {
   url?: string;
   status: string;
   period: string;
+  start?: string; // chip text when the period is not a 2026 start month
   what: string;
   forWho: string;
   does: string;
@@ -37,7 +38,7 @@ type Project = {
 const ui = {
   ro: {
     title: "Portofoliu | Mircea Braescu",
-    description: "Sase produse construite din aprilie 2026: magazine online, aplicatii web si mobile. Ce face fiecare, pentru cine si ce am facut eu.",
+    description: "Produse construite pe cont propriu: un magazin online, aplicatii web si mobile. Ce face fiecare, pentru cine si ce am facut eu.",
     switchHref: `${base}en/portfolio`,
     switchLabel: "English",
     eyebrow: "Portofoliu",
@@ -45,7 +46,7 @@ const ui = {
     h1b: "Proiectez si construiesc produse pentru fondatori si afaceri.",
     lead: "Din aprilie 2026 construiesc startup-uri: produse proprii sau impreuna cu fondatori care vor sa-si transforme ideea in produs.",
     facts: [
-      { value: "6", title: "produse pe cont propriu", text: "Din aprilie 2026, cand am plecat de la Code11: magazine online, aplicatii web si mobile si unelte cu AI." },
+      { value: "5", title: "produse pe cont propriu", text: "Din aprilie 2026, cand am plecat de la Code11: aplicatii web si mobile si unelte cu AI." },
       { value: "20", title: "de ani in software", text: "Product manager, designer si programator, din care 18 in echipa Code11." },
       { value: "1", title: "om, de la prima discutie la lansare", text: "Lucrez cu agenti AI, care scriu codul repede. Designul, arhitectura si calitatea raman la mine." },
     ],
@@ -53,7 +54,7 @@ const ui = {
     fitItems: ["Fondatori cu o idee de business si interes din piata, care cauta pe cineva sa le construiasca produsul.", "Cei care si-au facut singuri o prima versiune cu AI si vor sa o duca la un produs gata de productie."],
     seeAll: "Proiectele",
     founders: "Cum lucrez cu fondatorii",
-    since: "Pe cont propriu, din aprilie 2026:",
+    since: "Pe cont propriu:",
     role: "Rolul meu",
     client: "Client",
     about: "Lucrez in software de 20 de ani, ca product manager, designer si programator, din care 18 in echipa Code11. Iau un proiect de la prima discutie pana la lansare.",
@@ -83,7 +84,7 @@ const ui = {
   },
   en: {
     title: "Portfolio | Mircea Braescu",
-    description: "Six products built since April 2026: online shops, web and mobile apps. What each one does, who it is for and what I did.",
+    description: "Products I built on my own: an online shop, web and mobile apps. What each one does, who it is for and what I did.",
     switchHref: `${base}portofoliu`,
     switchLabel: "Romana",
     eyebrow: "Portfolio",
@@ -91,7 +92,7 @@ const ui = {
     h1b: "I design and build products for founders and businesses.",
     lead: "Since April 2026 I have been building startups: my own, or with founders who want to turn their idea into a product.",
     facts: [
-      { value: "6", title: "products on my own", text: "Since I left Code11 in April 2026: online shops, web and mobile apps and AI tools." },
+      { value: "5", title: "products on my own", text: "Since I left Code11 in April 2026: web and mobile apps and AI tools." },
       { value: "20", title: "years in software", text: "Product manager, designer and developer, 18 of them with the Code11 team." },
       { value: "1", title: "person, from the first call to launch", text: "I work with AI agents that write code fast. The design, the architecture and the quality stay with me." },
     ],
@@ -99,7 +100,7 @@ const ui = {
     fitItems: ["Founders with a business idea and market pull who need someone to build the product.", "People who vibe-coded a first version with AI and want to turn it into a production-ready product."],
     seeAll: "Projects",
     founders: "How I work with founders (in Romanian)",
-    since: "On my own, since April 2026:",
+    since: "On my own:",
     role: "My role",
     client: "Client",
     about: "I've worked in software for 20 years as a product manager, designer and developer, 18 of them with the Code11 team. I take a project from the first conversation to launch.",
@@ -145,7 +146,8 @@ const projects: Record<"ro" | "en", Project[]> = {
       name: "AcoMag",
       url: "https://www.acomag.ro",
       status: "Live",
-      period: "din aprilie 2026",
+      period: "de peste 2 ani",
+      start: "2+ ani",
       what: "Magazin online de suruburi, ancore, folii si accesorii pentru acoperisuri si dulgherie.",
       forWho: "Acoperisari, dulgheri si constructori, plus cei care isi fac singuri acoperisul.",
       does: "Vinde online suruburi structurale, conexpanduri, folii anticondens si accesorii de acoperis, cu livrare rapida si ridicare din depozit. Fiecare categorie explica tipurile si cum alegi, iar ghidurile de pe blog il ajuta pe client sa aleaga produsul potrivit pentru lucrarea lui.",
@@ -241,7 +243,8 @@ const projects: Record<"ro" | "en", Project[]> = {
       name: "AcoMag",
       url: "https://www.acomag.ro",
       status: "Live",
-      period: "since April 2026",
+      period: "for over 2 years",
+      start: "2+ yrs",
       what: "Online shop for screws, anchors, membranes and accessories for roofing and carpentry.",
       forWho: "Roofers, carpenters and builders, plus people who build their own roof.",
       does: "Sells structural wood screws, anchor bolts, roof membranes and roofing accessories online, with fast delivery and warehouse pickup. Every category explains the types and how to choose, and the blog guides help customers pick the right product for the job.",
@@ -375,7 +378,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
               {byStart.map((p) => (
                 <a href={`#${p.slug}`} class="bento-tile">
                   <img src={img(p.slug, "desktop-1")} alt="" loading="eager" />
-                  <span class="bento-chip">{p.name}<span class="tone-2 ml-1.5 font-normal">{month(p.period)}</span></span>
+                  <span class="bento-chip">{p.name}<span class="tone-2 ml-1.5 font-normal">{p.start ?? month(p.period)}</span></span>
                 </a>
               ))}
             </div>
