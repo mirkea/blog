@@ -41,7 +41,9 @@ const ui = {
     eyebrow: "Portofoliu",
     h1: "Mircea Braescu.",
     h1b: "Proiectez si construiesc magazine online si aplicatii pentru afaceri.",
-    lead: "Din aprilie 2026 construiesc startup-uri: produse proprii sau impreuna cu fondatori care vor sa-si transforme ideea in produs. Toate cele sase proiecte de mai jos le-am construit de atunci, de la zero: magazine online, aplicatii web si mobile si unelte cu AI.",
+    lead: "Din aprilie 2026 construiesc startup-uri: produse proprii sau impreuna cu fondatori care vor sa-si transforme ideea in produs. Cele sase proiecte de mai jos le-am inceput toate de atunci: magazine online, aplicatii web si mobile si unelte cu AI.",
+    founders: "Cum lucrez cu fondatorii",
+    since: "Din aprilie 2026:",
     role: "Rolul meu",
     client: "Client",
     about: "Lucrez in software de 20 de ani, ca product manager, designer si programator; am fost PM pe verified.eu. Iau un proiect de la prima discutie pana la lansare.",
@@ -70,7 +72,9 @@ const ui = {
     eyebrow: "Portfolio",
     h1: "Mircea Braescu.",
     h1b: "I design and build online shops and apps for businesses.",
-    lead: "Since April 2026 I have been building startups: my own, or with founders who want to turn their idea into a product. I built all six projects below since then, from scratch: online shops, web and mobile apps and AI tools.",
+    lead: "Since April 2026 I have been building startups: my own, or with founders who want to turn their idea into a product. I started all six projects below since then: online shops, web and mobile apps and AI tools.",
+    founders: "How I work with founders (in Romanian)",
+    since: "Since April 2026:",
     role: "My role",
     client: "Client",
     about: "I've worked in software for 20 years as a product manager, designer and developer; I was a PM on verified.eu. I take a project from the first conversation to launch.",
@@ -288,6 +292,9 @@ const projects: Record<"ro" | "en", Project[]> = {
 };
 
 const list = projects[lang];
+// Project buttons in start order, so the "since April 2026" timeline reads at a glance.
+const startOrder = ["acomag", "carvuu", "mistuff", "agentie", "kutaway", "nextaria"];
+const byStart = [...list].sort((a, b) => startOrder.indexOf(a.slug) - startOrder.indexOf(b.slug));
 const img = (slug: string, shot: string) => `${base}portfolio/${slug}-${shot}.webp`;
 const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
 ---
@@ -306,6 +313,8 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
             <span class="tone-2 block">{ui.h1b}</span>
           </h1>
           <p class="lead mt-6 max-w-3xl">{ui.lead}</p>
+          <p class="body mt-4 max-w-3xl text-ink">{ui.ctaFit}</p>
+          <a href={`${base}fondatori`} class="link-underline mt-3 inline-flex items-center gap-1.5 text-sm font-medium">{ui.founders}<Icon name="arrow-right" class="size-4" /></a>
         </div>
         <div class="rise mt-10 flex max-w-3xl items-start gap-5">
           <img src={`${base}profile.webp`} alt="Mircea Braescu" width="80" height="80" class="size-16 shrink-0 rounded-full object-cover sm:size-20" />
@@ -320,7 +329,8 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
           </div>
         </div>
         <nav class="rise mt-10 flex flex-wrap gap-2" aria-label={ui.eyebrow}>
-          {list.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}<span class="tone-2 ml-1.5 font-normal">{month(p.period)}</span></a>)}
+          <span class="caption self-center mr-1">{ui.since}</span>
+          {byStart.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}<span class="tone-2 ml-1.5 font-normal">{month(p.period)}</span></a>)}
         </nav>
       </div>
     </section>
@@ -414,8 +424,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
         <div class="rise card card-ink flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div class="max-w-2xl">
             <h2 class="title-sm">{ui.ctaTitle}</h2>
-            <p class="lead mt-4">{ui.ctaFit}</p>
-            <p class="body mt-3">{ui.ctaText}</p>
+            <p class="lead mt-4">{ui.ctaText}</p>
           </div>
           <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <a href={`https://cal.com/${calLink}`} target="_blank" rel="noopener" data-umami-event="portfolio-cal" class="btn btn-invert btn-lg"><Icon name="calendar" />{ui.ctaCal}</a>
