@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Icon from "./ui/Icon.astro";
+import { existsSync } from "node:fs";
 import PortfolioLightbox from "./PortfolioLightbox";
 
 // Hidden portfolio: noindex, out of the sitemap, linked from nowhere. Sent by hand to leads.
@@ -65,9 +66,9 @@ const ui = {
     beforeTitle: "Inainte, in echipa Code11 (2008-2026)",
     beforeLead: "18 ani intr-un studio de produs nordic, intr-o echipa de circa 25 de oameni. Trei produse la care am lucrat acolo, ca product manager:",
     before: [
-      { name: "Verified.eu", url: "https://www.verified.eu", what: "Platforma nordica de verificare a identitatii, verificari anti-spalare de bani si semnatura electronica pentru firme.", role: "Product manager intre 2016 si 2021; am construit si parti din interfata, in React." },
-      { name: "TasteForge", what: "Aplicatie cu AI care ajuta firmele de bunuri de larg consum sa decida ce produse noi lanseaza: tendinte, calitatea datelor si dezvoltarea conceptelor.", role: "Product manager: discutiile cu clientul, patru functii complexe definite si prototipate cu AI, fluxurile de date." },
-      { name: "Hidden Practice", what: "Aplicatie mobila de meditatie si longevitate, in format de povesti, pentru un fondator din Suedia.", role: "Product manager si dezvoltare pe aplicatia mobila, in React Native." },
+      { slug: "verified", kind: "desktop", name: "Verified.eu", url: "https://www.verified.eu", what: "Platforma nordica de verificare a identitatii, verificari anti-spalare de bani si semnatura electronica pentru firme.", role: "Product manager intre 2016 si 2021; am construit si parti din interfata, in React." },
+      { slug: "tasteforge", kind: "desktop", name: "TasteForge", what: "Aplicatie cu AI care ajuta firmele de bunuri de larg consum sa decida ce produse noi lanseaza: tendinte, calitatea datelor si dezvoltarea conceptelor.", role: "Product manager: discutiile cu clientul, patru functii complexe definite si prototipate cu AI, fluxurile de date." },
+      { slug: "hidden-practice", kind: "phone", name: "Hidden Practice", what: "Aplicatie mobila de meditatie si longevitate, in format de povesti.", role: "Product manager si dezvoltare pe aplicatia mobila, in React Native." },
     ],
     ctaPhone: phone.ro,
     ctaWa: "WhatsApp",
@@ -103,9 +104,9 @@ const ui = {
     beforeTitle: "Before: with the Code11 team (2008-2026)",
     beforeLead: "18 years at a Nordic product studio, in a team of about 25 people. Three products I worked on there as a product manager:",
     before: [
-      { name: "Verified.eu", url: "https://www.verified.eu", what: "A Nordic platform for identity checks, anti-money-laundering checks and e-signatures for businesses.", role: "Product manager from 2016 to 2021; I also built parts of the interface in React." },
-      { name: "TasteForge", what: "An AI app that helps consumer goods companies decide which new products to launch: trends, data quality and concept development.", role: "Product manager: client discovery, four complex features defined and prototyped with AI, the data pipelines." },
-      { name: "Hidden Practice", what: "A meditation and longevity mobile app in a stories format, for a Swedish founder.", role: "Product manager and development on the mobile app, in React Native." },
+      { slug: "verified", kind: "desktop", name: "Verified.eu", url: "https://www.verified.eu", what: "A Nordic platform for identity checks, anti-money-laundering checks and e-signatures for businesses.", role: "Product manager from 2016 to 2021; I also built parts of the interface in React." },
+      { slug: "tasteforge", kind: "desktop", name: "TasteForge", what: "An AI app that helps consumer goods companies decide which new products to launch: trends, data quality and concept development.", role: "Product manager: client discovery, four complex features defined and prototyped with AI, the data pipelines." },
+      { slug: "hidden-practice", kind: "phone", name: "Hidden Practice", what: "A meditation and longevity mobile app in a stories format.", role: "Product manager and development on the mobile app, in React Native." },
     ],
     ctaPhone: phone.en,
     ctaWa: "WhatsApp",
@@ -321,6 +322,8 @@ const list = projects[lang];
 const startOrder = ["acomag", "carvuu", "mistuff", "agentie", "kutaway", "nextaria"];
 const byStart = [...list].sort((a, b) => startOrder.indexOf(a.slug) - startOrder.indexOf(b.slug));
 const img = (slug: string, shot: string) => `${base}portfolio/${slug}-${shot}.webp`;
+// Code11 cards show public/portfolio/code11/<slug>.webp once it exists, a placeholder frame until then.
+const c11Shot = (slug: string) => (existsSync(`${process.cwd()}/public/portfolio/code11/${slug}.webp`) ? `${base}portfolio/code11/${slug}.webp` : null);
 const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
 ---
 
@@ -473,7 +476,30 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
         <div class="mt-8 grid gap-4 md:grid-cols-3">
           {ui.before.map((b) => (
             <div class="rise card">
-              <h3 class="text-lg font-semibold text-ink">{b.name}</h3>
+              {(() => {
+                const src = c11Shot(b.slug);
+                const inner = src ? <img src={src} alt={b.name} loading="lazy" /> : <span class="c11-empty">{b.name}</span>;
+                return (
+                  <div class:list={["c11-media", b.kind === "phone" && "is-phone"]}>
+                    {b.kind === "phone" ? (
+                      src ? <button type="button" class="shot c11-phone" data-full={src} aria-label={`${ui.zoom}: ${b.name}`}>{inner}</button> : <div class="c11-phone">{inner}</div>
+                    ) : (
+                      src ? (
+                        <button type="button" class="shot browser c11-browser" data-full={src} aria-label={`${ui.zoom}: ${b.name}`}>
+                          <span class="browser-bar" aria-hidden="true"><i /><i /><i /></span>
+                          {inner}
+                        </button>
+                      ) : (
+                        <div class="browser c11-browser">
+                          <span class="browser-bar" aria-hidden="true"><i /><i /><i /></span>
+                          {inner}
+                        </div>
+                      )
+                    )}
+                  </div>
+                );
+              })()}
+              <h3 class="mt-6 text-lg font-semibold text-ink">{b.name}</h3>
               <p class="body mt-2">{b.what}</p>
               <p class="label mt-5">{ui.role}</p>
               <p class="body mt-1.5 text-ink">{b.role}</p>
@@ -589,6 +615,51 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
     margin-inline: auto;
     padding-right: 2.25rem;
     font-size: 0.75rem;
+    color: var(--ink-3);
+  }
+  .c11-media {
+    aspect-ratio: 16 / 10;
+    display: flex;
+    justify-content: center;
+  }
+  .c11-browser {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background: var(--canvas);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .c11-browser img {
+    flex: 1;
+    min-height: 0;
+    object-fit: cover;
+    object-position: top;
+  }
+  .c11-phone {
+    height: 100%;
+    aspect-ratio: 9 / 19.5;
+    border-radius: 1.25rem;
+    border: 4px solid var(--ink);
+    overflow: hidden;
+    background: var(--canvas);
+  }
+  .c11-phone img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  .c11-empty {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.8125rem;
     color: var(--ink-3);
   }
   .phone {
