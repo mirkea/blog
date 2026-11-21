@@ -35,13 +35,13 @@ type Project = {
 const ui = {
   ro: {
     title: "Portofoliu | Mircea Braescu",
-    description: "Proiecte recente: magazine online, aplicatii web si mobile, SEO. Ce face fiecare, pentru cine si ce am facut eu.",
+    description: "Sase produse construite din aprilie 2026: magazine online, aplicatii web si mobile. Ce face fiecare, pentru cine si ce am facut eu.",
     switchHref: `${base}en/portfolio`,
     switchLabel: "English",
     eyebrow: "Portofoliu",
     h1: "Mircea Braescu.",
     h1b: "Proiectez si construiesc magazine online si aplicatii pentru afaceri.",
-    lead: "Am lucrat la zeci de alte proiecte ca parte dintr-o echipa. Cele de mai jos le-am construit pe cont propriu, de la idee la lansare: site-uri si magazine online, SEO, aplicatii web si mobile facute pe masura.",
+    lead: "Din aprilie 2026 lucrez in mod fondator. De atunci am construit pe cont propriu cele sase produse de mai jos, de la idee la lansare, pentru antreprenori si pentru mine: magazine online, aplicatii web si mobile si unelte cu AI.",
     role: "Rolul meu",
     client: "Client",
     about: "Lucrez in software de 20 de ani, ca product manager, designer si programator; am fost PM pe verified.eu. Iau un proiect de la prima discutie pana la lansare.",
@@ -63,13 +63,13 @@ const ui = {
   },
   en: {
     title: "Portfolio | Mircea Braescu",
-    description: "Recent projects: online shops, web and mobile apps, SEO. What each one does, who it is for and what I did.",
+    description: "Six products built since April 2026: online shops, web and mobile apps. What each one does, who it is for and what I did.",
     switchHref: `${base}portofoliu`,
     switchLabel: "Romana",
     eyebrow: "Portfolio",
     h1: "Mircea Braescu.",
     h1b: "I design and build online shops and apps for businesses.",
-    lead: "I have worked on dozens of other projects as part of a team. The ones below I built on my own, from idea to launch: websites and online shops, SEO, custom web and mobile apps.",
+    lead: "Since April 2026 I have been working in founder mode. Since then I have built the six products below on my own, from idea to launch, for business owners and for myself: online shops, web and mobile apps and AI tools.",
     role: "My role",
     client: "Client",
     about: "I've worked in software for 20 years as a product manager, designer and developer; I was a PM on verified.eu. I take a project from the first conversation to launch.",
@@ -90,6 +90,13 @@ const ui = {
     ctaWa: "WhatsApp",
   },
 }[lang];
+
+// Short start month for the project pills, from "din aprilie 2026" / "since April 2026".
+const month = (period: string) => {
+  const m = period.split(" ").slice(-2)[0].toLowerCase();
+  const short: Record<string, string> = { aprilie: "apr", mai: "mai", octombrie: "oct", noiembrie: "nov", april: "Apr", may: "May", october: "Oct", november: "Nov" };
+  return short[m] ?? m.slice(0, 3);
+};
 
 const projects: Record<"ro" | "en", Project[]> = {
   ro: [
@@ -311,7 +318,7 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
           </div>
         </div>
         <nav class="rise mt-10 flex flex-wrap gap-2" aria-label={ui.eyebrow}>
-          {list.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}</a>)}
+          {list.map((p) => <a href={`#${p.slug}`} class="pill pill-quiet hover:text-ink">{p.name}<span class="tone-2 ml-1.5 font-normal">{month(p.period)}</span></a>)}
         </nav>
       </div>
     </section>
