@@ -28,6 +28,7 @@ type Project = {
   privateNote?: string;
   role: string;
   client?: string;
+  people?: { name: string; photo: string; linkedin: string }[]; // founders shown under Client
   phone?: boolean; // false hides the phone shot
   shots: string[]; // after the cover (desktop-1) and the phone (mobile-1)
 };
@@ -123,6 +124,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "nextaria",
+      people: [{ name: "Dragos Paun", photo: "dragos-paun", linkedin: "https://www.linkedin.com/in/dragos-paun-84a93562" }],
       client: "Un fondator din industria de ferestre si usi, care isi porneste firma acum.",
       role: "Am definit arhitectura si setup-ul tehnic si am construit parti din suita. Raspund si de produs si de experienta utilizatorilor.",
       name: "Nextaria",
@@ -168,7 +170,8 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "kutaway",
-      client: "Proiect propriu.",
+      people: [{ name: "Andrii Sazonov", photo: "andrii-sazonov", linkedin: "https://www.linkedin.com/in/shao3d" }, { name: "Dominykas Gobe", photo: "dominykas-gobe", linkedin: "https://www.linkedin.com/in/dominykas-gobe-a480a143" }],
+      client: "Proiect propriu, cu doi cofondatori.",
       role: "Ideea, designul si dezvoltarea, de la zero.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
@@ -215,6 +218,7 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "nextaria",
+      people: [{ name: "Dragos Paun", photo: "dragos-paun", linkedin: "https://www.linkedin.com/in/dragos-paun-84a93562" }],
       client: "A founder in the window and door industry, starting his company now.",
       role: "I defined the technical architecture and setup and built parts of the suite. I'm also responsible for the product and the user experience.",
       name: "Nextaria",
@@ -260,7 +264,8 @@ const projects: Record<"ro" | "en", Project[]> = {
     },
     {
       slug: "kutaway",
-      client: "My own project.",
+      people: [{ name: "Andrii Sazonov", photo: "andrii-sazonov", linkedin: "https://www.linkedin.com/in/shao3d" }, { name: "Dominykas Gobe", photo: "dominykas-gobe", linkedin: "https://www.linkedin.com/in/dominykas-gobe-a480a143" }],
+      client: "My own project, with two co-founders.",
       role: "The idea, the design and the build, from scratch.",
       name: "Kutaway",
       url: "https://app.kutaway.com",
@@ -364,6 +369,17 @@ const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
                 <div class="mt-5">
                   <p class="label">{ui.client}</p>
                   <p class="body mt-1.5">{p.client}</p>
+                  {p.people && (
+                    <div class="mt-3 flex flex-wrap gap-x-5 gap-y-3">
+                      {p.people.map((m) => (
+                        <a href={m.linkedin} target="_blank" rel="noopener" class="inline-flex items-center gap-2.5 text-sm font-medium">
+                          <img src={`${base}portfolio/people/${m.photo}.webp`} alt={m.name} width="40" height="40" loading="lazy" class="size-10 rounded-full object-cover" />
+                          <span class="link-underline">{m.name}</span>
+                          <Icon name="arrow-up-right" class="size-4" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
